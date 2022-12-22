@@ -1,0 +1,167 @@
+﻿@model AlcaldiaAraucaPortalWeb.Models.ModelsViewCont.ContentEditViewModel
+
+@{
+    ViewData["Title"] = "Editar";
+}
+<h2>@ViewBag.LineName</h2>
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div class="row" style="width:100%;">
+        <div class="col-md-6">
+            <h4>Editar Contenido</h4>
+        </div>
+        <div class="col-md-2 text-right">
+            <div class="form-group">
+                <select asp-for="StateId" class="form-control" asp-items="ViewBag.StateId"></select>
+            </div>
+        </div>
+
+        <div class="col-md-4 text-right">
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-save-fill"></i>Guardar</button> |
+                <a asp-action="Index" class="btn btn-sm btn-success"><i class="bi bi-chevron-double-left"></i>Retornar</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ContentId" />
+        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="ContentDate" />
+        <input type="hidden" asp-for="ContentUrlImg1" />
+        <input type="hidden" asp-for="PqrsStrategicLineSectorId" />
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="PqrsStrategicLineSectorId" class="control-label"></label>
+                <select asp-for="PqrsStrategicLineSectorId" class="form-control" asp-items="ViewBag.PqrsStrategicLineSectorId" disabled></select>
+                <span asp-validation-for="PqrsStrategicLineSectorId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="ContentTitle" class="control-label"></label>
+                <input asp-for="ContentTitle" class="form-control" />
+                <span asp-validation-for="ContentTitle" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="ContentText" class="control-label"></label>
+                <input asp-for="ContentText" class="form-control" />
+                <span asp-validation-for="ContentText" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="ContentUrlImg" class="control-label"></label>
+                <input asp-for="ContentUrlImg" class="form-control" type="file" />
+                <span asp-validation-for="ContentUrlImg" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label id="contentDetailsId" hidden></label>
+                <label id="optionFile" hidden></label>
+                <label id="contentDate" hidden></label>
+                <label asp-for="ContentDetails.FirstOrDefault().ContentTitle" class="control-label"></label>
+                <input id="contentTitle" class="form-control" maxlength="40" />
+                <span id="spanContentTitle" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="ContentDetails.FirstOrDefault().ContentText" class="control-label"></label>
+                <textarea id="contentText" class="form-control" rows="2"></textarea>
+                <span id="spanContentText" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <select id="OptionFile" class="form-control">
+                    <option value="" disabled selected hidden>Seleccione..</option>
+                    <option value="1">Archivo</option>
+                    <option value="2">Video</option>
+                </select>
+                <span id="spanOptionFile" class="text-danger"></span>
+            </div>
+
+            <div id="dynamicCtr" class="form-group">
+            </div>
+
+
+        </div>
+        <div class="col-md-1 text-right align-self-center">
+            <div class="form-group">
+                <button type="button" id="btnAddContentDetalle" onclick="AddContentEditDetalle(@Model.ContentId,1);" class="btn btn-sm btn-primary">Agregar</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Contenido</th>
+                    <th>Imagen</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ContentDetails)
+                {
+                    <tr>
+                        <td width="10%">@Html.DisplayFor(modelitem => item.ContentTitle)</td>
+                        <td width="72%">@Html.DisplayFor(modelitem => item.ContentText)</td>
+                        <td width="10%">
+
+                            @if (item.ContentUrlImg.Contains(".pdf"))
+                            {
+                                <a href="@item.ContentUrlImg" target="_blank"><i class="bi bi-file-earmark-pdf-fill" style="font-size:30px;"></i></a>
+                            }
+                            else @if (item.ContentUrlImg.Contains(".png"))
+                            {
+                                <a href="@item.ContentUrlImg" target="_blank">
+
+                                    <img src="@Url.Content(item.ContentUrlImg)" class="img-rounded" alt="Image" style="width:50px;height:50px;max-width: 100%; height: auto;" />
+                                </a>
+                            }
+                            else
+                            {
+                                <iframe width="50" height="50" src="@item.ContentUrlImg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            }
+                        </td>
+                        <td style="display: none;">@Html.DisplayFor(modelitem => item.ContentUrlImg)</td>
+                        <td style="display: none;">@Html.DisplayFor(modelitem => item.ContentDetailsId)</td>
+                        <td style="display: none;">@Html.DisplayFor(modelitem => item.ContentDate)</td>
+
+                        <td width="8%">
+                            <button type="button" onclick="ContentDetailEdit(this);" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i></button> |
+                            <button type="button" onclick="ContentEditDetailDelete(@item.ContentDetailsId,@item.ContentId,1);" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i></button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</form>
+<footer>
+    <h4 style="color:white;">Avisos legales</h4>
+    <a href="#" style="color:white">Política de cookies</a>
+</footer>
+<footer>
+    <h4 style="color:white;">Avisos legales</h4>
+    <a href="#" style="color:white">Política de cookies</a>
+</footer>
+
+@section scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/Content/Content.js"></script>
+}

@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AlcaldiaAraucaPortalWeb</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="stylesheet" type="text/css" href="~/lib/DataTable/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="~/css/Cards.css" />
+    <link rel="stylesheet" href="~/AlcaldiaAraucaPortalWeb.styles.css" asp-append-version="true" />
+
+
+</head>
+<body>
+    <header>
+
+        <nav class="navbar navbar-dark" style="background-color:#3366CC;">
+            <div class="container">
+                <a href="https://www.gov.co/" title="" target="_blank"><img src="@Url.Content("~/Image/GoCo.png")" width="100" height="100" class="img-fluid" /></a>
+            </div>
+        </nav>
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3" style="background-color:#3366CC;">
+
+            <div class="container">
+
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/Image/ImagenLogo.png" alt="" width="120" height="30">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                    <ul class="navbar-nav flex-grow-1">
+
+                        <li class="nav-item dropdown text-center">
+                            <a class="nav-link small text-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Desarrollo Social<br />Incluyente</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="Cultura">Cultura</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="Deporte">Deporte</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="Educacion">Educación</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="InclusionSocial">Inclusión Social</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="SaludyProteccion">Salud y Protección Social</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="DesarrolloSocialNormatividad">Normatividad</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown text-center">
+                            <a class="nav-link small text-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Crecimiento<br />Económico</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="AgriculturaDesarrolloRural">Agricultura y Desarrollo Rural</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="CienciaTecnologiaInnovacion">Ciencia, Tecnología e Innovación</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="Trabajo">Trabajo</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="ComercionIndustriaTurismo">Comercio, Industria y Turismo</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="CrecimientoEconomicoNormatividad">Normatividad</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown text-center">
+                            <a class="nav-link small text-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Arauca Verde, Ordenada<br />y Sostenible</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="AmbienteyDesarrolloSostenible">Ambiente y Desarrollo Sostenible</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="AtencionDesastre">Gobierno Territorial - Atención a Desastres</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="AraucaVedeOrdenadaSostenibleNormatividad">Normatividad</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown text-center">
+                            <a class="nav-link small text-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Infraestrutura Social<br />y Productiva</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="Transporte">Transporte</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="MinasyEnergia">Minas y Energía</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="ViviendaInfra">Vivienda</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="InfraestructuraSocialProductivaNormatividad">Normatividad</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown text-center">
+                            <a class="nav-link small text-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Buen<br />Gobierno</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="InformacionEstadistica">Información Estadística</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="BuenGobiernoTerritorial">Gobierno Territorial</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="Tecnologia">Tecnologías de la Información y las Comunicaciones</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="ViviendaBuen">Vivienda</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="BuenGobiernoNormatividad">Normatividad</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown text-center">
+                            <a class="nav-link small text-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Seguridad, Convivencia<br />y Justicia</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="JusticiaDerecho">Justicia y del Derecho</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="InclusionSocial2">Inclusión Social</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="GobiernoTerritorial">Gobierno Territorial</a></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="ViviendaSeguridad">Vivienda</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item small" asp-controller="LineStrategic" asp-action="SeguridadConvivenciaJusticiaNormatividad">Normatividad</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown text-center">
+                            <a class="nav-link small text-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Gestión del<br />Conocimiento</a>
+                            <ul class="dropdown-menu">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @if (User.IsInRole("Administrador"))
+                                    {
+                                        <li><a class="dropdown-item small" asp-area="" asp-controller="GroupCommunities" asp-action="Index">Grupo Comunitario</a></li>
+                                        <li><a class="dropdown-item small" asp-area="" asp-controller="GroupProductives" asp-action="Index">Grupo productivos</a></li>
+                                        <li><a class="dropdown-item small" asp-area="" asp-controller="SocialNetworks" asp-action="Index">Redes Sociales</a></li>
+                                        <li><a class="dropdown-item small" asp-area="" asp-controller="Professions" asp-action="Index">Profesiones</a></li>
+                                        <li><a class="dropdown-item small" asp-area="" asp-controller="ApplicationUsers" asp-action="Index">Usuarios cambio de rol</a></li>
+                                        <li><a class="dropdown-item small" asp-area="" asp-controller="PqrsUserStrategicLines" asp-action="Index">Asignación de Usuarios a lineas</a></li>
+                                        <li><a class="dropdown-item small" asp-area="" asp-controller="Carousels" asp-action="Index">Imagenes banner</a></li>
+
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item small text-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Reportes</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item small" asp-area="" asp-controller="Reports" asp-action="AffiliateProfessions">Profesiones</a></li>
+                                                <li><a class="dropdown-item small" asp-area="" asp-controller="Reports" asp-action="AffiliateGrupoProductivo">Grupos productivos</a></li>
+                                                <li><a class="dropdown-item small" asp-area="" asp-controller="Reports" asp-action="AffiliateGrupoComunitario">Grupos comunitarios</a></li>
+                                                <li><a class="dropdown-item small" asp-area="" asp-controller="Reports" asp-action="AffiliateSocialNetwork">Redes sociales</a></li>
+                                                <li><a class="dropdown-item small" asp-area="" asp-controller="Reports" asp-action="UserRdlc">Usuarios registrados</a></li>
+                                            </ul>
+                                        </li>
+                                    }
+
+                                    @if (User.IsInRole("Publicador"))
+                                    {
+                                        <li><a class="dropdown-item small" asp-area="" asp-controller="Contents" asp-action="Index">Agregar contenido a la linea</a></li>
+                                    }
+                                    @if (User.IsInRole("Prensa"))
+                                    {
+                                        <li><a class="dropdown-item small" asp-area="" asp-controller="Prensas" asp-action="Index">Operar contenido</a></li>
+                                    }
+                                    @if (User.IsInRole("Usuario"))
+                                    {
+                                        <li><a class="dropdown-item small" asp-area="" asp-controller="Affiliates" asp-action="Index">Afiliados</a></li>
+                                    }
+                                }
+
+                                <li><a class="dropdown-item small" asp-area="" asp-controller="Home" asp-action="manuales" target="_blank">Manual de usuario</a></li>
+                                <li><a class="dropdown-item small" asp-area="" asp-controller="LineStrategic" asp-action="GestionConocimiento" asp-route-id="7">Gestión del conocimiento</a></li>
+                                <li><a class="dropdown-item small" asp-area="" asp-controller="home" asp-action="MapaSitio">Mapa del sitio</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+
+        </nav>
+    </header>
+
+    <partial name="_RedSocial" />
+    <partial name="_Subscription" />
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-center" style="background-color:#3366CC;">
+        <div class="container">
+            &copy; 2021 - Arauca activa - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/Cards.js"></script>
+    <script type="text/javascript" src="~/lib/DataTable/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

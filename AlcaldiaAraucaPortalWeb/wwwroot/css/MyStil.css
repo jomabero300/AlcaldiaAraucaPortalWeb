@@ -1,0 +1,52 @@
+﻿
+.social-bar {
+    position: fixed; /*para que quede fijo en nuestra pantalla*/
+    right: 0; /*Ubicarlo a la derecha de la pantalla*/
+    top: 23%; /*Posicionarlo casi en el centro*/
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /*Alinear a la parte inferior*/
+    z-index: 100; /*para que se ubique encimo del resto de la página*/
+}
+
+#biyoutube, #biinstagram, #bitwitter, #bifacebook {
+    color: white;
+    text-decoration: none;
+    padding: .7rem;
+    display: flex;
+    transition: all .5s;
+}
+
+
+#bifacebook.bi-facebook {
+    background: #3366CC;
+}
+
+#bitwitter.bi-twitter {
+    background: #3366CC;
+}
+
+#biinstagram.bi-instagram {
+    background: #3366CC;
+}
+
+#biyoutube.bi-youtube {
+    background: #3366CC;
+}
+
+
+
+#socialBar a.bi:first-child {
+    border-radius: 1rem 0 0 0;
+}
+
+#socialBar a.bi:last-child {
+    border-radius: 0 0 0 1rem;
+}
+
+#socialBar a.bi:hover {
+    padding-right: 3rem;
+    border-radius: 1rem 0 0 1rem;
+    box-shadow: 0 0 .5rem rgba(0,0,0,0.42);
+}

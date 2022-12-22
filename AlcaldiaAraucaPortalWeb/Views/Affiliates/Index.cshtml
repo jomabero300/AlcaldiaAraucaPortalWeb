@@ -1,0 +1,84 @@
+﻿@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Afil.Affiliate>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <di class="col-md-6">
+        <h1>Afiliaciones</h1>
+    </di>
+    <di class="col-md-6 text-end">
+        <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-fill"></i> Nuevo</a>
+    </di>
+</div>
+
+<table id="MyTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeUserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeUserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                    {
+                        <img class="img-rounded" src="@Url.Content(item.ImagePath)" alt="Image" style="width: 100px; height: 100px; max-width: 100%; height: auto;" />
+                    }
+
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.AffiliateId" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i> Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.AffiliateId" class="btn btn-sm btn-info"><i class="bi bi-eye-fill"></i> Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AffiliateId" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i> Elimnar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script src="~/js/datatable_files.js"></script>
+}

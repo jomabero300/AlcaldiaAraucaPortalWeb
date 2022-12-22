@@ -1,0 +1,290 @@
+﻿@model AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil.AffiliateViewModels
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h1>Editar</h1>
+
+<form asp-action="Edit" enctype="multipart/form-data">
+
+    <input type="hidden" asp-for="AffiliateId" />
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="ImagePath" />
+
+    <div class="col-12">
+        <div class="row">
+            <div class="col">
+                <h4>Affiliado</h4>
+            </div>
+            <div class="col" style="text-align: right;">
+            <button type="submit" class="btn btn-warning"><i class="bi bi-safe2-fill">Guardar</i></button> |
+            <a asp-action="Index" class="btn btn-success"><i class="bi bi-chevron-left"></i> Retornar</a>
+            </div>
+        </div>
+    </div>
+<hr />
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="TypeUserId" class="control-label"></label>
+                <select asp-for="TypeUserId" class="form-control" asp-items="ViewBag.TypeUserId"></select>
+                <span asp-validation-for="TypeUserId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Nit" class="control-label"></label>
+                <input asp-for="Nit" class="form-control" />
+                <span asp-validation-for="Nit" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CellPhone" class="control-label"></label>
+                <input asp-for="CellPhone" class="form-control" />
+                <span asp-validation-for="CellPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagePathNew" class="control-label"></label>
+                <input asp-for="ImagePathNew" class="form-control" type="file" />
+                <span asp-validation-for="ImagePathNew" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="container d-flex justify-content-center">
+                <div class="col-md-12 border shadow">
+                    <ul class="nav nav-pills nav-justified">
+                        <li class="nav-item"><a href="#GroupProductive-tab" class="nav-link" data-bs-toggle="pill">Productivo</a></li>
+                        <li class="nav-item"><a href="#GroupCommunities-tab" class="nav-link" data-bs-toggle="pill">Comunitario</a></li>
+                        <li class="nav-item"><a href="#Proffesional-tab" class="nav-link" data-bs-toggle="pill">Profesion</a></li>
+                        <li class="nav-item"><a href="#SocialNetwork-tab" class="nav-link" data-bs-toggle="pill">Redes sociales</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <!--Grupoi productivo-->
+                        <div class="tab-pane show fade active justify-content-center p-2" id="GroupProductive-tab">
+                            <div class="row" style="width:100%;">
+                                <di class="col-md-10">
+                                    <div class="form-group">
+                                        <label asp-for="GroupProductives.FirstOrDefault().GroupProductiveId" class="control-label"></label>
+                                        <select id="groupProductiveId" class="form-control" asp-items="ViewBag.GroupProductiveId"></select>
+                                        <span id="spanGroupProductiveId" class="text-danger"></span>
+                                    </div>
+                                </di>
+                                <di class="col-md-2 text-right align-self-center">
+                                    <div class="form-group">
+                                        <button type="button" id="btnAddPropductive" onclick="ProductivoAdd(@Model.AffiliateId);" class="btn btn-sm btn-primary">Agregar</button>
+                                    </div>
+                                </di>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div id="divProductive">
+                                    <table class="table" id="myTableProductive">
+                                        <thead>
+                                            <tr>
+                                                <th>Descripción</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.GroupProductives)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(modelitem => item.GroupProductive.GroupProductiveName)</td>
+                                                    <td><button type="button" onclick="ProductivoDelete(@Model.AffiliateId,@item.AffiliateGroupProductiveId);" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i></button></td>
+
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Grupo comunitario-->
+                        <div class="tab-pane justify-content-center p-2" id="GroupCommunities-tab">
+                            <div class="row" style="width:100%;">
+                                <di class="col-md-10">
+                                    <div class="form-group">
+                                        <label asp-for="GroupCommunities.FirstOrDefault().GroupCommunityId" class="control-label"></label>
+                                        <select id="groupCommunityId" class="form-control" asp-items="ViewBag.GroupCommunityId"></select>
+                                        <span id="spanGroupCommunityId" class="text-danger"></span>
+                                    </div>
+                                </di>
+                                <di class="col-md-2 text-right align-self-center">
+                                    <div class="form-group">
+                                        <button type="button" id="btnGroupCommunity" onclick="CommunityAdd(@Model.AffiliateId);" class="btn btn-sm btn-primary">Agregar</button>
+                                    </div>
+                                </di>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div id="divGroupCommunity">
+                                    <table class="table" id="myTableGroupCommunity">
+                                        <thead>
+                                            <tr>
+                                                <th>Descripción</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.GroupCommunities)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(modelitem => item.GroupCommunity.GroupCommunityName)</td>
+                                                    @*<td><a asp-action="DeleteCommunity" asp-route-id="@item.AffiliateGroupCommunityId" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i></a></td>*@
+                                                    <td><button type="button" onclick="CommunityDelete(@Model.AffiliateId,@item.AffiliateGroupCommunityId);" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i></button></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Profesion-->
+                        <div class="tab-pane justify-content-center p-2" id="Proffesional-tab">
+                            <div class="row" style="width:100%;">
+                                <di class="col-md-10">
+                                    <div class="form-group">
+                                        <label asp-for="Professions.FirstOrDefault().ProfessionId" class="control-label"></label>
+                                        <select id="professionId" class="form-control" asp-items="ViewBag.ProfessionId"></select>
+                                        <span id="spanProfessionId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="Professions.FirstOrDefault().ImagePath" class="control-label"></label>
+                                        <input id="imagePath" class="form-control" type="file" accept="image/*" />
+                                        <span id="spanImagePath" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Professions.FirstOrDefault().Concept" class="control-label"></label>
+                                        <input id="Concept" class="form-control" />
+                                        <span id="spanConcept" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Professions.FirstOrDefault().DocumentoPath" class="control-label"></label>
+                                        <input id="documentoPath" type="file" class="form-control" accept=".pdf" />
+                                        <span id="spanDocumentoPath" class="text-danger"></span>
+                                    </div>
+                                </di>
+                                <di class="col-md-2 text-right align-self-center">
+                                    <div class="form-group">
+                                        <button type="button" id="btnProfession" onclick="ProfessionAdd(@Model.AffiliateId);" class="btn btn-sm btn-primary">Agregar</button>
+                                    </div>
+                                </di>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div id="divProfession">
+                                    <table class="table" id="myTableProfession">
+                                        <thead>
+                                            <tr>
+                                                <th>Descripción</th>
+                                                <th>Foto</th>
+                                                <th>Concepto</th>
+                                                <th>Documento</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Professions)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(modelitem => item.Profession.ProfessionName)</td>
+                                                    <td width='10%'>
+                                                        <a href="@item.ImagePath" target="_blank">
+                                                            <img src="@item.ImagePath" class='img-rounded' alt='Image' style='width: 50px; height: 50px; max-width: 100 %; height: auto;' />
+                                                        </a>
+                                                   </td>
+                                                    <td>@Html.DisplayFor(modelitem => item.Concept)</td>
+                                                    <td width='10%'>
+                                                        <a href=" @item.DocumentoPath " target='_blank'><i class='bi bi-file-earmark-pdf-fill' style='font-size:30px;'></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a onclick="ProfessionsDelete(@Model.AffiliateId,@item.AffiliateProfessionId)" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i></a>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Redes sociales-->
+                        <div class="tab-pane justify-content-center p-2" id="SocialNetwork-tab">
+                            <div class="row" style="width:100%;">
+                                <di class="col-md-10">
+                                    <div class="form-group">
+                                        <label asp-for="SocialNetworks.FirstOrDefault().SocialNetworkId" class="control-label"></label>
+                                        <select id="socialNetworkId" class="form-control" asp-items="ViewBag.SocialNetworkId"></select>
+                                        <span asp-validation-for="SocialNetworks.FirstOrDefault().SocialNetworkId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="SocialNetworks.FirstOrDefault().AffiliateSocialNetworURL" class="control-label"></label>
+                                        <input id="affiliateSocialNetworURL" class="form-control" />
+                                        <span id="spanAffiliateSocialNetworURL" class="text-danger"></span>
+                                    </div>
+                                </di>
+                                <di class="col-md-2 text-right align-self-center">
+                                    <div class="form-group">
+                                        <button type="button" id="btnAddSocialNetwork" onclick="SocialNetworkAdd();" class="btn btn-sm btn-primary">Agregar</button>
+                                    </div>
+                                </di>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div id="divSocialNetwork">
+                                    <table class="table" id="myTableSocialNetwork">
+                                        <thead>
+                                            <tr>
+                                                <th>Red Social</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.SocialNetworks)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(modelitem => item.SocialNetwork.SocialNetworkName)</td>
+                                                    <td><a asp-action="DeleteSocialNetwork" asp-route-id="@item.AffiliateSocialNetworkId" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i></a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script src="~/js/Afil/AfiliateEdit.js"></script>
+}

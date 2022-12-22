@@ -1,0 +1,124 @@
+﻿@model AlcaldiaAraucaPortalWeb.Models.ModelsViewCont.ContentModelsViewCont
+
+@{
+    ViewData["Title"] = "Create";
+}
+<h2>@ViewBag.LineName</h2>
+<form asp-action="Create" enctype="multipart/form-data">
+
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Nuevo Contenido</h4>
+        </div>
+        <div class="col-md-4 text-end align-self-center">
+            <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-save-fill"></i>Guardar</button> |
+                <a asp-action="Index" class="btn btn-sm btn-success"><i class="bi bi-chevron-double-left"></i>Retornar</a>
+            </div>
+
+        </div>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="PqrsStrategicLineSectorId" class="control-label"></label>
+                <select asp-for="PqrsStrategicLineSectorId" class="form-control" asp-items="ViewBag.PqrsStrategicLineSectorId"></select>
+                <span asp-validation-for="PqrsStrategicLineSectorId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="ContentTitle" class="control-label"></label>
+                <input asp-for="ContentTitle" class="form-control" />
+                <span asp-validation-for="ContentTitle" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="ContentText" class="control-label"></label>
+                <input asp-for="ContentText" class="form-control" />
+                <span asp-validation-for="ContentText" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="ContentUrlImg" class="control-label"></label>
+                <input asp-for="ContentUrlImg" class="form-control" type="file" type="file" accept="image/gif, image/jpeg, image/png"/>
+                <span asp-validation-for="ContentUrlImg" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <h5>Detalle</h5>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+
+                <label id="optionFile" hidden></label>
+                <label id="contentDetailsId" hidden></label>
+                <label id="contentDate" hidden></label>
+
+                <label asp-for="ContentDetails.FirstOrDefault().ContentTitle" class="control-label"></label>
+                <input id="contentTitle" class="form-control" maxlength="40" />
+                <span id="spanContentTitle" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="ContentDetails.FirstOrDefault().ContentText" class="control-label"></label>
+                <textarea id="contentText" class="form-control"  rows="2"></textarea>
+                <span id="spanContentText" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="form-group">
+                    <select id="OptionFile" class="form-control">
+                        <option value="">Seleccione..</option>
+                        <option value="1">Archivo</option>
+                        <option value="2">Video</option>
+                    </select>
+                    <span id="spanOptionFile" class="text-danger"></span>
+                </div>
+
+                <div id="dynamicCtr" class="form-group mt-2">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1 text-right align-self-center">
+            <div class="form-group">
+                <button type="button" id="btnAddContentDetalle" onclick="AddContentDetalle();" class="btn btn-sm btn-primary">Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-12">
+            <div id="divContentDetalle">
+                <table class="table" id="myTableContentDetalle">
+                    <thead>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Descripción</th>
+                            <th>Imagen</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/Content/Content.js"></script>
+}

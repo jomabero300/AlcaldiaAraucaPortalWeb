@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-AlcaldiaAraucaPortalWeb-DA19F004-5D11-42E7-B3D5-DE711518B120</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Image\Afiliate\AfilateTemp\" />
+    <Folder Include="wwwroot\Image\Afiliate\Document\" />
+    <Folder Include="wwwroot\Image\Afiliate\Image\" />
+    <Folder Include="wwwroot\Image\Menu\" />
+    <Folder Include="wwwroot\Image\ImageTemp\" />
+    <Folder Include="wwwroot\Image\Menu\Arauca\Ambiente\" />
+    <Folder Include="wwwroot\Image\Menu\Arauca\Gobierno\" />
+    <Folder Include="wwwroot\Image\Menu\BuenGobierno\Gobierno\" />
+    <Folder Include="wwwroot\Image\Menu\BuenGobierno\Informacion\" />
+    <Folder Include="wwwroot\Image\Menu\BuenGobierno\Tecnologia\" />
+    <Folder Include="wwwroot\Image\Menu\BuenGobierno\Vivienda\" />
+    <Folder Include="wwwroot\Image\Menu\Crecimiento\Agricultura\" />
+    <Folder Include="wwwroot\Image\Menu\Crecimiento\Ciencia\" />
+    <Folder Include="wwwroot\Image\Menu\Crecimiento\Comercio\" />
+    <Folder Include="wwwroot\Image\Menu\Crecimiento\Normatividad\" />
+    <Folder Include="wwwroot\Image\Menu\Crecimiento\Trabajo\" />
+    <Folder Include="wwwroot\Image\Menu\Desarrollo\Cultura\" />
+    <Folder Include="wwwroot\Image\Menu\Desarrollo\Deporte\" />
+    <Folder Include="wwwroot\Image\Menu\Desarrollo\Educacion\" />
+    <Folder Include="wwwroot\Image\Menu\Desarrollo\Inclusion\" />
+    <Folder Include="wwwroot\Image\Menu\Desarrollo\Normatividad\" />
+    <Folder Include="wwwroot\Image\Menu\Desarrollo\Salud\" />
+    <Folder Include="wwwroot\Image\Menu\Gestion\" />
+    <Folder Include="wwwroot\Image\Menu\Infraestructura\Mina\" />
+    <Folder Include="wwwroot\Image\Menu\Infraestructura\Transporte\" />
+    <Folder Include="wwwroot\Image\Menu\Infraestructura\Vivienda\" />
+    <Folder Include="wwwroot\Image\Menu\Seguridad\Inclusion\" />
+    <Folder Include="wwwroot\Image\Menu\Seguridad\Justicia\" />
+    <Folder Include="wwwroot\support\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\support\ManualDelPublicador.pdf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\support\ManualDelSistemas.pdf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

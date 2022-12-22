@@ -1,0 +1,44 @@
+﻿@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Afil.Profession>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row" style="width:100%;">
+    <div class="col-md-6">
+        <h1>Profesiones</h1>
+    </div>
+    <div class="col-md-6" style="text-align: end;vertical-align: middle;">
+        <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-fill"></i> Nuevo</a>
+    </div>
+</div>
+
+<table id="MyTable" class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProfessionName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProfessionName)
+                </td>
+                <td align="center">
+                    <a asp-action="Edit" asp-route-id="@item.ProfessionId" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i> Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProfessionId" class="btn btn-sm btn-info"><i class="bi bi-eye-fill"></i> Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProfessionId" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i> Elimnar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script src="~/js/datatable_files.js"></script>
+}

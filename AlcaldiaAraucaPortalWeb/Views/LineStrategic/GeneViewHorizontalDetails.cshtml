@@ -1,0 +1,73 @@
+﻿@model List<AlcaldiaAraucaPortalWeb.Data.Entities.Cont.ContentDetail>
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+<link rel="stylesheet" href="~/css~/css/GeneViewHorizontalDetails.css" />
+
+<div class="container" style="padding:5%">
+    <div class="card-group vgr-cards">
+
+        @foreach (var item in Model)
+        {
+            @if (Model.Count() == 1)
+            {
+                <div class="card">
+                    <div class="card-img-top text-center">
+
+                        @if (item.ContentUrlImg.Contains(".pdf"))
+                        {
+                            <div style="position: absolute; left: 50%; top: 15px;"><a href="@item.ContentUrlImg" target="_blank"><i class="bi bi-file-earmark-pdf-fill" style="font-size:30px;"></i></a></div>
+                            <div style="position: absolute; left: 50%; top: 50px;"><a href="@item.ContentUrlImg" target="_blank">Ver</a></div>
+
+                        }
+                        else @if (item.ContentUrlImg.Contains(".png") || item.ContentUrlImg.Contains(".jpg") || item.ContentUrlImg.Contains(".jpeg"))
+                        {
+                            <img src="@item.ContentUrlImg" class="img-rounded" alt="Image" style="width:200px;height:800px;max-width: 100%; height: auto;">
+                        }
+                        else
+                        {
+                            <iframe width="320" height="150" src="@item.ContentUrlImg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        }
+                    </div>
+
+                    <div class="card-body">
+                        <h4 class="card-title">@item.ContentTitle</h4>
+                        <p class="card-text overflow-auto" style="height:300px;text-align: justify;text-justify: inter-word">@Html.Raw(@item.ContentText)</p>
+                    </div>
+                </div>
+            }
+            else
+            {
+
+                <div class="col-lg-6 mb-3">
+                    <div class="card">
+                        <div class="card-img-top text-center">
+
+                            @if (item.ContentUrlImg.Contains(".pdf"))
+                            {
+                                <div style="position: absolute; left: 50%; top: 15px;"><a href="@item.ContentUrlImg" target="_blank"><i class="bi bi-file-earmark-pdf-fill" style="font-size:30px;"></i></a></div>
+                                <div style="position: absolute; left: 50%; top: 50px;"><a href="@item.ContentUrlImg" target="_blank">Ver</a></div>
+
+                            }
+                            else @if (item.ContentUrlImg.Contains(".png") || item.ContentUrlImg.Contains(".jpg") || item.ContentUrlImg.Contains(".jpeg"))
+                            {
+                                <img src="@item.ContentUrlImg" class="img-rounded" alt="Image" style="width:600px;height:800px;max-width: 100%; height: auto;">
+                            }
+                            else
+                            {
+                                <iframe width="320" height="150" src="@item.ContentUrlImg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            }
+                        </div>
+
+                        <div class="card-body">
+                            <h4 class="card-title">@item.ContentTitle</h4>
+                            <p class="card-text text-justify overflow-auto" style="height:300px;">@Html.Raw(@item.ContentText)</p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+</div>

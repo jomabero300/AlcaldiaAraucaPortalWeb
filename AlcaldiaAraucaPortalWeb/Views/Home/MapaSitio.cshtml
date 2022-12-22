@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Mapa del sitio</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <ul>
+            <li>
+                Con Desarrollo social incluyente
+                <ul>
+                    <li><a asp-controller="LineStrategic" asp-action="Cultura">Cultura</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="Deporte">Deporte</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="Educacion">Educación</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="InclusionSocial">Inclusión Social</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="SaludyProteccion">Salud y Protección social</a></li>
+                </ul>
+            </li>
+            <li>
+                Con crecimineto económico
+                <ul>
+                    <li><a asp-controller="LineStrategic" asp-action="AgriculturaDesarrolloRural">Agricultura y Desarrollo Rural</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="CienciaTecnologiaInnovacion">Ciencia, Tecnología e Innovación</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="ComercionIndustriaTurismo">Comercio, Industria y Turismo</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="Trabajo">Trabajo</a></li>
+                </ul>
+            </li>
+            <li>
+                Con un arauca verde, ordenada y sostenible
+                <ul>
+                    <li><a asp-controller="LineStrategic" asp-action="AmbienteyDesarrolloSostenible">Ambiente y Desarrollo Sostenible</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="AtencionDesastre">Gobierno Territorial - Atención a Desastres</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li>
+                Con infraestructura social y productiva
+                <ul>
+                    <li><a asp-controller="LineStrategic" asp-action="MinasyEnergia">Minas y Energía</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="Transporte">Transporte</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="ViviendaInfra">Vivienda</a></li>
+                </ul>
+            </li>
+            <li>
+                Con buen gobierno
+                <ul>
+                    <li><a asp-controller="LineStrategic" asp-action="BuenGobiernoTerritorial">Gobierno Territorial</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="InformacionEstadistica">Información Estadística</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="Tecnologia">Tecnologías de la Información y las Comunicaciones</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="ViviendaBuen">Vivienda</a></li>
+                </ul>
+            </li>
+            <li>
+                Con seguridad convivencia y justicia
+                <ul>
+                    <li><a asp-controller="LineStrategic" asp-action="GobiernoTerritorial">Gobierno Territorial</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="InclusionSocial2">Inclusión social</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="JusticiaDerecho">Justicia y del Derecho</a></li>
+                    <li><a asp-controller="LineStrategic" asp-action="ViviendaSeguridad">Vivienda</a></li>
+
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li>
+                Peticiones, quejas, reclamos y solicitudes
+                <ul>
+                    <li>
+                        <a href="#victorModal" role="button" data-bs-toggle="modal">P.Q.R.S</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<partial name="_MyModalPqrs" />

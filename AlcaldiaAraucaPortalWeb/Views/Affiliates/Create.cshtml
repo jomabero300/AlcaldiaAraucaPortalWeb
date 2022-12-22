@@ -1,0 +1,237 @@
+﻿@model AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil.AffiliateViewModelsProc
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Nuevo Afiliado</h4>
+<form asp-action="Create" enctype="multipart/form-data">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="border p-3">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="TypeUserId" class="control-label"></label>
+                    <select asp-for="TypeUserId" class="form-control" asp-items="ViewBag.TypeUserId"></select>
+                    <span asp-validation-for="TypeUserId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Nit" class="control-label"></label>
+                    <input asp-for="Nit" class="form-control" />
+                    <span asp-validation-for="Nit" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="Phone" class="control-label"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CellPhone" class="control-label"></label>
+                    <input asp-for="CellPhone" class="form-control" />
+                    <span asp-validation-for="CellPhone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ImagePath" class="control-label"></label>
+                    <input asp-for="ImagePath" class="form-control" type="file" />
+                    <span asp-validation-for="ImagePath" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="container d-flex justify-content-center">
+                    <div class="col-md-12 border shadow">
+                        <ul class="nav nav-pills nav-justified">
+                            <li class="nav-item active"><a href="#GroupProductive-tab" class="nav-link" data-bs-toggle="pill">Productivo</a></li>
+                            <li class="nav-item"><a href="#GroupCommunities-tab" class="nav-link" data-bs-toggle="pill">Comunitario</a></li>
+                            <li class="nav-item"><a href="#Proffesional-tab" class="nav-link" data-bs-toggle="pill">Profesion</a></li>
+                            <li class="nav-item"><a href="#SocialNetwork-tab" class="nav-link" data-bs-toggle="pill">Redes sociales</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <!--Grupoi productivo-->
+                            <div class="tab-pane show fade active justify-content-center p-2" id="GroupProductive-tab">
+                                <div class="row" style="width:100%;">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <select id="groupProductiveId" class="form-control" asp-items="ViewBag.GroupProductiveId"></select>
+                                            <span id="spangroupProductiveId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 text-right align-self-center">
+                                        <div class="form-group">
+                                            <button type="button" id="btnAddPropductive" onclick="ProductivoAdd();" class="btn btn-sm btn-primary"><i class="bi bi-download"></i>Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <div id="divProductive">
+                                        <table class="table" id="myTableProductive">
+                                            <thead>
+                                                <tr>
+                                                    <th>Descripción</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Grupo comunitario-->
+                            <div class="tab-pane justify-content-center p-2" id="GroupCommunities-tab">
+                                <div class="row" style="width:100%;">
+                                    <di class="col-md-10">
+                                        <div class="form-group">
+                                            <select id="groupCommunityId" class="form-control" asp-items="ViewBag.GroupCommunityId"></select>
+                                            <span id="spanGroupCommunityId" class="text-danger"></span>
+                                        </div>
+                                    </di>
+                                    <di class="col-md-2 text-right align-self-center">
+                                        <div class="form-group">
+                                            <button type="button" id="btnGroupCommunity" onclick="CommunityAdd();" class="btn btn-sm btn-primary"><i class="bi bi-download"></i>Agregar</button>
+                                        </div>
+                                    </di>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div id="divGroupCommunity">
+                                        <table class="table" id="myTableGroupCommunity">
+                                            <thead>
+                                                <tr>
+                                                    <th>Descripción</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Profesion-->
+                            <div class="tab-pane justify-content-center p-2" id="Proffesional-tab">
+                                <div class="row" style="width:100%;">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <select id="professionId" class="form-control" asp-items="ViewBag.ProfessionId"></select>
+                                            <span id="spanProfessionId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input id="profImagePath" type="file" class="form-control" accept=".png" />
+                                            <span id="spanProfImagePath" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input id="profConcept"  placeholder="Descripción" class="form-control" maxlength="100"/>
+                                            <span id="spamProfConcept" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="profdocumentoPath" type="file" class="form-control" accept=".pdf" />
+                                            <span id="spanProfDocumentoPath" class="text-danger"></span>
+                                        </div>                                    
+                                    </div>
+                                    <di class="col-md-2 text-right align-self-center">
+                                        <div class="form-group">
+                                            <button type="button" id="btnProfession" onclick="ProfessionAdd();" class="btn btn-sm btn-primary"><i class="bi bi-download"></i> Agregar</button>
+                                        </div>
+                                    </di>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div id="divProfession">
+                                        <table class="table" id="myTableProfession">
+                                            <thead>
+                                                <tr>
+                                                    <th>Profesion</th>
+                                                    <th>Foto</th>
+                                                    <th>Descripción</th>
+                                                    <th>Documento</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+  
+                            </div>
+
+                            <!--Redes sociales-->
+                            <div class="tab-pane justify-content-center p-2" id="SocialNetwork-tab">
+                                <div class="row" style="width:100%;">
+                                    <di class="col-md-10">
+                                        <div class="form-group">
+                                            <select id="socialNetworkId" class="form-control" asp-items="ViewBag.SocialNetworkId"></select>
+                                            <span id="spanSocialNetworkId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="socialNetworURL" placeholder="https://www.pagina.com/" maxlength="200" class="form-control" />
+                                            <span id="spanSocialNetworURL" class="text-danger"></span>
+                                        </div>
+                                    </di>
+                                    <di class="col-md-2 text-right align-self-center">
+                                        <div class="form-group">
+                                            <button type="button" id="btnAddSocialNetwork" onclick="SocialNetworkAdd();" class="btn btn-sm btn-primary"><i class="bi bi-download"></i> Agregar</button>
+                                        </div>
+                                    </di>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <div id="divSocialNetwork">
+                                        <table class="table" id="myTableSocialNetwork">
+                                            <thead>
+                                                <tr>
+                                                    <th>Red</th>
+                                                    <th>Url</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-warning"><i class="bi bi-save-fill" style="color:white"></i> Guardar</button> |
+            <a asp-action="Index" class="btn btn-success"><i class="bi bi-chevron-double-left"></i> Retornar</a>
+        </div>
+    </div>
+</form>
+@section Scripts{
+<script src="~/js/Afil/Afiliate.js"></script>
+}

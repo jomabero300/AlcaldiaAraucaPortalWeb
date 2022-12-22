@@ -1,0 +1,46 @@
+﻿@model AlcaldiaAraucaPortalWeb.Data.Entities.Alar.PqrsUserStrategicLine
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h1>Editar</h1>
+
+<h4>Usuario y Linea</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PqrsUserStrategicLineId" />
+            <input type="hidden" asp-for="UserId" />
+
+
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId" disabled></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PqrsStrategicLineId" class="control-label"></label>
+                <select asp-for="PqrsStrategicLineId" class="form-control" asp-items="ViewBag.PqrsStrategicLineId"></select>
+                <span asp-validation-for="PqrsStrategicLineId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StateId" class="control-label"></label>
+                <select asp-for="StateId" class="form-control" asp-items="ViewBag.StateId"></select>
+                <span asp-validation-for="StateId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-sm btn-warning"><i class="bi bi-save"></i>Actualizar</button> |
+                <a asp-action="Index" class="btn btn-sm btn-success"><i class="bi bi-chevron-left"></i> Retornar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

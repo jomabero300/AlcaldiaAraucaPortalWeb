@@ -1,0 +1,49 @@
+﻿@model AlcaldiaAraucaPortalWeb.Models.ModelsViewCont.ContentGeneViewModels;
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+<body>
+    <section>
+        <h1>@ViewBag.TituloHead</h1>
+        <p>@ViewBag.SubTituloHead</p>
+
+    </section>
+    <section>
+        @foreach (var item in Model.ContentOds)
+        {
+            <div class="row text-center">
+                @*<div class="col-2 justify-content-start">
+                        <a href="@ViewBag.ODSUrl" title="" target="_blank"><img src="@Url.Content(@ViewBag.ODSImag)" width="100" height="100" class="img-fluid" /></a>
+                    </div>
+                    <div class="col-8">
+                        <p>@ViewBag.ODSText</p>
+                    </div>*@
+                <div class="col-2 justify-content-start">
+                    <a href="@item.ContentOdsUrl" title="" target="_blank"><img src="@Url.Content(item.ContentOdsImg)" width="100" height="100" class="img-fluid" /></a>
+                </div>
+                <div class="col-8">
+                    <p>@item.ContentOdsText</p>
+                </div>
+
+            </div>
+        }
+    </section>
+    <section>
+        <div class="row d-flex justify-content-center text-center g-0">
+            @foreach (var item in Model.Contents)
+            {
+                <div class="card" style="width:20em;margin:10px;">
+                    <img src="@item.img" class="card-img-top" />
+                    <div class="card-body">
+                        <h4 class="card-title">@item.title</h4>
+                        <p class="card-text text-justify">@item.text</p>
+                        <a asp-action="GeneViewHorizontalDetails" asp-route-id="@item.url" class="btn btn-sm btn-outline-success">Ver..</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+</body>

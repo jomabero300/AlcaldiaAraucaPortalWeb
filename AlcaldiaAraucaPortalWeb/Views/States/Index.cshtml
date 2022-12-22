@@ -1,0 +1,61 @@
+﻿@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Gene.State>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="row" style="width:100%;">
+    <di class="col-md-6">
+        <h1>Estados</h1>
+    </di>
+    <di class="col-md-4 text-right">
+        <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-fill"></i> Nuevo</a>
+    </di>
+</div>
+
+<table class="table" id="MyTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StateName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StateB)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StateName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StateB)
+                </td>
+                <td align="center">
+                    <a asp-action="Edit" asp-route-id="@item.StateId" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i>Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.StateId" class="btn btn-sm btn-info"><i class="bi bi-eye-fill"></i> Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.StateId" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i> Elimnar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script src="~/js/datatable_files.js"></script>
+@*    <script>
+        $(document).ready(function () {
+            $('#MyTable').DataTable({
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                }
+            });
+        });
+    </script>
+*@}

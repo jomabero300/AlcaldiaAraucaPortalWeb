@@ -1,0 +1,78 @@
+﻿@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Cont.Content>
+
+@{
+    ViewData["Title"] = "Contenido";
+}
+<body>
+    <section>
+        <div class="row" style="width:100%;">
+            <di class="col-md-10">
+                <h2>@ViewBag.LineName</h2>
+            </di>
+            <di class="col-md-2 text-right">
+                <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-fill"></i> Nuevo</a>
+            </di>
+        </div>
+
+    </section>
+    <section>
+        <table id="MyTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContentDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContentTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContentText)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContentUrlImg)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StateId)
+                    </th>
+                    <th>Proceso</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContentDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContentTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContentText)
+                        </td>
+                        <td>
+                            <img src="@Url.Content(item.ContentUrlImg)" class="img-rounded" alt="Image" style="width:60px;height:60px;max-width: 60%; height: auto;" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.State.StateName)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ContentId" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i> Editar</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ContentId" class="btn btn-danger btn-sm"><i class="bi bi-trash2-fill"></i> Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </section>
+    <footer>
+        <h4 style="color:white;">Avisos legales</h4>
+        <a href="#" style="color:white">Política de cookies</a>
+    </footer>
+
+</body>
+
+@section scripts{
+    <script src="~/js/datatable_files.js"></script>
+}

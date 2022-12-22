@@ -1,0 +1,64 @@
+﻿@model List<AlcaldiaAraucaPortalWeb.Models.Gene.ContentModelView>;
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<body>
+    <section>
+        <div class="container-sm">
+            <div class="text-center">
+                <img src="@Url.Content(@ViewBag.Image)" class="img-fluid" alt="Responsive image" width="996" height="400">
+            </div>
+        </div>
+        <p>@ViewBag.SubMensaje</p>
+        <hr />
+        <div class="row d-flex justify-content-center text-center g-0">
+            @foreach (var item in Model)
+            {
+                <div class="card" style="width:20em;margin:10px;">
+                    @if (item.url != "81")
+                    {
+                        <a asp-controller="Home" asp-action="MenuConfirmed" asp-route-id="@item.url" class="btn btn-sm btn-primary">
+                            <img src="@Url.Content(item.img)" class="card-img-top" />
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#victorModal" role="button" data-bs-toggle="modal" class="btn btn-sm btn-primary">
+                            <img src="@Url.Content(item.img)" class="card-img-top" />
+                        </a>
+
+                    }
+
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h2>@item.title</h2>
+                        </div>
+                        <div class="card-text">
+                            <p>@item.text</p>
+                        </div>
+                        @if (item.url != "81")
+                        {
+                            <a asp-controller="Home" asp-action="MenuConfirmed" asp-route-id="@item.url" class="btn btn-sm btn-primary">Más...</a>
+                        }
+                        else
+                        {
+                            <a href="#victorModal" role="button" data-bs-toggle="modal" class="btn btn-sm btn-primary">
+                                Más...
+                            </a>
+
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+    <footer>
+        <h4 style="color:white;">Avisos legales</h4>
+        <a href="#" style="color:white;">Política de cookies</a>
+    </footer>
+</body>
+
+<partial name="_MyModalPqrs" />

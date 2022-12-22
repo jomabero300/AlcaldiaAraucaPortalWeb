@@ -1,0 +1,26 @@
+﻿@model AlcaldiaAraucaPortalWeb.Models.ModelsViewRepo.StatisticsViewModel
+
+@{
+    ViewData["Title"] = "Reporte";
+}
+
+<h4>Reporte por roles</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UserRdlc" target="_blank">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label"></label>
+                <select asp-for="idOp" class="form-control" asp-items="ViewBag.Id"></select>
+                <span asp-validation-for="idOp" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-pdf"></i> Generar</button>
+            </div>
+
+        </form>
+    </div>
+</div>

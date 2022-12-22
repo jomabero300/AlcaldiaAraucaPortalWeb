@@ -1,0 +1,145 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    .note {
+        text-align: center;
+        height: 80px;
+        background: -webkit-linear-gradient(left, #3366CC, #3366CC);
+        color: #fff;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        line-height: 80px;
+    }
+
+    .form-content {
+        padding: 5%;
+        border: 1px solid #ced4da;
+        margin-bottom: 2%;
+    }
+
+    .form-control {
+        border-radius: 1.5rem;
+    }
+
+    .btnSubmit {
+        border: none;
+        border-radius: 1.5rem;
+        padding: 1%;
+        width: 20%;
+        cursor: pointer;
+        background: #0062cc;
+        color: #fff;
+    }
+
+    .contenedor {
+        align-items: center;
+    }
+</style>
+
+<div class="row justify-content-center mt-2">
+
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="note">
+                <p>Crear una nueva cuenta</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row justify-content-center mt-2">
+                <div class="col-md-6 offset">
+                    <div class="form-group">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Correo electrónico" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <select id="documentTypeId" asp-for="Input.DocumentTypeId" class="form-control" asp-items="ViewBag.DocumentTypeId"></select>
+                        <span asp-validation-for="Input.DocumentTypeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <input asp-for="Input.Document" class="form-control" autocomplete="username" aria-required="true" placeholder="Documento número"/>
+                        <span asp-validation-for="Input.Document" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <input asp-for="Input.FirstName" class="form-control" autocomplete="username" aria-required="true" placeholder="Nombres"/>
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <input asp-for="Input.LastName" class="form-control" autocomplete="username" aria-required="true" placeholder="apellidos"/>
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <input asp-for="Input.BirdDarte" class="form-control" type="date" autocomplete="username" aria-required="true" placeholder="Fecha de nacimiento" />
+                        <span asp-validation-for="Input.BirdDarte" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <select asp-for="Input.GenderId" class="form-control" asp-items="ViewBag.GenderId"></select>
+                        <span asp-validation-for="Input.GenderId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <select id="zoneId" asp-for="Input.ZoneId" class="form-control" asp-items="ViewBag.ZoneId"></select>
+                        <span asp-validation-for="Input.ZoneId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <select id="communeTownshipId" asp-for="Input.CommuneTownshipId" class="form-control" asp-items="ViewBag.CommuneTownshipId"></select>
+                        <span asp-validation-for="Input.CommuneTownshipId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <select id="neighborhoodSidewalkId" asp-for="Input.NeighborhoodSidewalkId" class="form-control" asp-items="ViewBag.NeighborhoodSidewalkId"></select>
+                        <span asp-validation-for="Input.NeighborhoodSidewalkId" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group mt-2">
+                        <input asp-for="Input.Address" class="form-control" autocomplete="username" aria-required="true" placeholder="Dirección de residencia" />
+                        <span asp-validation-for="Input.Address" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between mt-2">
+                        <div class="form-group d-flex align-items-center">
+                            <input asp-for="Input.Length" class="form-control" autocomplete="username" aria-required="true" placeholder="Longitud" />
+                            <span asp-validation-for="Input.Length" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Input.Latitude" class="form-control" autocomplete="username" aria-required="true" placeholder="Latitud" />
+                            <span asp-validation-for="Input.Latitude" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group mt-2">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Contraseña" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="confirme constraseña" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-2">
+                <button type="submit" class="btn btn-sm btn-primary btnSubmit">Registarse</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/Gene/ZoneCommunNeighborhoodjs.js"></script>
+
+}
