@@ -21,12 +21,13 @@
     <Folder Include="wwwroot\Image\Afiliate\AfilateTemp\" />
     <Folder Include="wwwroot\Image\Afiliate\Document\" />
     <Folder Include="wwwroot\Image\Afiliate\Image\" />
-    <Folder Include="wwwroot\Image\Menu\" />
     <Folder Include="wwwroot\Image\ImageTemp\" />
     <Folder Include="wwwroot\Image\Menu\Arauca\Ambiente\" />
     <Folder Include="wwwroot\Image\Menu\Arauca\Gobierno\" />
+    <Folder Include="wwwroot\Image\Menu\Arauca\Normatividad\" />
     <Folder Include="wwwroot\Image\Menu\BuenGobierno\Gobierno\" />
     <Folder Include="wwwroot\Image\Menu\BuenGobierno\Informacion\" />
+    <Folder Include="wwwroot\Image\Menu\BuenGobierno\Normatividad\" />
     <Folder Include="wwwroot\Image\Menu\BuenGobierno\Tecnologia\" />
     <Folder Include="wwwroot\Image\Menu\BuenGobierno\Vivienda\" />
     <Folder Include="wwwroot\Image\Menu\Crecimiento\Agricultura\" />
@@ -42,10 +43,13 @@
     <Folder Include="wwwroot\Image\Menu\Desarrollo\Salud\" />
     <Folder Include="wwwroot\Image\Menu\Gestion\" />
     <Folder Include="wwwroot\Image\Menu\Infraestructura\Mina\" />
+    <Folder Include="wwwroot\Image\Menu\Infraestructura\Normatividad\" />
     <Folder Include="wwwroot\Image\Menu\Infraestructura\Transporte\" />
     <Folder Include="wwwroot\Image\Menu\Infraestructura\Vivienda\" />
     <Folder Include="wwwroot\Image\Menu\Seguridad\Inclusion\" />
     <Folder Include="wwwroot\Image\Menu\Seguridad\Justicia\" />
+    <Folder Include="wwwroot\Image\Menu\Seguridad\Vivienda\" />
+    <Folder Include="wwwroot\Image\Menu\Seguridad\Normatividad\" />
     <Folder Include="wwwroot\support\" />
   </ItemGroup>
 

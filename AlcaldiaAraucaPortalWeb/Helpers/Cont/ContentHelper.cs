@@ -35,23 +35,25 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
 
         public async Task<Response> ActiveAsync(int id)
         {
-            State state = await _context.States.Where(s => s.StateName == "Activo" && s.StateType=="G").FirstOrDefaultAsync();
-
-            Content model = await _context.Contents.Where(c => c.ContentId == id).FirstOrDefaultAsync();
-
-            model.StateId = state.StateId;
-
             Response response = new Response() { Succeeded = true };
-
-            _context.Contents.Update(model);
 
             try
             {
+                State state = await _context.States.Where(s => s.StateName == "Activo" && s.StateType=="G").FirstOrDefaultAsync();
+
+                Content model = await _context.Contents.Where(c => c.ContentId == id).FirstOrDefaultAsync();
+
+                model.StateId = state.StateId;
+
+
+                _context.Contents.Update(model);
+
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 response.Succeeded = false;
+
                 response.Message = ex.Message;
             }
 
@@ -60,72 +62,73 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
 
         public async Task<Response> AddAsync(ContentModelsViewCont model)
         {
-            ApplicationUser user = await _context.Users.Where(c => c.Email == model.UserId).FirstOrDefaultAsync();
-
-            model.ContentTitle = Utilities.StartCharacterToUpper(model.ContentTitle);
-
-            model.ContentText = Utilities.StartCharacterToUpper(model.ContentText);
-
-            if (model.ContentText.Contains("http"))
-            {
-                model.ContentText = Utilities.ConvertToTextInLik(model.ContentText);
-            }
-
-            string folder = await _folderStrategicLineasHelper.FolderPathAsync(model.PqrsStrategicLineSectorId, model.UserId);
-
-            var path = string.Empty;
-
-            if (model.ContentUrlImg != null)
-            {
-                path = await _imageHelper.UploadImageAsync(model.ContentUrlImg, folder);
-            }
-
-            int stateId = await _stateHelper.StateIdAsync("G", "Previo");
-
-            for (int i = 0; i < model.ContentDetails.Count; i++)
-            {
-                if (model.ContentDetails[i].isEsta == 1)
-                {
-                    model.ContentDetails[i].ContentUrlImg = _folderStrategicLineasHelper.FileMove(model.ContentDetails[i].ContentUrlImg, folder);
-                }
-                else
-                {
-                    model.ContentDetails[i].ContentUrlImg = model.ContentDetails[i].ContentUrlImg;
-                }
-
-                if (model.ContentDetails[i].ContentText.Contains("http"))
-                {
-                    model.ContentDetails[i].ContentText = Utilities.ConvertToTextInLik(model.ContentDetails[i].ContentText);
-                }
-            }
-
-            var modelAdd = new Content()
-            {
-                PqrsStrategicLineSectorId = model.PqrsStrategicLineSectorId,
-                UserId = user.Id,
-                ContentDate = DateTime.Now,
-                ContentTitle = model.ContentTitle,
-                ContentText = model.ContentText,
-                ContentUrlImg = path,
-                StateId = stateId,
-                ContentDetails = model.ContentDetails.Select(c => new ContentDetail()
-                {
-                    ContentDate = DateTime.Now,
-                    ContentTitle = c.ContentTitle,
-                    ContentText = c.ContentText,
-                    ContentUrlImg = c.ContentUrlImg,
-                    StateId = stateId
-                }).ToList()
-            };
-
             Response response = new Response() { Succeeded = true };
-
-            List<SubscriberSector> subscriberSector = await _subscriberSectorHelper.BySectorIdAsync(model.PqrsStrategicLineSectorId);
-            _context.Contents.Add(modelAdd);
 
             try
             {
+                ApplicationUser user = await _context.Users.Where(c => c.Email == model.UserId).FirstOrDefaultAsync();
+
+                model.ContentTitle = Utilities.StartCharacterToUpper(model.ContentTitle);
+
+                model.ContentText = Utilities.StartCharacterToUpper(model.ContentText);
+
+                if (model.ContentText.Contains("http"))
+                {
+                    model.ContentText = Utilities.ConvertToTextInLik(model.ContentText);
+                }
+
+                string folder = await _folderStrategicLineasHelper.FolderPathAsync(model.PqrsStrategicLineSectorId, model.UserId);
+
+                var path = string.Empty;
+
+                if (model.ContentUrlImg != null)
+                {
+                    path = await _imageHelper.UploadImageAsync(model.ContentUrlImg, folder);
+                }
+
+                int stateId = await _stateHelper.StateIdAsync("G", "Previo");
+
+                for (int i = 0; i < model.ContentDetails.Count; i++)
+                {
+                    if (model.ContentDetails[i].isEsta == 1)
+                    {
+                        model.ContentDetails[i].ContentUrlImg = _folderStrategicLineasHelper.FileMove(model.ContentDetails[i].ContentUrlImg, folder);
+                    }
+                    else
+                    {
+                        model.ContentDetails[i].ContentUrlImg = model.ContentDetails[i].ContentUrlImg;
+                    }
+
+                    if (model.ContentDetails[i].ContentText.Contains("http"))
+                    {
+                        model.ContentDetails[i].ContentText = Utilities.ConvertToTextInLik(model.ContentDetails[i].ContentText);
+                    }
+                }
+
+                var modelAdd = new Content()
+                {
+                    PqrsStrategicLineSectorId = model.PqrsStrategicLineSectorId,
+                    UserId = user.Id,
+                    ContentDate = DateTime.Now,
+                    ContentTitle = model.ContentTitle,
+                    ContentText = model.ContentText,
+                    ContentUrlImg = path,
+                    StateId = stateId,
+                    ContentDetails = model.ContentDetails.Select(c => new ContentDetail()
+                    {
+                        ContentDate = DateTime.Now,
+                        ContentTitle = c.ContentTitle,
+                        ContentText = c.ContentText,
+                        ContentUrlImg = c.ContentUrlImg,
+                        StateId = stateId
+                    }).ToList()
+                };
+
+                List<SubscriberSector> subscriberSector = await _subscriberSectorHelper.BySectorIdAsync(model.PqrsStrategicLineSectorId);
+                _context.Contents.Add(modelAdd);
+
                 await _context.SaveChangesAsync();
+
                 if (subscriberSector != null)
                 {
                     _context.SubscriberSectors.UpdateRange(subscriberSector);
@@ -220,29 +223,15 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
         {
             Response response = new Response() { Succeeded = true };
 
-            //State stateActivo = await _context.States.Where(s => s.StateName == "Activo" && s.StateType == "G").FirstOrDefaultAsync();
-
-            Content model = await _context.Contents
-                                        .Include(c => c.ContentDetails)
-                                        .Where(c => c.ContentId == id)
-                                        .FirstOrDefaultAsync();
-            //if (model.StateId == stateActivo.StateId)
-            //{
-            //    State stateInactivo = await _context.States.Where(s => s.StateName == "Inactivo" && s.StateType == "G").FirstOrDefaultAsync();
-
-            //    model.StateId = stateInactivo.StateId;
-
-            //    _context.Contents.Update(model);
-            //}
-            //else
-            //{
-            //    _context.Contents.Remove(model);
-            //}
-
-            _context.Contents.Remove(model);
-
             try
             {
+                Content model = await _context.Contents
+                                            .Include(c => c.ContentDetails)
+                                            .Where(c => c.ContentId == id)
+                                            .FirstOrDefaultAsync();
+
+                _context.Contents.Remove(model);
+
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -258,16 +247,19 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
         {
             var response = new Response() { Succeeded = true };
 
-            var model = await _context.ContentDetails.Where(a => a.ContentDetailsId == id).FirstOrDefaultAsync();
 
             try
             {
+                var model = await _context.ContentDetails.Where(a => a.ContentDetailsId == id).FirstOrDefaultAsync();
+
                 _context.ContentDetails.Remove(model);
+ 
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 response.Succeeded = false;
+
                 response.Message = ex.Message.Contains("REFERENCE") ? "No se puede borrar la categoría porque tiene registros relacionados" : ex.Message;
             }
 
@@ -284,23 +276,25 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
 
         public async Task<Response> InactiveAsync(int id)
         {
-            State state = await _context.States.Where(s => s.StateName == "Inactivo" && s.StateType == "G").FirstOrDefaultAsync();
-
-            Content model = await _context.Contents.Where(c => c.ContentId == id).FirstOrDefaultAsync();
-
-            model.StateId = state.StateId;
-
             Response response = new Response() { Succeeded = true };
-
-            _context.Contents.Update(model);
 
             try
             {
+                State state = await _context.States.Where(s => s.StateName == "Inactivo" && s.StateType == "G").FirstOrDefaultAsync();
+
+                Content model = await _context.Contents.Where(c => c.ContentId == id).FirstOrDefaultAsync();
+
+                model.StateId = state.StateId;
+
+
+                _context.Contents.Update(model);
+
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 response.Succeeded = false;
+
                 response.Message = ex.Message;
             }
 
@@ -408,31 +402,32 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
         {
             Response response = new Response() { Succeeded = true };
 
-            string folder = await _folderStrategicLineasHelper.FolderPathAsync(model.PqrsStrategicLineSectorId, model.UserId);
-
-            string path = string.Empty;
-
-            if (model.ContentUrlImg != null)
-            {
-                path = await _imageHelper.UploadImageAsync(model.ContentUrlImg, folder);
-            }
-
-            Content content = await _context.Contents.FindAsync(model.ContentId);
-            content.PqrsStrategicLineSectorId = model.PqrsStrategicLineSectorId;
-            content.ContentTitle = model.ContentTitle;
-            content.ContentText = model.ContentText;
-            content.ContentUrlImg = (model.ContentUrlImg != null ? path : model.ContentUrlImg1);
-            content.StateId = model.StateId;
-
-            _context.Contents.Update(content);
-
             try
             {
+                string folder = await _folderStrategicLineasHelper.FolderPathAsync(model.PqrsStrategicLineSectorId, model.UserId);
+
+                string path = string.Empty;
+
+                if (model.ContentUrlImg != null)
+                {
+                    path = await _imageHelper.UploadImageAsync(model.ContentUrlImg, folder);
+                }
+
+                Content content = await _context.Contents.FindAsync(model.ContentId);
+                content.PqrsStrategicLineSectorId = model.PqrsStrategicLineSectorId;
+                content.ContentTitle = model.ContentTitle;
+                content.ContentText = model.ContentText;
+                content.ContentUrlImg = (model.ContentUrlImg != null ? path : model.ContentUrlImg1);
+                content.StateId = model.StateId;
+
+                _context.Contents.Update(content);
+
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 response.Succeeded = false;
+
                 response.Message = ex.Message;
             }
 
