@@ -98,6 +98,18 @@ builder.Services.AddTransient<SeedDb>();
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
+//Para solucionar el problema de CORS
+//https://www.youtube.com/watch?v=tfumTIhpG_A
+builder.Services.AddCors(op =>
+{
+    op.AddPolicy("MyPolicy", app =>
+    {
+        app.WithOrigins("https://araucactiva.com");
+        //app.AllowAnyOrigin()
+        //.AllowAnyHeader()
+        //.AllowAnyMethod();
+    });
+});
 var app = builder.Build();
 
 app.UseStatusCodePagesWithReExecute("/error/{0}");
@@ -135,6 +147,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
+app.UseCors("MyPolicy");
 app.UseAuthorization();
 
 app.MapControllerRoute(

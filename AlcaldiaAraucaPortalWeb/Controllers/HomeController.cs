@@ -352,13 +352,13 @@ namespace AlcaldiaAraucaPortalWeb.Controllers
                     title = "Gestión del Conocimiento",
                     text = "..."
                 });
-                model.Add(new ContentModelView()
-                {
-                    url = id + "2",
-                    img = "~/Image/Menu/Menu" + id + "2.png",
-                    title = "Normatividad",
-                    text = "..."
-                });
+                //model.Add(new ContentModelView()
+                //{
+                //    url = id + "2",
+                //    img = "~/Image/Menu/Menu" + id + "2.png",
+                //    title = "Normatividad",
+                //    text = "..."
+                //});
 
             }
             else if (id == "8")
