@@ -54,7 +54,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Gene
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("UserId,FullName,RoleId")] RoleUserModelView model)
+        public async Task<IActionResult> Edit(string id, [Bind("UserId,FullName,RoleName,RoleId")] RoleUserModelView model)
         {
             if (id != model.UserId)
             {
@@ -64,10 +64,12 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Gene
             if (ModelState.IsValid)
             {
                 Response response=await _userHelper.RemoveRoleUserAsync(model.UserId,model.RoleId);
+
                 if(response.Succeeded)
                 {
                     return RedirectToAction(nameof(Index));
                 }
+
                 ModelState.AddModelError(string.Empty, response.Message);
             }
 

@@ -60,7 +60,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Gene
             List<RoleUserModelView> users = await (from U in _context.Users
                                                    join E in _context.UserRoles on U.Id equals E.UserId
                                                    join R in _context.Roles on E.RoleId equals R.Id
-                                                   select new RoleUserModelView { UserId = U.Id, FullName = U.FullName, RoleId = R.Name }).ToListAsync();
+                                                   select new RoleUserModelView { UserId = U.Id, FullName = U.FullName, RoleId = R.Name,email=U.Email }).ToListAsync();
 
             return users.OrderBy(u => u.FullName).ToList();
         }
@@ -71,7 +71,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Gene
                                             join E in _context.UserRoles on U.Id equals E.UserId
                                             join R in _context.Roles on E.RoleId equals R.Id
                                             where U.Id == id
-                                            select new RoleUserModelView { UserId = U.Id, FullName = U.FullName, RoleId = R.Name }).FirstOrDefaultAsync();
+                                            select new RoleUserModelView { UserId = U.Id, FullName = U.FullName, RoleName = R.Name,RoleId=R.Id }).FirstOrDefaultAsync();
 
             return user;
         }
@@ -90,11 +90,20 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Gene
             try
             {
                 ApplicationUser user = await _userManager.FindByIdAsync(userId);
-                var role = _context.UserRoles.Where(u => u.UserId == userId).FirstOrDefault();
-                var roleName = _context.Roles.Where(r => r.Id == role.RoleId).FirstOrDefault().Name;
-                await _userManager.RemoveFromRoleAsync(user, roleName);
-                roleName = _context.Roles.Where(r => r.Id == roleNewId).FirstOrDefault().Name;
-                await _userManager.AddToRoleAsync(user, roleName);
+
+
+                var xx = await _userManager.GetRolesAsync(user);
+
+                //var roleUser = _context.UserRoles.Where(u => u.UserId == userId).FirstOrDefault();
+
+                //string roleOldName = _context.Roles.Where(r => r.Id == roleUser.RoleId).FirstOrDefault().Name;
+
+                //await _userManager.RemoveFromRoleAsync(user, roleOldName);
+                await _userManager.RemoveFromRoleAsync(user, xx[0].ToString());
+
+                string roleNewName = _context.Roles.Where(r => r.Id == roleNewId).FirstOrDefault().Name;
+
+                await _userManager.AddToRoleAsync(user, roleNewName);
 
             }
             catch (Exception ex)

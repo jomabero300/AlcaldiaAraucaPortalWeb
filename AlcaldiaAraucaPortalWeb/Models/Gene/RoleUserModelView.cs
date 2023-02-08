@@ -13,6 +13,10 @@ namespace AlcaldiaAraucaPortalWeb.Models.Gene
 
         [Display(Name = "Rol")]
         [Required(ErrorMessage = "El campo {0} es requerido.")]
+        public string RoleName { get; set; }
+
+        [Display(Name = "Rol")]
+        [Required(ErrorMessage = "El campo {0} es requerido.")]
         public string RoleId { get; set; }
 
         [Display(Name = "Correo electrónico")]

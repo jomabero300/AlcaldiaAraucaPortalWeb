@@ -23,6 +23,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers
             //publicSend();
 
             List<CarouselModelView> cont = _imageHelper.ImageDirectory("Image", "Imagen0*");
+
             List<ContentModelView> content = new List<ContentModelView>()
             {
                 new ContentModelView(){

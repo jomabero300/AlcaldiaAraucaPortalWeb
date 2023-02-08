@@ -2,6 +2,7 @@
 using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
 using AlcaldiaAraucaPortalWeb.Helpers.Gene;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
+using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
@@ -9,6 +10,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
     public class ProfessionHelper : IProfessionHelper
     {
         private readonly ApplicationDbContext _context;
+
         private readonly IUtilitiesHelper _utilitiesHelper;
 
         public ProfessionHelper(ApplicationDbContext context, IUtilitiesHelper utilitiesHelper)
@@ -106,9 +108,28 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
 
         public async Task<List<Profession>> ListAsync()
         {
-            var model = await _context.Professions.Include(g => g.State).ToListAsync();
+            List<Profession> model = await _context.Professions.Take(10).Include(g => g.State).ToListAsync();
 
             return model.OrderBy(m => m.ProfessionName).ToList();
+        }
+
+        public async Task<AffiliateProfessionViewModelsProcFilter> ListAsync(int RowsCant, int OmitCant, string SearchText = "")
+        {
+            AffiliateProfessionViewModelsProcFilter model = new AffiliateProfessionViewModelsProcFilter();
+
+            IQueryable<Profession> queryProfession = _context.Professions;
+
+            int Rows=queryProfession.Count();
+
+            queryProfession = queryProfession
+                .Where(p => p.ProfessionName.Contains(SearchText));
+
+            //int RowsFilterTotal=queryProfession.Count();
+            model.RowsFilterTotal = queryProfession.Count();
+
+            model.Professions=await queryProfession.Skip(OmitCant).Take(RowsCant).ToListAsync();
+
+            return model;
         }
     }
 }

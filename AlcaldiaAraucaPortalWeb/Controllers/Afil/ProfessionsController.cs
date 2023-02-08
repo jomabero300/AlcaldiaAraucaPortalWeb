@@ -2,10 +2,12 @@
 using AlcaldiaAraucaPortalWeb.Enun;
 using AlcaldiaAraucaPortalWeb.Helpers.Afil;
 using AlcaldiaAraucaPortalWeb.Helpers.Gene;
+using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 {
@@ -25,6 +27,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
         public async Task<IActionResult> Index()
         {
             return View(await _professionHelper.ListAsync());
+            //return View();
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -147,6 +150,31 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
             ModelState.AddModelError(string.Empty, respose.Message);
             var model = await _professionHelper.ByIdAsync((int)id);
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> ListProfesiona()
+        {
+
+            //Representa el numero de veces que se ha realizado una petición
+            int PetitionCant = Convert.ToInt32(Request.Form["draw"].FirstOrDefault() ?? "0");
+
+            //Cantidad de registro va ha devolver
+            int RowsCant = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
+
+            //cuantos registros va ha omitir
+            int OmitCant = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
+
+            string SearchText = Request.Form["search[value]"].FirstOrDefault() ?? "";
+
+            AffiliateProfessionViewModelsProcFilter professions = await _professionHelper.ListAsync(RowsCant, OmitCant, SearchText);
+             
+            return Json(new { 
+                draw = PetitionCant,
+                recordsTotal= RowsCant,
+                recordsFiltered= professions.RowsFilterTotal,
+                data = professions.Professions });
+
         }
     }
 }

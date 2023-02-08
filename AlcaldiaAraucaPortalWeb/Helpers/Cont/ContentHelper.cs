@@ -350,6 +350,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
                                 select new { b.AffiliateId, b.Name, b.Address, b.ImagePath })).ToList();
 
             List<FilterViewModel> model = new List<FilterViewModel>();
+
             if (modelConten.Count > 0)
             {
                 model = modelConten.Select(x => new FilterViewModel

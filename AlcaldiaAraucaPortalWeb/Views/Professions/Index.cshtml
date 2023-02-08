@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Afil.Profession>
+﻿@*@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Afil.Profession>
 
 @{
     ViewData["Title"] = "Index";
@@ -41,4 +41,62 @@
 
 @section scripts{
     <script src="~/js/datatable_files.js"></script>
+}
+*@
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="row" style="width:100%;">
+    <div class="col-md-6">
+        <h1>Profesiones</h1>
+    </div>
+    <div class="col-md-6" style="text-align: end;vertical-align: middle;">
+        <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-fill"></i> Nuevo</a>
+    </div>
+</div>
+
+<div class="row">
+    <table id="MyTable" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.ProfessionName)*@
+                    Profesión
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+
+    </table>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#MyTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "@Url.Action("ListProfesiona","Professions")",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "professionName" },
+                    {
+                        "data": "professionId", "render": function (data) {
+                            return '<a href="/Professions/Edit/' + data + '" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill" title="Editar"></i> Editar</a> |' +
+                                '<a href="/Professions/Details/' + data + '" class="btn btn-sm btn-info"><i class="bi bi-eye-fill" title="Datlles"></i> Detalle</a> |' +
+                                '<a href="/Professions/Delete/' + data + '" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill" title="Borrar"></i> Borrar</a> '
+
+                        }
+                    }
+                ]
+            });
+        });
+
+                //https://www.youtube.com/watch?v=1ni6bId8gcw
+    </script>
 }

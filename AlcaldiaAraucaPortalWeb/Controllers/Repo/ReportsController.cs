@@ -45,7 +45,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Repo
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AffiliateProfessionGenerate(StatisticsViewModel model)
         {
-            MemoryStream ms = await _pdfDocumentHelper.StatisticsAsync(model.Id, "Profesión");
+            MemoryStream ms = await _pdfDocumentHelper.StatisticsAsync(model.Id, "afiliados por Profesión");
 
             return File(ms.ToArray(), "application/pdf");
         }
@@ -62,7 +62,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Repo
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AffiliateGrupoProductivoGenerate(StatisticsViewModel model)
         {
-            MemoryStream ms = await _pdfDocumentHelper.StatisticsAsync(model.Id, "Grupo productivo");
+            MemoryStream ms = await _pdfDocumentHelper.StatisticsAsync(model.Id, "afiliados por Grupo productivo");
 
             return File(ms.ToArray(), "application/pdf");
 
@@ -80,7 +80,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Repo
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AffiliateGrupoComunitarioGenerate(StatisticsViewModel model)
         {
-            MemoryStream ms = await _pdfDocumentHelper.StatisticsAsync(model.Id, "Grupo comunitario");
+            MemoryStream ms = await _pdfDocumentHelper.StatisticsAsync(model.Id, "afiliados por Grupo comunitario");
 
             return File(ms.ToArray(), "application/pdf");
 
@@ -96,7 +96,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Repo
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AffiliateSocialNetworkRdlcGenerate(StatisticsViewModel model)
         {
-            MemoryStream ms = await _pdfDocumentHelper.StatisticsAsync(model.Id, "Red social");
+            MemoryStream ms = await _pdfDocumentHelper.StatisticsAsync(model.Id, "afiliados por Red social");
 
             return File(ms.ToArray(), "application/pdf");
         }

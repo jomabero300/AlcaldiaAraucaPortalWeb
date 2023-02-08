@@ -82,21 +82,21 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Pdf
 
 
             myTable = new PdfPTable(new float[] { 100f }) { WidthPercentage = 100f };
-            myTable.AddCell(new PdfPCell(new Phrase($"Estadística por {title.ToLower()}", _titles12)) { Border = 0, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_MIDDLE });
+            myTable.AddCell(new PdfPCell(new Phrase($"Estadística {title.ToLower()}", _titles12)) { Border = 0, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_MIDDLE });
             doc.Add(myTable);
             doc.Add(new Phrase("\n"));
 
 
 
-            if (title == "Profesión" || title == "Grupo productivo" || title == "Grupo comunitario" || title == "Red social")
+            if (title.Contains("Profesión") || title.Contains("Grupo productivo") || title.Contains("Grupo comunitario") || title.Contains("Red social"))
             {
                 myTable = new PdfPTable(new float[] { 80f, 20f }) { WidthPercentage = 100f };
-                PdfPCell pdfPCell1 = new PdfPCell(new Phrase(title, theader)) { Border = 0, BorderColorTop = new BaseColor(195, 195, 195), BorderWidthTop = 1.99f, HorizontalAlignment = Element.ALIGN_LEFT, PaddingTop = 8f, PaddingBottom = 8f };
+                PdfPCell pdfPCell1 = new PdfPCell(new Phrase(title.Replace("afiliados por ", string.Empty), theader)) { Border = 0, BorderColorTop = new BaseColor(195, 195, 195), BorderWidthTop = 1.99f, HorizontalAlignment = Element.ALIGN_LEFT, PaddingTop = 8f, PaddingBottom = 8f };
                 PdfPCell pdfPCell2 = new PdfPCell(new Phrase("Total", theader)) { Border = 0, BorderColorTop = new BaseColor(195, 195, 195), BorderWidthTop = 1.99f, HorizontalAlignment = Element.ALIGN_CENTER, PaddingTop = 8f, PaddingBottom = 8f };
                 myTable.AddCell(pdfPCell1);
                 myTable.AddCell(pdfPCell2);
 
-                await AfiliateStatistics(id, title, pdfPCell1, pdfPCell2);
+                await AfiliateStatistics(id, title.Replace("afiliados por ",string.Empty), pdfPCell1, pdfPCell2);
             }
             else
             {
