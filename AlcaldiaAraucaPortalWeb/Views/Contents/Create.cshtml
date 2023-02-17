@@ -3,12 +3,12 @@
 @{
     ViewData["Title"] = "Create";
 }
-<h2>@ViewBag.LineName</h2>
+<h2 class="fst-italic fw-bold text-capitalize" style="color:#3366CC;">@ViewBag.LineName</h2>
 <form asp-action="Create" enctype="multipart/form-data">
 
     <div class="row">
         <div class="col-md-8">
-            <h4>Nuevo Contenido</h4>
+            <h4 class="fst-italic fw-bold text-capitalize" style="color:#3366CC;">Nuevo Contenido</h4>
         </div>
         <div class="col-md-4 text-end align-self-center">
             <div class="form-group">
@@ -80,8 +80,8 @@
                 <div class="form-group">
                     <select id="OptionFile" class="form-control">
                         <option value="">Seleccione..</option>
-                        <option value="1">Archivo</option>
-                        <option value="2">Video</option>
+                        <option value="1">Archivo: (Imagen o Pdf)</option>
+                        <option value="2">Video (url youtube)</option>
                     </select>
                     <span id="spanOptionFile" class="text-danger"></span>
                 </div>

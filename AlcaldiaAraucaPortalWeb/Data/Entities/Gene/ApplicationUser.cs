@@ -61,8 +61,10 @@ namespace AlcaldiaAraucaPortalWeb.Data.Entities.Gene
         public string Latitude { get; set; }
 
 
+        [Display(Name = "Nombre")]
         public string FullName => $"{FirstName} {LastName}";
 
+        [Display(Name = "Nombre")]
         public string FullNameWithDocument => $"{FirstName} {LastName} - {Document}";
 
         public virtual Gender Gender { get; set; }

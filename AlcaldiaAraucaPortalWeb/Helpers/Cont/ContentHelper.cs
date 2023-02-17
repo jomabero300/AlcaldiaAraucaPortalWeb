@@ -1,5 +1,6 @@
 ﻿using AlcaldiaAraucaPortalWeb.Common;
 using AlcaldiaAraucaPortalWeb.Data;
+using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
 using AlcaldiaAraucaPortalWeb.Data.Entities.Alar;
 using AlcaldiaAraucaPortalWeb.Data.Entities.Cont;
 using AlcaldiaAraucaPortalWeb.Data.Entities.Gene;
@@ -310,6 +311,31 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
             return model.OrderByDescending(m => m.ContentDate).ToList();
         }
 
+        public async Task<ContentModelsViewFilter> ListAsync(int RowsCant, int OmitCant, string SearchText = "")
+        {
+            ContentModelsViewFilter model= new ContentModelsViewFilter();
+
+            IQueryable<Content> query = _context.Contents
+                                                .Include(c => c.ApplicationUser)
+                                                .Include(c => c.PqrsStrategicLineSector)
+                                                .Include(c => c.State)
+                                                .Where(c => c.State.StateName == "Previo");
+
+            int Rows = query.Count();
+
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                query = query
+                    .Where(p => string.Concat(p.ContentTitle,p.ContentText).Contains(SearchText));
+            }
+
+            model.RowsFilterTotal = query.Count();
+
+            model.Contents = await query.Skip(OmitCant).Take(RowsCant).ToListAsync();
+
+            return model;
+        }
+
         public async Task<List<ContentDetail>> ListDetailsAsync(int contentId)
         {
             var model = await _context.ContentDetails
@@ -320,17 +346,17 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
 
         }
 
-        public async Task<List<Content>> ListReporterAsync()
-        {
-            List<Content> model = await
-                _context.Contents
-                                        .Include(c => c.ApplicationUser)
-                                        .Include(c => c.PqrsStrategicLineSector)
-                                        .Include(c => c.State)
-                                        .Where(c => c.State.StateName == "Previo")
-                                        .OrderByDescending(x => x.ContentId).ToListAsync();
-            return model;
-        }
+        //public async Task<List<Content>> ListReporterAsync()
+        //{
+        //    List<Content> model = await
+        //        _context.Contents
+        //                                .Include(c => c.ApplicationUser)
+        //                                .Include(c => c.PqrsStrategicLineSector)
+        //                                .Include(c => c.State)
+        //                                .Where(c => c.State.StateName == "Previo")
+        //                                .OrderByDescending(x => x.ContentId).ToListAsync();
+        //    return model;
+        //}
 
         public async Task<List<FilterViewModel>> ListTitleAsync(string title)
         {

@@ -27,6 +27,18 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Alar
             return model;
         }
 
+        public async Task<string> ByLineaSector(int pqrsStrategicLineId)
+        {
+            string NameLineSector = await _context.Contents
+                                                    .Include(C => C.PqrsStrategicLineSector)
+                                                    .ThenInclude(P => P.PqrsStrategicLine)
+                                                    .Where(c => c.ContentId == pqrsStrategicLineId)
+                                                    .Select(x => string.Concat(x.PqrsStrategicLineSector.PqrsStrategicLine.PqrsStrategicLineName, " - ", x.PqrsStrategicLineSector.PqrsStrategicLineSectorName))
+                                                    .FirstOrDefaultAsync();
+
+            return NameLineSector;
+        }
+
         public async Task<PqrsStrategicLineSector> ByNameAsync(string pqrsStrategicLineSectorName, int PqrsStrategicLineId)
         {
             PqrsStrategicLineSector model = await _context.PqrsStrategicLineSectors.Where(p => p.PqrsStrategicLineSectorName == pqrsStrategicLineSectorName && p.PqrsStrategicLineId == PqrsStrategicLineId).FirstOrDefaultAsync();

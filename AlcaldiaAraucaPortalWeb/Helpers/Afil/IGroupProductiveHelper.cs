@@ -1,5 +1,6 @@
 ﻿using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
+using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
 
 namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
 {
@@ -12,5 +13,6 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
         Task<List<GroupProductive>> ComboAsync(string[] GroupProductives, bool lbEsta);
         Task<Response> DeleteAsync(int id);
         Task<List<GroupProductive>> ListAsync();
+        Task<AffiliateGroupProductiveViewModelsFilter> ListAsync(int RowsCant, int OmitCant, string SearchText = "");
     }
 }

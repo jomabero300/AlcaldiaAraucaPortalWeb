@@ -1,17 +1,21 @@
 ﻿using AlcaldiaAraucaPortalWeb.Data;
 using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
+using AlcaldiaAraucaPortalWeb.Helpers.Gene;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
 using Microsoft.EntityFrameworkCore;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
 {
     public class AffiliateHelper : IAffiliateHelper
     {
         private readonly ApplicationDbContext _context;
+        private readonly IImageHelper _imageHelper;
 
-        public AffiliateHelper(ApplicationDbContext context)
+        public AffiliateHelper(ApplicationDbContext context, IImageHelper imageHelper)
         {
             _context = context;
+            _imageHelper = imageHelper;
         }
 
         public async Task<Response> AddUpdateAsync(Affiliate model)
@@ -53,23 +57,48 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
             return model;
         }
 
-        public async Task<List<Affiliate>> AffiliateListAsync()
+        public async Task<List<Affiliate>> AffiliateListAsync(string id)
         {
-            List<Affiliate> model = await _context.Affiliates.Include(a => a.ApplicationUser).ToListAsync();
+            List<Affiliate> model = await _context.Affiliates
+                                                  .Include(a => a.ApplicationUser)
+                                                  .Where(a=>a.UserId==id)
+                                                  .ToListAsync();
+
             return model.OrderBy(m => m.Name).ToList();
         }
 
         public async Task<Response> DeleteAsync(int id)
         {
-            var response = new Response() { Succeeded = true };
+            string folder = "Image\\Afiliate\\Image";
 
-            var model = await _context.Affiliates.Where(a => a.AffiliateId == id).FirstOrDefaultAsync();
+           var response = new Response() { Succeeded = true };
 
+            Affiliate model = await _context.Affiliates
+                                      .Include(a=>a.GroupProductives)
+                                      .Include(a=>a.GroupCommunities)
+                                      .Include(a=>a.Professions)
+                                      .Include(a=>a.SocialNetworks)
+                                      .Where(a => a.AffiliateId == id).FirstOrDefaultAsync();
             try
             {
                 _context.Affiliates.Remove(model);
 
                 await _context.SaveChangesAsync();
+
+                _imageHelper.DeleteImageAsync(model.ImagePath, folder).Wait();
+
+                foreach (var item in model.Professions)
+                {
+                    if(!string.IsNullOrEmpty(item.ImagePath))
+                    {
+                        _imageHelper.DeleteImageAsync(item.ImagePath, folder).Wait();
+                    }
+                    if(!string.IsNullOrEmpty(item.DocumentoPath))
+                    {
+                        _imageHelper.DeleteImageAsync(item.DocumentoPath, "Image\\Afiliate\\Document").Wait();
+                    }
+
+                }
             }
             catch (Exception ex)
             {

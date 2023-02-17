@@ -6,6 +6,7 @@ using AlcaldiaAraucaPortalWeb.Helpers.Cont;
 using AlcaldiaAraucaPortalWeb.Helpers.Gene;
 using AlcaldiaAraucaPortalWeb.Helpers.Subs;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
+using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
 using AlcaldiaAraucaPortalWeb.Models.ModelsViewCont;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -55,13 +56,14 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
             return View();
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            List<Content> model = await _contentHelper.ListReporterAsync();
+            //List<Content> model = await _contentHelper.ListReporterAsync();
 
             ViewBag.LineName = "Prensa";
 
-            return View(model);
+            //return View(model);
+            return View();
         }
 
         [HttpGet]
@@ -373,12 +375,38 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
 
         }
 
-
         public async Task<JsonResult> getSector(int Id)
         {
-            var strategicLine = await _strategicLineSectorHelper.ComboAsync(Id);
+            List<PqrsStrategicLineSector> strategicLine = await _strategicLineSectorHelper.ComboAsync(Id);
 
             return Json(strategicLine);
         }
+
+        [HttpPost]
+        public async Task<JsonResult> ListGene()
+        {
+            //Representa el numero de veces que se ha realizado una petición
+            int PetitionCant = Convert.ToInt32(Request.Form["draw"].FirstOrDefault() ?? "0");
+
+            //Cantidad de registro va ha devolver
+            int RowsCant = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
+
+            //cuantos registros va ha omitir
+            int OmitCant = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
+
+            string SearchText = Request.Form["search[value]"].FirstOrDefault() ?? "";
+
+            ContentModelsViewFilter model = await _contentHelper.ListAsync(RowsCant, OmitCant, SearchText);
+
+            return Json(new
+            {
+                draw = PetitionCant,
+                recordsTotal = RowsCant,
+                recordsFiltered = model.RowsFilterTotal,
+                data = model.Contents
+            });
+
+        }
+
     }
 }

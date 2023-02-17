@@ -29,243 +29,187 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Estr
 
 
         #region Desarrollo social
-        public async Task<IActionResult> Cultura()
+        
+        public IActionResult Cultura()
         {
-            var strategicLineId = await StrategicLine("Desarrollo social incluyente");
+            string StrategicLine = "Desarrollo social incluyente";
 
-            var OdsText = "Accesso de la población colombiana a espacios culturales. \n Bienes Y manifestaciones del patrimonio cultural reconocidos y protegidos";
-            var OdsImag = "~/Image/Menu/ODS/11ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-11-sustainable-cities-and-communities.html";
+            return RedirectToAction("GeneView", new { lTipo = "Cultura", tituloHead = $"{StrategicLine} - Cultura", LineaStrategica = StrategicLine });
 
-            return RedirectToAction("GeneViewHorizontal", new { lTipo = "Cultura", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
         }
-        public async Task<IActionResult> Deporte()
+        public IActionResult Deporte()
         {
-            var OdsText = "poblacion que raliza actividad física en su tiempo libre";
-            var OdsImag = "~/Image/Menu/ODS/5ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-5-gender-equality.html";
+            string StrategicLine = "Desarrollo social incluyente";
 
-            var strategicLineId = await StrategicLine("Desarrollo social incluyente");
-
-            return RedirectToAction("GeneView", new { lTipo = "Deporte", tituloHead = "Sección de Deporte", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Deporte", tituloHead = $"{StrategicLine} - Deporte", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> Educacion()
+        public IActionResult Educacion()
         {
-            var OdsText = "Cobertura bruta en la educación inicial preescolar, basica y media";
-            var OdsImag = "~/Image/Menu/ODS/4ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-4-quality-education.html";
+            string StrategicLine = "Desarrollo social incluyente";
 
-            var strategicLineId = await StrategicLine("Desarrollo social incluyente");
-
-            return RedirectToAction("GeneView", new { lTipo = "Educación", tituloHead = "Seccion de Educacion", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Educación", tituloHead = $"{StrategicLine} - Educación", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> InclusionSocial()
+        public IActionResult InclusionSocial()
         {
-            var OdsText = "Indicador de pobreza multidimensional (IPM)";
-            var OdsImag = "~/Image/Menu/ODS/5ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-5-gender-equality.html";
+            string StrategicLine = "Desarrollo social incluyente";
 
-            var strategicLineId = await StrategicLine("Desarrollo social incluyente");
-
-            return RedirectToAction("GeneViewHorizontal", new { lTipo = "Inclusión social", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Inclusión social", tituloHead= $"{StrategicLine} - Inclusión social", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> SaludyProteccion()
+        public IActionResult SaludyProteccion()
         {
-            var OdsText = "Tasa de mortalidad prematura por enfermedades no transmisibles (por 100.000 habitantes de 30 a 70 años)";
-            var OdsImag = "~/Image/Menu/ODS/2ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-2-zero-hunger.html";
+            string StrategicLine = "Desarrollo social incluyente";
 
-            var strategicLineId = await StrategicLine("Desarrollo social incluyente");
-
-            return RedirectToAction("GeneView", new { lTipo = "Salud y protección", tituloHead = "Salud y protección", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Salud y protección", tituloHead = $"{StrategicLine} - Salud y protección social", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> DesarrolloSocialNormatividad()
+        public IActionResult DesarrolloSocialNormatividad()
         {
-            var OdsText = "Tasa de mortalidad prematura por enfermedades no transmisibles (por 100.000 habitantes de 30 a 70 años)";
-            var OdsImag = "~/Image/Menu/ODS/2ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-2-zero-hunger.html";
-
-            var strategicLineId = await StrategicLine("Desarrollo social incluyente");
-
-            return RedirectToAction("GeneViewHorizontal", new { lTipo = "Normatividad", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            string StrategicLine = "Desarrollo social incluyente";
+            return RedirectToAction("GeneViewHorizontal", new { lTipo = "Normatividad", tituloHead= $"{StrategicLine} - Normatividad", LineaStrategica = StrategicLine });
         }
         #endregion
 
         #region Crecimiento economico
-        public async Task<IActionResult> AgriculturaDesarrolloRural()
+        public IActionResult AgriculturaDesarrolloRural()
         {
-            var OdsText = "Porcentaje de unidades de producción agropecuaria (UPAS) que recibieron asistencia técnica";
-            var OdsImag = "~/Image/Menu/ODS/8ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-8-decent-work-and-economic-growth.html";
+            string StrategicLine = "Crecimiento económico";
 
-            var strategicLineId = await StrategicLine("Crecimiento económico");
-
-            return RedirectToAction("GeneView", new { lTipo = "Agricultura y desarrollo rural", tituloHead = "Agricultura y Desarrollo Rural", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Agricultura y desarrollo rural", tituloHead = $"{StrategicLine} - Agricultura y Desarrollo Rural", LineaStrategica =StrategicLine });
         }
-        public async Task<IActionResult> CienciaTecnologiaInnovacion()
+        public IActionResult CienciaTecnologiaInnovacion()
         {
-            var OdsText = "Personas que desarrollan actividades de ciencia tecnología e innovación";
-            var OdsImag = "~/Image/Menu/ODS/9ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-9-industry-innovation-and-infrastructure.html";
+            string StrategicLine = "Crecimiento económico";
 
-            var strategicLineId = await StrategicLine("Crecimiento económico");
-
-            return RedirectToAction("GeneView", new { lTipo = "Ciencia, tecnología e innovación", tituloHead = "Ciencia y Tecnología Innovacion", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Ciencia, tecnología e innovación", tituloHead = $"{StrategicLine} - Ciencia y Tecnología Innovación", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> Trabajo()
+        public IActionResult Trabajo()
         {
-            var OdsText = "Tasa de desempleo";
-            var OdsImag = "~/Image/Menu/ODS/12ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-12-responsible-consumption-and-production.html";
+            string StrategicLine = "Crecimiento económico";
 
-            var strategicLineId = await StrategicLine("Crecimiento económico");
-
-            return RedirectToAction("GeneView", new { lTipo = "Trabajo", tituloHead = "Trabajo", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Trabajo", tituloHead = $"{StrategicLine} - Trabajo", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> ComercionIndustriaTurismo()
+        public IActionResult ComercionIndustriaTurismo()
         {
-            var OdsText = "Valor agregado por sectores económicos (Medido en miles de millones de pesos corrientes)";
-            var OdsImag = "~/Image/Menu/ODS/12ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-12-responsible-consumption-and-production.html";
+            string StrategicLine = "Crecimiento económico";
 
-            var strategicLineId = await StrategicLine("Crecimiento económico");
-
-            return RedirectToAction("GeneView", new { lTipo = "Comercio, industria y turismo", tituloHead = "Comercio Industria y Turismo", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Comercio, industria y turismo", tituloHead = $"{StrategicLine} - Comercio Industria y Turismo", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> CrecimientoEconomicoNormatividad()
+        public IActionResult CrecimientoEconomicoNormatividad()
         {
-            var strategicLineId = await StrategicLine("Crecimiento económico");
-            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = "Normatividad", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Crecimiento económico";
+
+            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = $"{StrategicLine} - Normatividad", LineaStrategica = StrategicLine });
         }
 
         #endregion
 
         #region Arauca Verde, Ordenaday Sostenible
-        public async Task<IActionResult> AmbienteyDesarrolloSostenible()
+        public IActionResult AmbienteyDesarrolloSostenible()
         {
-            var OdsText = "Área deforestada en la entidad territorial";
-            var OdsImag = "~/Image/Menu/ODS/13ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-13-climate-action.html";
+            string StrategicLine = "Arauca verde, ordenada y sostenible";
 
-            var strategicLineId = await StrategicLine("Arauca verde, ordenada y sostenible");
-
-            return RedirectToAction("GeneView", new { lTipo = "Ambiente desarrollo sostenible", tituloHead = "Ambiente y desarrollo sostenible", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Ambiente desarrollo sostenible", tituloHead = $"{StrategicLine} - Ambiente y desarrollo sostenible", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> AtencionDesastre()
+        public IActionResult AtencionDesastre()
         {
-            var OdsText = "Evento de riesgos de desastres";
-            var OdsImag = "~/Image/Menu/ODS/11ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-11-sustainable-cities-and-communities.html";
+            string StrategicLine = "Arauca verde, ordenada y sostenible";
 
-            var strategicLineId = await StrategicLine("Arauca verde, ordenada y sostenible");
-
-            return RedirectToAction("GeneView", new { lTipo = "Gobierno territorial - Atención a desastres", tituloHead = "Gobierno territorial - Atención a desastres", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Gobierno territorial - Atención a desastres", tituloHead = $"{StrategicLine} - Gobierno territorial - Atención a desastres", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> AraucaVedeOrdenadaSostenibleNormatividad()
+        public IActionResult AraucaVedeOrdenadaSostenibleNormatividad()
         {
-            var strategicLineId = await StrategicLine("Arauca verde, ordenada y sostenible");
-            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = "Normatividad", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Arauca verde, ordenada y sostenible";
+
+            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = $"{StrategicLine} - Normatividad", LineaStrategica = StrategicLine });
         }
         #endregion
 
         #region Infraestrutura Social y Productiva
-        public async Task<IActionResult> Transporte()
+        public IActionResult Transporte()
         {
-            var OdsText = "Personas lesionadas con incapacidad permanentes por siniestros viales)";
-            var OdsImag = "~/Image/Menu/ODS/9ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-9-industry-innovation-and-infrastructure.html";
 
-            var strategicLineId = await StrategicLine("Infraestructura social y productiva");
+            string StrategicLine = "Infraestructura social y productiva";
 
-            return RedirectToAction("GeneView", new { lTipo = "Transporte", tituloHead = "Transporte", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Transporte", tituloHead = $"{StrategicLine} - Transporte", LineaStrategica=StrategicLine });
         }
-        public async Task<IActionResult> MinasyEnergia()
+        public IActionResult MinasyEnergia()
         {
-            var OdsText = "Intensidad de energía eléctrica";
-            var OdsImag = "~/Image/Menu/ODS/7ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-7-affordable-and-clean-energy.html";
+            string StrategicLine = "Infraestructura social y productiva";
 
-            var strategicLineId = await StrategicLine("Infraestructura social y productiva");
-
-            return RedirectToAction("GeneView", new { lTipo = "Minas y energía", tituloHead = "Minas y energía", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Minas y energía", tituloHead = $"{StrategicLine} - Minas y energía", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> ViviendaInfra()
+        public IActionResult ViviendaInfra()
         {
-            var OdsText = "Intensidad de energía eléctrica";
-            var OdsImag = "~/Image/Menu/ODS/6ODS.png";
-            var OdsUrl = "https://www1.undp.org/content/undp/es/home/sustainable-development-goals/goal-6-clean-water-and-sanitation.html";
+            string StrategicLine = "Infraestructura social y productiva";
 
-            var strategicLineId = await StrategicLine("Infraestructura social y productiva");
-
-            return RedirectToAction("GeneView", new { lTipo = "Vivienda", tituloHead = "Vivienda", PqrsStrategicLineId = strategicLineId, OdsText = OdsText, OdsImag = OdsImag, ODSUrl = OdsUrl });
+            return RedirectToAction("GeneView", new { lTipo = "Vivienda", tituloHead = $"{StrategicLine} - Vivienda", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> InfraestructuraSocialProductivaNormatividad()
+        public IActionResult InfraestructuraSocialProductivaNormatividad()
         {
-            var strategicLineId = await StrategicLine("Infraestructura social y productiva");
-            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = "Normatividad", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Infraestructura social y productiva";
+            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = $"{StrategicLine} - Normatividad", LineaStrategica = StrategicLine });
         }
         #endregion
 
         #region Buen gobierno
-        public async Task<IActionResult> InformacionEstadistica()
+        public IActionResult InformacionEstadistica()
         {
-            var strategicLineId = await StrategicLine("Buen gobierno");
+            string StrategicLine ="Buen gobierno";
 
-            return RedirectToAction("GeneView", new { lTipo = "Información estadisiticas", tituloHead = "Información estadisiticas", PqrsStrategicLineId = strategicLineId });
+            return RedirectToAction("GeneView", new { lTipo = "Información estadisiticas", tituloHead = $"{StrategicLine} - Información estadisiticas", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> BuenGobiernoTerritorial()
+        public IActionResult BuenGobiernoTerritorial()
         {
-            var strategicLineId = await StrategicLine("Buen gobierno");
-            return RedirectToAction("GeneView", new { lTipo = "Gobierno territorial", tituloHead = "Gobierno territorial", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Buen gobierno";
+            return RedirectToAction("GeneView", new { lTipo = "Gobierno territorial", tituloHead = $"{StrategicLine} - Gobierno territorial", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> Tecnologia()
+        public IActionResult Tecnologia()
         {
-            var strategicLineId = await StrategicLine("Buen gobierno");
-            return RedirectToAction("GeneView", new { lTipo = "Tecnologioas de la información y las comunicaciones", tituloHead = "Tecnologioas de la información y las comunicaciones", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Buen gobierno";
+            return RedirectToAction("GeneView", new { lTipo = "Tecnologioas de la información y las comunicaciones", tituloHead = $"{StrategicLine} - Tecnologioas de la información y las comunicaciones", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> ViviendaBuen()
+        public IActionResult ViviendaBuen()
         {
-            var strategicLineId = await StrategicLine("Buen gobierno");
-            return RedirectToAction("GeneView", new { lTipo = "Vivienda", tituloHead = "Vivienda", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Buen gobierno";
+            return RedirectToAction("GeneView", new { lTipo = "Vivienda", tituloHead = $"{StrategicLine} - Vivienda", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> BuenGobiernoNormatividad()
+        public IActionResult BuenGobiernoNormatividad()
         {
-            var strategicLineId = await StrategicLine("Buen gobierno");
-            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = "Normatividad", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Buen gobierno";
+            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = $"{StrategicLine} - Normatividad", LineaStrategica = StrategicLine });
         }
         #endregion
 
-        #region Seguridad, Convivencia y Justicia
-        public async Task<IActionResult> JusticiaDerecho()
+         #region Seguridad, Convivencia y Justicia
+        public IActionResult JusticiaDerecho()
         {
-            var strategicLineId = await StrategicLine("Seguridad convivencia y justicia");
+            string StrategicLine ="Seguridad convivencia y justicia";
 
-            return RedirectToAction("GeneView", new { lTipo = "Justicia y derecho", tituloHead = "Justicia y derecho", PqrsStrategicLineId = strategicLineId });
+            return RedirectToAction("GeneView", new { lTipo = "Justicia y derecho", tituloHead = $"{StrategicLine} - Justicia y derecho", LineaStrategica=StrategicLine });
         }
-        public async Task<IActionResult> InclusionSocial2()
+        public IActionResult InclusionSocial2()
         {
-            var strategicLineId = await StrategicLine("Seguridad convivencia y justicia");
-            return RedirectToAction("GeneView", new { lTipo = "Inclusion social", tituloHead = "Inclusion social", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Seguridad convivencia y justicia";
+            return RedirectToAction("GeneView", new { lTipo = "Inclusion social", tituloHead = $"{StrategicLine} - Inclusion social", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> GobiernoTerritorial()
+        public IActionResult GobiernoTerritorial()
         {
-            var strategicLineId = await StrategicLine("Seguridad convivencia y justicia");
-            return RedirectToAction("GeneView", new { lTipo = "Gobierno territorial", tituloHead = "Gobierno territorial", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Seguridad convivencia y justicia";
+            return RedirectToAction("GeneView", new { lTipo = "Gobierno territorial", tituloHead = $"{StrategicLine} - Gobierno territorial", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> ViviendaSeguridad()
+        public IActionResult ViviendaSeguridad()
         {
-            var strategicLineId = await StrategicLine("Seguridad convivencia y justicia");
-            return RedirectToAction("GeneView", new { lTipo = "Vivienda", tituloHead = "Vivienda", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Seguridad convivencia y justicia";
+            return RedirectToAction("GeneView", new { lTipo = "Vivienda", tituloHead = $"{StrategicLine} - Vivienda", LineaStrategica = StrategicLine });
         }
-        public async Task<IActionResult> SeguridadConvivenciaJusticiaNormatividad()
+        public IActionResult SeguridadConvivenciaJusticiaNormatividad()
         {
-            var strategicLineId = await StrategicLine("Seguridad convivencia y justicia");
-            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = "Normatividad", PqrsStrategicLineId = strategicLineId });
+            string StrategicLine = "Seguridad convivencia y justicia";
+            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = $"{StrategicLine} - Normatividad", LineaStrategica = StrategicLine });
         }
         #endregion
 
         #region Gestion del conocimiento
-        public async Task<IActionResult> GestionConocimiento()
+        public async Task< IActionResult> GestionConocimiento()
         {
             List<ContentModelView> model = new List<ContentModelView>();
 
@@ -318,10 +262,10 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Estr
 
         #endregion
 
-        public async Task<IActionResult> GeneViewHorizontal(string lTipo, int PqrsStrategicLineId, string OdsText, string OdsImag, string ODSUrl)
+        public async Task<IActionResult> GeneViewHorizontal(string lTipo, string tituloHead, int PqrsStrategicLineId, string OdsText, string OdsImag, string ODSUrl)
         {
             ContentGeneViewModels model = new ContentGeneViewModels();
-
+            ViewBag.TituloHead2 = tituloHead;
             var sectorId = await _lineSectorHelper.ByNameAsync(lTipo, PqrsStrategicLineId);
             if (sectorId != null)
             {
@@ -366,13 +310,15 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Estr
             return View(model);
         }
 
-        public async Task<IActionResult> GeneView(string lTipo, string tituloHead, string subTituloHead, int PqrsStrategicLineId, string OdsText, string OdsImag, string ODSUrl)
+        public async Task<IActionResult> GeneView(string lTipo, string tituloHead, string subTituloHead, string LineaStrategica)
         {
             var model = new ContentGeneViewModels();
 
-            ViewBag.TituloHead = tituloHead.ToUpper();
+            ViewBag.TituloHead = tituloHead;
 
             ViewBag.SubTituloHead = subTituloHead;
+
+            int PqrsStrategicLineId = await StrategicLine(LineaStrategica);
 
             var sectorId = await _lineSectorHelper.ByNameAsync(lTipo, PqrsStrategicLineId);
 
@@ -400,7 +346,10 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Estr
 
         public async Task<IActionResult> GeneViewHorizontalDetails(int id)
         {
-            var model = await _contentHelper.ListDetailsAsync(id);
+            List<ContentDetail> model = await _contentHelper.ListDetailsAsync(id);
+
+            //string xx =await _lineSectorHelper.ByLineaSector(id);
+            ViewBag.TituloHead =await _lineSectorHelper.ByLineaSector(id);
 
             return View(model);
         }

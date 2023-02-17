@@ -5,7 +5,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
 {
     public interface IAffiliateHelper
     {
-        Task<List<Affiliate>> AffiliateListAsync();
+        Task<List<Affiliate>> AffiliateListAsync(string id);
         Task<Affiliate> AffiliateByIdAsync(int id);
         Task<Response> AddUpdateAsync(Affiliate model);
         Task<Response> DeleteAsync(int id);

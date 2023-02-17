@@ -14,5 +14,6 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
         Task<List<GroupCommunityViewModel>> StatisticsReportAsync(GroupCommunityViewModel model);
         Task<Response> DeleteAsync(int id);
         Task<List<GroupCommunity>> ListAsync();
+        Task<AffiliateGroupCommunityViewModelsFilter> ListAsync(int RowsCant, int OmitCant, string SearchText = "");
     }
 }

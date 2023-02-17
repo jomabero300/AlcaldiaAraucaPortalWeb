@@ -84,19 +84,18 @@ function ProfessionAdd(id) {
         $('#spanProfessionId').text('!El campo es requerido¡').show();
         $('#professionId').focus();
 
-    } else if ($('#imagePath').val() == "") {
-        $('#spanImagePath').text('!El campo es requerido¡').show();
-        $('#imagePath').focus();
+    //} else if ($('#imagePath').val() == "") {
+    //    $('#spanImagePath').text('!El campo es requerido¡').show();
+    //    $('#imagePath').focus();
 
     } else if ($('#Concept').val() == "") {
         $('#spanConcept').text('!El campo es requerido¡').show();
         $('#Concept').focus();
 
-    } else if ($('#documentoPath').val() == "") {
-        $('#spanDocumentoPath').text('!El campo es requerido¡').show();
-        $('#documentoPath').focus();
+    //} else if ($('#documentoPath').val() == "") {
+    //    $('#spanDocumentoPath').text('!El campo es requerido¡').show();
+    //    $('#documentoPath').focus();
     } else {
-
         var formData = new FormData();
 
         formData.append("id", id);
@@ -118,9 +117,9 @@ function ProfessionAdd(id) {
                 alert('Falló al agregar la profesion. ' + ex);
             }
         });
-
     }
 }
+
 function ProfessionsDelete(id, AffiliateProfessionId) {
 
     $.ajax({

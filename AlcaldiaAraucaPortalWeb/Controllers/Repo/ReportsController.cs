@@ -1,4 +1,5 @@
-﻿using AlcaldiaAraucaPortalWeb.Helpers.Afil;
+﻿using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
+using AlcaldiaAraucaPortalWeb.Helpers.Afil;
 using AlcaldiaAraucaPortalWeb.Helpers.Gene;
 using AlcaldiaAraucaPortalWeb.Helpers.Pdf;
 using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
@@ -116,6 +117,13 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Repo
             MemoryStream ms = await _pdfDocumentHelper.StatisticsAsync(model.Id, "Usiarios registrados", model.idOp);
 
             return File(ms.ToArray(), "application/pdf");
+        }
+
+        public async Task<JsonResult> ObtenerLlistado()
+        {
+            List<Profession> model = await _professionHelper.ComboAsync(null, false);
+
+            return Json(model);
         }
     }
 }

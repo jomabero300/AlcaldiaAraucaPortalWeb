@@ -8,14 +8,11 @@ using AlcaldiaAraucaPortalWeb.Models.Gene;
 using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
 
 namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 {
-    [Authorize(Roles =nameof(UserType.Usuario))]
+    [Authorize(Roles = nameof(UserType.Usuario))]
 
     public class AffiliatesController : Controller
     {
@@ -67,8 +64,11 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = await _affiliate.AffiliateListAsync();
-            return View(applicationDbContext);
+            ApplicationUser user =await _userHelper.GetUserAsync(User.Identity.Name);
+
+            List<Affiliate> model = await _affiliate.AffiliateListAsync(user.Id);
+
+            return View(model);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -95,7 +95,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
             ViewData["ProfessionId"] = new SelectList(await _professionHelper.ComboAsync(), "ProfessionId", "ProfessionName");
             ViewData["SocialNetworkId"] = new SelectList(await _socialNetworkHelper.ComboAsync(), "SocialNetworkId", "SocialNetworkName");
             ViewData["TypeUserId"] = new SelectList(typeUser(), "TypeUserId", "TypeUserName");
-                                                                 
+
             return View();
         }
 
@@ -118,14 +118,23 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
                 {
                     for (int i = 0; i < model.Professions.Count; i++)
                     {
-                        string pathFile = _affiliateProfessionHelper.FileMove(model.Professions[i].DocumentoPath, "Image\\Afiliate\\Document");
-                        model.Professions[i].DocumentoPath = pathFile;
-                        pathFile = _affiliateProfessionHelper.FileMove(model.Professions[i].ImagePath, "Image\\Afiliate\\Image");
-                        model.Professions[i].ImagePath = pathFile;
+                        string pathFile = string.Empty;
+
+                        if(!string.IsNullOrEmpty( model.Professions[i].DocumentoPath))
+                        {
+                            pathFile = _affiliateProfessionHelper.FileMove(model.Professions[i].DocumentoPath, "Image\\Afiliate\\Document");
+                            model.Professions[i].DocumentoPath = pathFile;
+                        }
+
+                        if (!string.IsNullOrEmpty(model.Professions[i].ImagePath))
+                        {
+                            pathFile = _affiliateProfessionHelper.FileMove(model.Professions[i].ImagePath, "Image\\Afiliate\\Image");
+                            model.Professions[i].ImagePath = pathFile;
+                        }
                     }
                 }
 
-                ApplicationUser userId =await _userHelper.GetUserAsync(User.Identity.Name);
+                ApplicationUser userId = await _userHelper.GetUserAsync(User.Identity.Name);
 
                 Affiliate afiliate = new Affiliate()
                 {
@@ -182,20 +191,20 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
             AffiliateViewModels model = new AffiliateViewModels()
             {
-                AffiliateId=affiliate.AffiliateId,
-                UserId=affiliate.UserId,
-                TypeUserId=affiliate.TypeUserId,
-                Name=affiliate.Name,
-                Nit=affiliate.Nit,
-                Address=affiliate.Address,
-                Phone=affiliate.Phone,
-                CellPhone=affiliate.CellPhone,
-                Email=affiliate.Email,
-                ImagePath=affiliate.ImagePath,
-                GroupProductives=affiliate.GroupProductives,
-                GroupCommunities=affiliate.GroupCommunities,
+                AffiliateId = affiliate.AffiliateId,
+                UserId = affiliate.UserId,
+                TypeUserId = affiliate.TypeUserId,
+                Name = affiliate.Name,
+                Nit = affiliate.Nit,
+                Address = affiliate.Address,
+                Phone = affiliate.Phone,
+                CellPhone = affiliate.CellPhone,
+                Email = affiliate.Email,
+                ImagePath = affiliate.ImagePath,
+                GroupProductives = affiliate.GroupProductives,
+                GroupCommunities = affiliate.GroupCommunities,
                 SocialNetworks = affiliate.SocialNetworks,
-                Professions=affiliate.Professions,
+                Professions = affiliate.Professions,
             };
 
             ViewData["GroupProductiveId"] = new SelectList(await _productiveHelper.ByIdAffiliateAsync(model.AffiliateId), "GroupProductiveId", "GroupProductiveName");
@@ -222,7 +231,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
                 {
                     string path = await _imageHelper.UploadImageAsync(model.ImagePathNew, "Image\\Afiliate\\Image");
                     await _imageHelper.DeleteImageAsync(model.ImagePath, "Image\\Afiliate\\Image");
-                    model.ImagePath=path;
+                    model.ImagePath = path;
                 }
 
                 Affiliate modelUpdate = new Affiliate
@@ -239,9 +248,9 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
                     ImagePath = model.ImagePath,
                 };
 
-                Response response =await _affiliate.AddUpdateAsync(modelUpdate);
+                Response response = await _affiliate.AddUpdateAsync(modelUpdate);
 
-                if(response.Succeeded)
+                if (response.Succeeded)
                 {
                     return RedirectToAction(nameof(Index));
                 }
@@ -251,7 +260,52 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
             return View(model);
         }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            Affiliate affiliate = await _affiliate.AffiliateByIdAsync((int)id);
 
+            if (affiliate == null)
+            {
+                return NotFound();
+            }
+
+            AffiliateViewModels model = new AffiliateViewModels()
+            {
+                AffiliateId = affiliate.AffiliateId,
+                UserId = affiliate.UserId,
+                TypeUserId = affiliate.TypeUserId,
+                Name = affiliate.Name,
+                Nit = affiliate.Nit,
+                Address = affiliate.Address,
+                Phone = affiliate.Phone,
+                CellPhone = affiliate.CellPhone,
+                Email = affiliate.Email,
+                ImagePath = affiliate.ImagePath,
+                GroupProductives = affiliate.GroupProductives,
+                GroupCommunities = affiliate.GroupCommunities,
+                SocialNetworks = affiliate.SocialNetworks,
+                Professions = affiliate.Professions,
+            };
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            Response response = await _affiliate.DeleteAsync(id);
+
+            if (response.Succeeded)
+            {
+                //Eliminar las imagenes
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            ModelState.AddModelError(string.Empty, response.Message);
+
+            return RedirectToAction(nameof(Index));
+        }
         [HttpPost]
         public async Task<JsonResult> getCommunity(string GroupCommunity)
         {
@@ -267,10 +321,10 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
                 string[] groupProductiveId = GroupCommunity.Split(',').Select(d => d.ToString()).ToArray();
 
-                model = await _communityHelper.ComboAsync(groupProductiveId,true);
+                model = await _communityHelper.ComboAsync(groupProductiveId, true);
 
             }
-            
+
             return Json(model);
         }
 
@@ -291,10 +345,10 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
                 string[] groupProfessionId = GroupProfession.Split(',').Select(d => d.ToString()).ToArray();
 
-                model = await _professionHelper.ComboAsync(groupProfessionId,true);
+                model = await _professionHelper.ComboAsync(groupProfessionId, true);
 
             }
-            
+
             return Json(model);
         }
 
@@ -313,10 +367,10 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
                 string[] groupProductiveId = GroupProductive.Split(',').Select(d => d.ToString()).ToArray();
 
-                model = await _productiveHelper.ComboAsync(groupProductiveId,true);
+                model = await _productiveHelper.ComboAsync(groupProductiveId, true);
 
             }
-            
+
             return Json(model);
         }
 
@@ -334,9 +388,9 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
                 string[] SocialNetworkName = SocialNetwork.Split(',').Select(d => d.ToString()).ToArray();
 
-                model = await _socialNetworkHelper.ComboAsync(SocialNetworkName,true);
+                model = await _socialNetworkHelper.ComboAsync(SocialNetworkName, true);
             }
-            
+
             return Json(model);
         }
 
@@ -359,7 +413,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
         {
             Response response = await _affiliateGroupProductiveHelper.DeleteAsync(GroupProductiveId);
 
-            return Json(new { res = response.Succeeded});
+            return Json(new { res = response.Succeeded });
         }
 
 
@@ -382,21 +436,21 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
         {
             Response response = await _AffiliateGroupCommunityHelper.DeleteAsync(GroupCommunityId);
 
-            return Json(new { res = response.Succeeded});
+            return Json(new { res = response.Succeeded });
         }
 
 
         [HttpPost]
-        public async Task<JsonResult> ProfessionAdd(int id, int ProfessionId,IFormFile ImagePath,string Concept, IFormFile DocumentoPath)
+        public async Task<JsonResult> ProfessionAdd(int id, int ProfessionId, IFormFile ImagePath, string Concept, IFormFile DocumentoPath)
         {
             AffiliateProfessionViewModels model = new AffiliateProfessionViewModels()
             {
-                AffiliateProfessionId=0,
+                AffiliateProfessionId = 0,
                 AffiliateId = id,
-                ProfessionId= ProfessionId,
-                ImagePath=ImagePath,
+                ProfessionId = ProfessionId,
+                ImagePath = ImagePath,
                 Concept = Concept,
-                DocumentoPath=DocumentoPath
+                DocumentoPath = DocumentoPath
             };
 
             Response response = await _affiliateProfessionHelper.AddUpdateAsync(model);
@@ -410,19 +464,27 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
         {
             Response response = await _affiliateProfessionHelper.DeleteAsync(ProfessionId);
 
-            return Json(new { res = response.Succeeded});
+            return Json(new { res = response.Succeeded });
         }
-
-
 
         [HttpPost]
         public async Task<IActionResult> UploadeTemp(IFormFile fileImg, IFormFile fileDoc)
         {
             string path = _configuration["MyFolders:AfiliateTemp"];
 
-            string responseImg = await _imageHelper.UploadImageAsync(fileImg, path);
+            string responseImg = string.Empty;
+            
+            string responseDoc=string.Empty;
 
-            string responseDoc = await _imageHelper.UploadFileAsync(fileDoc, path);
+            if (fileImg != null)
+            {
+                responseImg = await _imageHelper.UploadImageAsync(fileImg, path);
+            }
+
+            if(fileDoc!=null)
+            {
+                responseDoc = await _imageHelper.UploadFileAsync(fileDoc, path);
+            }
 
             return Json(new { pathImg = responseImg, pathDoc = responseDoc });
         }
@@ -430,34 +492,45 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
         [HttpPost]
         public IActionResult DeleteTemp(string fileImg, string filePdf)
         {
+            if(string.IsNullOrEmpty(fileImg) && string.IsNullOrEmpty(filePdf)) return Json(new { path = "Ok" });
+
             string path = _configuration["MyFolders:AfiliateTemp"];
+            int startFile = 0;
+            string pathFile = string.Empty;
 
-            int startFile = fileImg.LastIndexOf("/") + 1;
-
-            string pathFile = fileImg.Substring(startFile, fileImg.Length - startFile);
-
-            pathFile = Path.Combine(_env.WebRootPath, path, pathFile);
-
-            FileInfo fi = new FileInfo(pathFile);
-
-            if (fi != null)
+            if (!string.IsNullOrEmpty(fileImg))
             {
-                System.IO.File.Delete(pathFile);
-                fi.Delete();
+                startFile = fileImg.LastIndexOf("/") + 1;
+
+                pathFile = fileImg.Substring(startFile, fileImg.Length - startFile);
+
+                pathFile = Path.Combine(_env.WebRootPath, path, pathFile);
+
+                FileInfo fi = new FileInfo(pathFile);
+
+                if (fi != null)
+                {
+                    System.IO.File.Delete(pathFile);
+
+                    fi.Delete();
+                }
             }
 
-            startFile = filePdf.LastIndexOf("/") + 1;
-
-            pathFile = filePdf.Substring(startFile, filePdf.Length - startFile);
-
-            pathFile = Path.Combine(_env.WebRootPath, path, pathFile);
-
-
-            FileInfo fiPdf = new FileInfo(pathFile);
-            if (fiPdf != null)
+            if(!string.IsNullOrEmpty(filePdf))
             {
-                System.IO.File.Delete(pathFile);
-                fiPdf.Delete();
+                startFile = filePdf.LastIndexOf("/") + 1;
+
+                pathFile = filePdf.Substring(startFile, filePdf.Length - startFile);
+
+                pathFile = Path.Combine(_env.WebRootPath, path, pathFile);
+
+                FileInfo fiPdf = new FileInfo(pathFile);
+
+                if (fiPdf != null)
+                {
+                    System.IO.File.Delete(pathFile);
+                    fiPdf.Delete();
+                }
             }
 
             return Json(new { path = "Ok" });

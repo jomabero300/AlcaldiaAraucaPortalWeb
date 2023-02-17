@@ -212,9 +212,9 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
             {
                 if (img != null)
                 {
-                    var folder = await _folderStrategicLineasHelper.FolderPathAsync(model.PqrsStrategicLineSectorId, User.Identity.Name);
+                    string folder = await _folderStrategicLineasHelper.FolderPathAsync(model.PqrsStrategicLineSectorId, User.Identity.Name);
 
-                    foreach (var item in img)
+                    foreach (string item in img)
                     {
                         await _imageHelper.DeleteImageAsync(item, folder);
                     }

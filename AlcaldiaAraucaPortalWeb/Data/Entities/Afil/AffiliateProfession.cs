@@ -19,7 +19,7 @@ namespace AlcaldiaAraucaPortalWeb.Data.Entities.Afil
         public int ProfessionId { get; set; }
 
         [Column(TypeName = "varchar(200)")]
-        [Required(ErrorMessage = "El campo {0} es requerido")]
+        //[Required(ErrorMessage = "El campo {0} es requerido")]
         [MaxLength(200, ErrorMessage = "El máximo tamaño del campo {0} es {1} caractéres")]
         [Display(Name = "Imagen")]
         public string ImagePath { get; set; }
@@ -31,7 +31,7 @@ namespace AlcaldiaAraucaPortalWeb.Data.Entities.Afil
         public string Concept { get; set; }
 
         [Column(TypeName = "varchar(200)")]
-        [Required(ErrorMessage = "El campo {0} es requerido")]
+        //[Required(ErrorMessage = "El campo {0} es requerido")]
         [MaxLength(200, ErrorMessage = "El máximo tamaño del campo {0} es {1} caractéres")]
         [Display(Name = "Camara de Comercio")]
         public string DocumentoPath { get; set; }

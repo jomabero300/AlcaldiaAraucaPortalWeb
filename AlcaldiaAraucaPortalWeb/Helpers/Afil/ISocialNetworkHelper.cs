@@ -1,5 +1,6 @@
 ﻿using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
+using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
 
 namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
 {
@@ -15,5 +16,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
 
         Task<Response> DeleteAsync(int id);
         Task<List<SocialNetwork>> ListAsync();
+        Task<AffiliateSocialNetworkViewModelsFilter> ListAsync(int RowsCant, int OmitCant, string SearchText = "");
+
     }
 }

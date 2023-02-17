@@ -45,8 +45,9 @@ namespace AlcaldiaAraucaPortalWeb.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            [Display(Name = "Correo electrónico")]
+            [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+            [EmailAddress(ErrorMessage = "El campo de correo electrónico no es una dirección válida")]
             public string Email { get; set; }
         }
 
@@ -73,9 +74,9 @@ namespace AlcaldiaAraucaPortalWeb.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+                    "Restablecer la contraseña",
+                    $"Restablezca su contraseña <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>haciendo clic aquí");
+                        
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 

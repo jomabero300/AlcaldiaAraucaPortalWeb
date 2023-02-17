@@ -2,6 +2,7 @@
 using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
 using AlcaldiaAraucaPortalWeb.Helpers.Gene;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
+using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
@@ -113,6 +114,25 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
             List<SocialNetwork> model =await _context.SocialNetworks.ToListAsync();
 
             return model.OrderBy(s=>s.SocialNetworkName).ToList();
+        }
+
+        public async Task<AffiliateSocialNetworkViewModelsFilter> ListAsync(int RowsCant, int OmitCant, string SearchText = "")
+        {
+            AffiliateSocialNetworkViewModelsFilter model = new AffiliateSocialNetworkViewModelsFilter();
+
+            IQueryable<SocialNetwork> query = _context.SocialNetworks.Include(g => g.State);
+
+            int Rows = query.Count();
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                query = query
+                    .Where(p => p.SocialNetworkName.Contains(SearchText));
+            }
+            model.RowsFilterTotal = query.Count();
+
+            model.SocialNetworks = await query.Skip(OmitCant).Take(RowsCant).ToListAsync();
+
+            return model;
         }
     }
 }

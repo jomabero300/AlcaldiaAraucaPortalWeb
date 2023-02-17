@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Cont.Content>
+﻿@*@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Cont.Content>
 
 @{
     ViewData["Title"] = "Contenido";
@@ -7,7 +7,7 @@
     <section>
         <div class="row" style="width:100%;">
             <di class="col-md-10">
-                <h2>@ViewBag.LineName</h2>
+                <h2 class="fst-italic fw-bold text-capitalize" style="color:#3366CC;">@ViewBag.LineName</h2>
             </di>
             <di class="col-md-2 text-right">
                 <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-fill"></i> Nuevo</a>
@@ -16,7 +16,7 @@
 
     </section>
     <section>
-        <table id="MyTable" class="table table-striped" style="width:100%">
+        <table id="MyTablePrensa" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>
@@ -71,8 +71,60 @@
         <a href="#" style="color:white">Política de cookies</a>
     </footer>
 
+</body>*@
+
+
+
+@{
+    ViewData["Title"] = "Contenido";
+}
+<body>
+    <section>
+        <div class="row" style="width:100%;">
+            <di class="col-md-10">
+                <h2 class="fst-italic fw-bold text-capitalize" style="color:#3366CC;">@ViewBag.LineName</h2>
+            </di>
+            <di class="col-md-2 text-right">
+                <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-fill"></i> Nuevo</a>
+            </di>
+        </div>
+
+    </section>
+    <section>
+        <table id="MyTablePrensa" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Fecha
+                    </th>
+                    <th>
+                        Titulo
+                    </th>
+                    <th>
+                        Contenido
+                    </th>
+                    <th>
+                        Imagen
+                    </th>
+                    <th>
+                        Estado
+                    </th>
+                    <th style="width:15%;">Proceso</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </section>
+    <footer>
+        <h4 style="color:white;">Avisos legales</h4>
+        <a href="#" style="color:white">Política de cookies</a>
+    </footer>
+
 </body>
 
 @section scripts{
     <script src="~/js/datatable_files.js"></script>
+    <script src="~/js/Afil/AfiliateList.js"></script>
 }

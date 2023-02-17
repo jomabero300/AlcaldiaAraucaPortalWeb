@@ -11,5 +11,6 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Alar
         Task<PqrsStrategicLineSector> ByIdAsync(int pqrsStrategicLineSectorId);
         PqrsStrategicLineSector ById(int pqrsStrategicLineSectorId);
         Task<List<PqrsStrategicLineSector>> ListAsync();
+        Task<string> ByLineaSector(int pqrsStrategicLineId);
     }
 }

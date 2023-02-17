@@ -151,12 +151,10 @@ namespace AlcaldiaAraucaPortalWeb.Data.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("DocumentoPath")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 

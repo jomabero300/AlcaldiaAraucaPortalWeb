@@ -1,4 +1,5 @@
-﻿using AlcaldiaAraucaPortalWeb.Models.ModelsViewRepo;
+﻿using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
+using AlcaldiaAraucaPortalWeb.Models.ModelsViewRepo;
 
 namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
 {

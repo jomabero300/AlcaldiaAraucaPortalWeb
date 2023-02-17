@@ -124,7 +124,6 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
             queryProfession = queryProfession
                 .Where(p => p.ProfessionName.Contains(SearchText));
 
-            //int RowsFilterTotal=queryProfession.Count();
             model.RowsFilterTotal = queryProfession.Count();
 
             model.Professions=await queryProfession.Skip(OmitCant).Take(RowsCant).ToListAsync();

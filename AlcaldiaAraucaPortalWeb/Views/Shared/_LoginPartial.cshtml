@@ -1,17 +1,69 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<AlcaldiaAraucaPortalWeb.Data.Entities.Gene.ApplicationUser> SignInManager
 @inject UserManager<AlcaldiaAraucaPortalWeb.Data.Entities.Gene.ApplicationUser> UserManager
-
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link small text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hola @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
+@*    <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button  type="submit" class="nav-link btn btn-link text-white">Salir</button>
         </form>
+    </li>
+*@    <li class="nav-item dropdown text-center">
+        <a class="nav-link small text-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Administración</a>
+        <ul class="dropdown-menu">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="GroupCommunities" asp-action="Index">Grupos Comunitario</a></li>
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="GroupProductives" asp-action="Index">Grupos productivos</a></li>
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="SocialNetworks" asp-action="Index">Redes Sociales</a></li>
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="Professions" asp-action="Index">Profesiones/Oficios</a></li>
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="ApplicationUsers" asp-action="Index">Usuarios cambio de rol</a></li>
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="PqrsUserStrategicLines" asp-action="Index">Asignación de Usuarios a lineas</a></li>
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="Carousels" asp-action="Index">Imagenes banner</a></li>
+
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item small text-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Reportes</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item small" asp-area="" asp-controller="Reports" asp-action="AffiliateGrupoProductivo">Afiliados grupos productivos</a></li>
+                                <li><a class="dropdown-item small" asp-area="" asp-controller="Reports" asp-action="AffiliateGrupoComunitario">Afiliados grupos comunitarios</a></li>
+                                <li><a class="dropdown-item small" asp-area="" asp-controller="Reports" asp-action="AffiliateProfessions">Afiliados profesión</a></li>
+                                <li><a class="dropdown-item small" asp-area="" asp-controller="Reports" asp-action="AffiliateSocialNetwork">Afiliados redes sociales</a></li>
+                                <li><a class="dropdown-item small" asp-area="" asp-controller="Reports" asp-action="UserRdlc">Usuarios registrados</a></li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Publicador"))
+                    {
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="Contents" asp-action="Index">Agregar contenido a la linea</a></li>
+                    }
+                    @if (User.IsInRole("Prensa"))
+                    {
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="Prensas" asp-action="Index">Operar contenido</a></li>
+                    }
+                    @if (User.IsInRole("Usuario"))
+                    {
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="Affiliates" asp-action="Index">Perfil de registro</a></li>
+                    }
+
+
+                    <li>
+                        <form  class="dropdown-item small" 
+                        asp-area="Identity" 
+                        asp-page="/Account/Logout" 
+                        asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button  type="submit" class="btn btn-sm btn-link text-dark">Salir</button>
+                        </form>
+                    </li>
+
+                }
+        </ul>
+    </li>
+    <li class="nav-item">
+        <a  class="nav-link small text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hola @User.Identity?.Name!</a>
     </li>
 }
 else

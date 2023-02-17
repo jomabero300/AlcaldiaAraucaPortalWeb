@@ -3,21 +3,16 @@
 @{
     ViewData["Title"] = "Index";
 }
-@**@
+
 <style>
         #header {
         background: url(@ViewBag.RulImagen) center center / cover no-repeat;
         }
 </style>
+
+<h3 class="fst-italic fw-bold text-capitalize" style="color:#3366CC;">@ViewBag.TituloHead2</h3>
+
 <body>
-    <section id="header" class="jumbotron text-center" style="height:350px">
-    </section>
-    <div class="text-center">
-        <h5>@ViewBag.TituloHead</h5>
-        <p class="lead">@Html.Raw(@ViewBag.SubTituloHead)</p>
-        <a asp-action="GeneViewHorizontalDetails" asp-route-id="@ViewBag.url" class="btn btn-sm btn-outline-success">Ver..</a>
-    </div>
-    <hr />
     <section>
         @foreach (var item in Model.ContentOds)
         {
@@ -32,6 +27,15 @@
             </div>
         }
     </section>
+    <hr />
+
+    <section id="header" class="jumbotron text-center" style="height:350px">
+    </section>
+    <div class="text-center">
+        <h5>@ViewBag.TituloHead</h5>
+        <p class="lead">@Html.Raw(@ViewBag.SubTituloHead)</p>
+        <a asp-action="GeneViewHorizontalDetails" asp-route-id="@ViewBag.url" class="btn btn-sm btn-outline-success">Ver..</a>
+    </div>
     <hr />
     <section id="gallery">
         <div class="container">

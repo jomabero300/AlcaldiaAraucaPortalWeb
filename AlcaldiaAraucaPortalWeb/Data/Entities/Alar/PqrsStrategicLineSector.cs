@@ -20,6 +20,7 @@ namespace AlcaldiaAraucaPortalWeb.Data.Entities.Alar
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "Linea estratégica")]
         public string PqrsStrategicLineSectorName { get; set; }
+
         public virtual PqrsStrategicLine PqrsStrategicLine { get; set; }
         public virtual ICollection<SubscriberSector> SubscriberSectors { get; set; }
 

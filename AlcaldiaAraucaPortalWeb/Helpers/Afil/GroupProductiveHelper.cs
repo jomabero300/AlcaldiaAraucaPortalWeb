@@ -2,6 +2,7 @@
 using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
 using AlcaldiaAraucaPortalWeb.Helpers.Gene;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
+using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
@@ -107,6 +108,26 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
             var model = await _context.GroupProductives.Include(g => g.State).ToListAsync();
 
             return model.OrderBy(m => m.GroupProductiveName).ToList();
+        }
+
+        public async Task<AffiliateGroupProductiveViewModelsFilter> ListAsync(int RowsCant, int OmitCant, string SearchText = "")
+        {
+            AffiliateGroupProductiveViewModelsFilter model = new AffiliateGroupProductiveViewModelsFilter();
+
+            IQueryable<GroupProductive> query = _context.GroupProductives.Include(g=>g.State);
+
+            int Rows = query.Count();
+
+            if(!string.IsNullOrEmpty(SearchText))
+            {
+                query = query
+                    .Where(p => p.GroupProductiveName.Contains(SearchText));
+            }
+            model.RowsFilterTotal = query.Count();
+
+            model.GroupProductives = await query.Skip(OmitCant).Take(RowsCant).ToListAsync();
+
+            return model;
         }
     }
 }

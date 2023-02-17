@@ -2,6 +2,7 @@
 using AlcaldiaAraucaPortalWeb.Enun;
 using AlcaldiaAraucaPortalWeb.Helpers.Afil;
 using AlcaldiaAraucaPortalWeb.Helpers.Gene;
+using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -148,6 +149,31 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
             ModelState.AddModelError(string.Empty, response.Message);
 
             return View(response);
+        }
+
+        public async Task<JsonResult> ListGene()
+        {
+
+            //Representa el numero de veces que se ha realizado una petición
+            int PetitionCant = Convert.ToInt32(Request.Form["draw"].FirstOrDefault() ?? "0");
+
+            //Cantidad de registro va ha devolver
+            int RowsCant = Convert.ToInt32(Request.Form["length"].FirstOrDefault() ?? "0");
+
+            //cuantos registros va ha omitir
+            int OmitCant = Convert.ToInt32(Request.Form["start"].FirstOrDefault() ?? "0");
+
+            string SearchText = Request.Form["search[value]"].FirstOrDefault() ?? "";
+
+            AffiliateGroupProductiveViewModelsFilter model = await _groupProductive.ListAsync(RowsCant, OmitCant, SearchText);
+
+            return Json(new
+            {
+                draw = PetitionCant,
+                recordsTotal = RowsCant,
+                recordsFiltered = model.RowsFilterTotal,
+                data = model.GroupProductives
+            });
         }
     }
 }

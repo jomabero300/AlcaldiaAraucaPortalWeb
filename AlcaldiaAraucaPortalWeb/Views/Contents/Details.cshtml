@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Detalles</h1>
+<h1 class="fst-italic fw-bold text-capitalize" style="color:#3366CC;">Detalles</h1>
 
 <div>
-    <h4>Contenido</h4>
+    <h4 class="fst-italic fw-bold text-capitalize" style="color:#3366CC;">Contenido</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -55,6 +55,9 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ContentId" class="btn btn-sm btn-warning">Editar</a> |
+    @if (Model.State.StateName != "Activo")
+    {
+        <a asp-action="Edit" asp-route-id="@Model.ContentId" class="btn btn-sm btn-warning">Editar</a>
+    }
     <a asp-action="Index" class="btn btn-sm btn-success">Retornar</a>
 </div>

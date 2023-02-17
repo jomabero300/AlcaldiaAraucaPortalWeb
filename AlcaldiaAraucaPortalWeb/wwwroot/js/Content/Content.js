@@ -124,6 +124,7 @@ function ContentDetalleValidate() {
             $("#OptionFile").focus();
         }
         else if ($("#OptionFile").val() == null) {
+
             $('#spanOptionFile').text('!El campo es requerido¡').show();
 
             if (isValid) {
@@ -443,7 +444,8 @@ $(document).ready(function () {
             $("#dynamicCtr").append("<div class='form-group' id='inputFile'><input id='contentUrlImg' class='form-control' type='file' accept='application/pdf, image/gif, image/jpeg, image/png'/><span id='spanContentUrlImg' class='text-danger'></span></div>");
         }
         else if ($("#OptionFile").val() == "2") {
-            $("#dynamicCtr").append("<input id='contentUrlImg' class='form-control' maxlength='150' placeholder='Digite una url'/><span id='spanContentUrlImg' class='text-danger'></span>");
+            $("#dynamicCtr").append(
+                "<div class='input-group mb-3'> <input id='contentUrlImg' class='form-control' maxlength='150' placeholder='Digite una url' /><span id = 'spanContentUrlImg' class= 'text-danger' ></span> <a href='https://www.youtube.com/@araucactiva1178' class='btn btn-primary stretched-link' target='_blank'><i class='bi bi-youtube'></i></a></div>");
         }
     });
 
@@ -452,9 +454,11 @@ $(document).ready(function () {
 
     $("#pqrsStrategicLineId").change(function () {
 
-        var newVal = $(this).val();
-        let a = document.getElementById("myTableContentDetalle");
-        let lnRows = a.rows.length - 1;
+        let newVal = $(this).val();
+
+        let rowsTable = document.getElementById("myTableContentDetalle");
+
+        let lnRows = rowsTable.rows.length - 1;
 
         if (lnRows > 0) {
             if (!confirm("Realmente desea cambiar de linea estrategica?,la informacion del detalle se perderá.")) {
@@ -466,10 +470,11 @@ $(document).ready(function () {
         }
 
         $("#pqrsStrategicLineSectorId").empty();
+        console.log($("#pqrsStrategicLineId").val());
 
         $.ajax({
             type: 'POST',
-            url: '/Prensa/getSector/',
+            url: urlServidor + 'Prensas/getSector/',
             dataType: 'json',
             data: { Id: $("#pqrsStrategicLineId").val() },
             success: function (data) {

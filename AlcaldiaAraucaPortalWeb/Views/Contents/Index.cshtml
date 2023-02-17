@@ -7,7 +7,7 @@
     <section>
         <div class="row">
             <di class="col-md-10">
-                <h2>@ViewBag.LineName</h2>
+                <h2 class="fst-italic fw-bold text-capitalize" style="color:#3366CC;">@ViewBag.LineName</h2>
             </di>
             <di class="col-md-2 text-end align-self-center">
                 <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-fill"></i> Nuevo</a>
@@ -40,8 +40,8 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
+                    <tr valign="middle">
+                        <td style="width:8%;">
                             @Html.DisplayFor(modelItem => item.ContentDate)
                         </td>
                         <td>
@@ -50,21 +50,23 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ContentText)
                         </td>
-                        <td>
+                        <td align="center">
                             <img src="@Url.Content(item.ContentUrlImg)" class="img-rounded" alt="Image" style="width:60px;height:60px;max-width: 60%; height: auto;" />
                         </td>
-                        <td>
+                        <td align="center">
                             @Html.DisplayFor(modelItem => item.State.StateName)
                         </td>
-                        <td align="center" style="width:15%;">
-                            <a asp-action="Edit" asp-route-id="@item.ContentId" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i> Editar</a>
+                        <td align="center" style="width:16%;">
                             @if (item.State.StateName == "Previo")
                             {
+                                <a asp-action="Edit" asp-route-id="@item.ContentId" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i> Editar</a>
                                 <a asp-action="Delete" asp-route-id="@item.ContentId" class="btn btn-danger btn-sm"><i class="bi bi-trash2-fill"></i> Eliminar</a>
                             }
                             else if (item.State.StateName == "Activo")
                             {
-                                <a asp-action="Inactive" asp-route-id="@item.ContentId" class="btn btn-success btn-sm"><i class="bi bi-toggle-off"></i> Inactivar</a>
+
+                                <a asp-action="Details" asp-route-id="@item.ContentId" class="btn btn-sm btn-info"><i class="bi bi-eye-fill"></i> Detalles</a>
+                                <a asp-action="Inactive" asp-route-id="@item.ContentId" class="btn btn-sm btn-success"><i class="bi bi-toggle-off"></i> Inactivar</a>
                             }
                             else
                             {

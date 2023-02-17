@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h4>Nuevo Afiliado</h4>
+<h4>Nuevo perfil de registro</h4>
 <form asp-action="Create" enctype="multipart/form-data">
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -144,17 +144,28 @@
                                             <span id="spanProfessionId" class="text-danger"></span>
                                         </div>
 
-                                        <div class="form-group">
-                                            <input id="profImagePath" type="file" class="form-control" accept=".png" />
+                                        <div class="form-group mt-2">
+                                            <div class="mb-3 row">
+                                                <label class="col-sm-4 col-form-label">Imagen perfil</label>
+                                                <div class="col-sm-8">
+                                                    <input id="profImagePath" type="file" class="form-control" accept=".png" />
+
+                                                </div>
+                                            </div>
                                             <span id="spanProfImagePath" class="text-danger"></span>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group mt-2">
                                             <input id="profConcept"  placeholder="Descripción" class="form-control" maxlength="100"/>
                                             <span id="spamProfConcept" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">
-                                            <input id="profdocumentoPath" type="file" class="form-control" accept=".pdf" />
+                                        <div class="form-group mt-2">
+                                            <div class="mb-3 row">
+                                                <label class="col-sm-4 col-form-label">Doc. soporte</label>
+                                                <div class="col-sm-8">
+                                                    <input id="profdocumentoPath" type="file" class="form-control" accept=".pdf" />
+                                                </div>
+                                            </div>
                                             <span id="spanProfDocumentoPath" class="text-danger"></span>
                                         </div>                                    
                                     </div>
@@ -164,7 +175,7 @@
                                         </div>
                                     </di>
                                 </div>
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-12 mt-2">
                                     <div id="divProfession">
                                         <table class="table" id="myTableProfession">
                                             <thead>
@@ -192,19 +203,19 @@
                                             <select id="socialNetworkId" class="form-control" asp-items="ViewBag.SocialNetworkId"></select>
                                             <span id="spanSocialNetworkId" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group mt-2">
                                             <input id="socialNetworURL" placeholder="https://www.pagina.com/" maxlength="200" class="form-control" />
                                             <span id="spanSocialNetworURL" class="text-danger"></span>
                                         </div>
                                     </di>
-                                    <di class="col-md-2 text-right align-self-center">
+                                    <di class="col-md-2 text-right align-self-center mt-2">
                                         <div class="form-group">
                                             <button type="button" id="btnAddSocialNetwork" onclick="SocialNetworkAdd();" class="btn btn-sm btn-primary"><i class="bi bi-download"></i> Agregar</button>
                                         </div>
                                     </di>
                                 </div>
 
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-12 mt-2">
                                     <div id="divSocialNetwork">
                                         <table class="table" id="myTableSocialNetwork">
                                             <thead>
@@ -227,8 +238,8 @@
         </div>
 
         <div class="form-group mt-4">
-            <button type="submit" class="btn btn-warning"><i class="bi bi-save-fill" style="color:white"></i> Guardar</button> |
-            <a asp-action="Index" class="btn btn-success"><i class="bi bi-chevron-double-left"></i> Retornar</a>
+            <button type="submit" class="btn btn-sm btn-warning"><i class="bi bi-save-fill" style="color:white"></i> Guardar</button> |
+            <a asp-action="Index" class="btn btn-sm btn-success"><i class="bi bi-chevron-double-left"></i> Retornar</a>
         </div>
     </div>
 </form>

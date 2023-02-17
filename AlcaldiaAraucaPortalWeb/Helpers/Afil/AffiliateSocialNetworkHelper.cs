@@ -1,4 +1,5 @@
 ﻿using AlcaldiaAraucaPortalWeb.Data;
+using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
 using AlcaldiaAraucaPortalWeb.Models.ModelsViewRepo;
 using Microsoft.EntityFrameworkCore;
 

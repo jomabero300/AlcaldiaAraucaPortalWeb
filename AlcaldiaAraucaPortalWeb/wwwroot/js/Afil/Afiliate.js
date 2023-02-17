@@ -8,68 +8,100 @@ let numS = 0;
 function ProfessionAdd() {
     if (ProfessionDetalleValidate()) {
 
-        var formData = new FormData();
+        if ($('#profImagePath').val().trim() == "" && $('#profdocumentoPath').val().trim() == "") {
 
-        formData.append("fileImg", $("#profImagePath")[0].files[0]);
-        formData.append("fileDoc", $("#profdocumentoPath")[0].files[0]);
+            $("#myTableProfession tbody").append("<tr>" +
+                "<td>" + $("#professionId option:selected").text() + "</td>" +
+                "<td><img src='" + urlServidor +"Image/noImage.png' class='img - rounded' alt='Image' style='width: 50px; height: 50px; max-width: 100 %; height: auto;' /></td>" +
+                "<td>" + $("#profConcept").val() + "</td>" +
 
-        $.ajax({
-            type: "POST",
-            url: urlServidor + "Affiliates/UploadeTemp",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                $("#myTableProfession tbody").append("<tr>" +
-                    "<td>" + $("#professionId option:selected").text() + "</td>" +
-                    "<td><img src='" + data.pathImg + "' class='img - rounded' alt='Image' style='width: 100px; height: 100px; max - width: 100 %; height: auto;' /></td>" +
-                    "<td>" + $("#profConcept").val() + "</td>" +
+                "<td width='10%'><img src='" + urlServidor +"Image/noFile.png' class='img - rounded' alt='Image' style='width: 50px; height: 50px; max-width: 100 %; height: auto;' /></td>" +
 
-                    "<td width='10%'><a href='" + data.pathDoc + "' target='_blank'><i class='bi bi-file-earmark-pdf-fill' style='font-size:30px;'></i></a></td>" +
+                "<td style='display: none;'></td>" +
+                "<td style='display: none;'></td>" +
+                "<td>" + '<button class="btn btn-sm btn-danger" type="button" onclick="ProfessionDelete(this)"><i class="bi bi-trash2"></i></button>' + "</td>" +
+                "</tr>");
+            $("#divProfession table").append(
+                "<input type='hidden' name='Professions.Index' value=" + numP + " /> " +
+                "<input type='hidden' name='Professions[" + numP + "].ProfessionId' value='" + $("#professionId").val() + "'/> " +
+                "<input type='hidden' name='Professions[" + numP + "].ImagePath' value=''/> " +
+                "<input type='hidden' name='Professions[" + numP + "].Concept' value='" + $("#profConcept").val() + "'/> " +
+                "<input type='hidden' name='Professions[" + numP + "].DocumentoPath' value=''/> "
+            );
 
-                    "<td style='display: none;'>" + data.pathImg + "</td>" +
-                    "<td style='display: none;'>" + data.pathDoc + "</td>" +
-                    "<td>" + '<button class="btn btn-sm btn-danger" type="button" onclick="ProfessionDelete(this)"><i class="bi bi-trash2"></i></button>' + "</td>" +
-                    "</tr>");
+            $("#professionId").val("0");
+            $("#profImagePath").val("");
+            $("#profConcept").val("");
+            $("#profdocumentoPath").val("");
 
-                $("#divProfession table").append(
-                    "<input type='hidden' name='Professions.Index' value=" + numP + " /> " +
-                    "<input type='hidden' name='Professions[" + numP + "].ProfessionId' value='" + $("#professionId").val() + "'/> " +
-                    "<input type='hidden' name='Professions[" + numP + "].ImagePath' value='" + data.pathImg + "'/> " +
-                    "<input type='hidden' name='Professions[" + numP + "].Concept' value='" + $("#profConcept").val() + "'/> " +
-                    "<input type='hidden' name='Professions[" + numP + "].DocumentoPath' value='" + data.pathDoc + "'/> "
-                );
+            numP++;
 
-                $("#professionId").val("0");
-                $("#profImagePath").val("");
-                $("#profConcept").val("");
-                $("#profdocumentoPath").val("");
+        } else {
+            var formData = new FormData();
 
-                numP++;
-                //Profession();
-            },
-            error: function (ex) {
-                alert('Failed to retrieve.' + ex);
-            }
-        });
+            formData.append("fileImg", $("#profImagePath")[0].files[0]);
+            formData.append("fileDoc", $("#profdocumentoPath")[0].files[0]);
+
+            $.ajax({
+                type: "POST",
+                url: urlServidor + "Affiliates/UploadeTemp",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $("#myTableProfession tbody").append("<tr>" +
+                        "<td>" + $("#professionId option:selected").text() + "</td>" +
+                        "<td><img src='" + data.pathImg + "' class='img - rounded' alt='Image' style='width: 100px; height: 100px; max-width: 100 %; height: auto;' /></td>" +
+                        "<td>" + $("#profConcept").val() + "</td>" +
+
+                        "<td width='10%'><a href='" + data.pathDoc + "' target='_blank'><i class='bi bi-file-earmark-pdf-fill' style='font-size:30px;'></i></a></td>" +
+
+                        "<td style='display: none;'>" + data.pathImg + "</td>" +
+                        "<td style='display: none;'>" + data.pathDoc + "</td>" +
+                        "<td>" + '<button class="btn btn-sm btn-danger" type="button" onclick="ProfessionDelete(this)"><i class="bi bi-trash2"></i></button>' + "</td>" +
+                        "</tr>");
+
+                    $("#divProfession table").append(
+                        "<input type='hidden' name='Professions.Index' value=" + numP + " /> " +
+                        "<input type='hidden' name='Professions[" + numP + "].ProfessionId' value='" + $("#professionId").val() + "'/> " +
+                        "<input type='hidden' name='Professions[" + numP + "].ImagePath' value='" + data.pathImg + "'/> " +
+                        "<input type='hidden' name='Professions[" + numP + "].Concept' value='" + $("#profConcept").val() + "'/> " +
+                        "<input type='hidden' name='Professions[" + numP + "].DocumentoPath' value='" + data.pathDoc + "'/> "
+                    );
+
+                    $("#professionId").val("0");
+                    $("#profImagePath").val("");
+                    $("#profConcept").val("");
+                    $("#profdocumentoPath").val("");
+
+                    numP++;
+                    //Profession();
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve.' + ex);
+                }
+            });
+        }
     }
 }
 function ProfessionDelete(ctl) {
     _row = $(ctl).parents("tr");
 
-    var cols = _row.children("td");
+    let cols = _row.children("td");
 
-    var pathImg = $(cols[4]).text();
-    var pathPdf = $(cols[5]).text();
+    let pathImg = $(cols[4]).text();
+
+    let pathPdf = $(cols[5]).text();
+
     $.ajax({
         type: "POST",
         url: urlServidor + "Affiliates/DeleteTemp",
         data: { fileImg: pathImg, filePdf: pathPdf },
         success: function (data) {
 
-            var count = $("#myTableProfession tr").length - 1;
+            let count = $("#myTableProfession tr").length - 1;
 
-            var index = $(ctl).closest("tr").index();
+            let index = $(ctl).closest("tr").index();
 
             $(ctl).parents("tr").remove();
 
@@ -109,16 +141,16 @@ function ProfessionDetalleValidate() {
         isValid = false;
     }
 
-    if ($('#profImagePath').val().trim() == "") {
+    //if ($('#profImagePath').val().trim() == "") {
 
-        $('#spanProfImagePath').text('!El campo es requerido¡').show();
+    //    $('#spanProfImagePath').text('!El campo es requerido¡').show();
 
-        if (isValid) {
-            $('#profImagePath').focus();
-        }
+    //    if (isValid) {
+    //        $('#profImagePath').focus();
+    //    }
 
-        isValid = false;
-    }
+    //    isValid = false;
+    //}
 
     if ($('#profConcept').val().trim() == "") {
 
@@ -131,16 +163,16 @@ function ProfessionDetalleValidate() {
         isValid = false;
     }
 
-    if ($('#profdocumentoPath').val().trim() == "") {
+    //if ($('#profdocumentoPath').val().trim() == "") {
 
-        $('#spanProfDocumentoPath').text('!El campo es requerido¡').show();
+    //    $('#spanProfDocumentoPath').text('!El campo es requerido¡').show();
 
-        if (isValid) {
-            $('#profdocumentoPath').focus();
-        }
+    //    if (isValid) {
+    //        $('#profdocumentoPath').focus();
+    //    }
 
-        isValid = false;
-    }
+    //    isValid = false;
+    //}
 
     return isValid;
 }
@@ -180,7 +212,9 @@ function Profession() {
 }
 
 function ProductivoAdd() {
+
     if (ProductivoValidate()) {
+
         $("#myTableProductive tbody").append("<tr>" +
             "<td>" + $("#groupProductiveId option:selected").text() + "</td>" +
             "<td>" + '<button class="btn btn-sm btn-danger" type="button" onclick="ProductiveDelete(this)"><i class="bi bi-trash2"></i></button>' + "</td>" +
@@ -191,10 +225,10 @@ function ProductivoAdd() {
             "<input type='hidden' name='Productivo[" + numD + "].GroupProductiveId' value='" + $("#groupProductiveId").val() + "'/> "
         );
 
-        $("#groupProductiveId").val(0)
-        numD++;
-        btnProdutiveAdd(numD);
-        Productivo();
+    //    $("#groupProductiveId").val(0)
+    //    numD++;
+    //    btnProdutiveAdd(numD);
+    //    Productivo();
     }
 }
 function ProductiveDelete(ctl) {

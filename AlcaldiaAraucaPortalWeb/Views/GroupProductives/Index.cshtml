@@ -1,13 +1,11 @@
-﻿@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Afil.GroupProductive>
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
 
 <div class="row" style="width:100%;">
     <div class="col-md-6">
-        <h1>Grupo productivos</h1>
+        <h1 class="fst-italic fw-bold text-capitalize" style="color:#3366CC;">Grupos productivos</h1>
     </div>
     <div class="col-md-6" style="text-align: end;vertical-align: middle;">
         <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-fill"></i> Nuevo</a>
@@ -15,36 +13,22 @@
 </div>
 
 
-<table id="MyTable" class="table table-striped" style="width:100%">
+<table id="MyTableGroupProductive" class="table table-striped" style="width:100%">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.GroupProductiveName)
+                Descripción
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StateId)
+                Estado
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GroupProductiveName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.State.StateName)
-            </td>
-            <td align="center">
-                <a asp-action="Edit" asp-route-id="@item.GroupProductiveId" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i> Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.GroupProductiveId" class="btn btn-sm btn-info"><i class="bi bi-eye-fill"></i> Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.GroupProductiveId" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i> Elimnar</a>
-            </td>
-        </tr>
-}
     </tbody>
 </table>
 @section scripts{
     <script src="~/js/datatable_files.js"></script>
+    <script src="~/js/Afil/AfiliateList.js"></script>
 }

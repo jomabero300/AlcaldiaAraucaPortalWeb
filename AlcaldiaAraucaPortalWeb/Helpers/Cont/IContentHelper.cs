@@ -11,10 +11,11 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
         Task<Response> AddEditDetailAsync(ContentDetail model);
 
         Task<List<Content>> ListAsync(int SectorId);
+        Task<ContentModelsViewFilter> ListAsync(int RowsCant, int OmitCant, string SearchText = "");
         Task<List<FilterViewModel>> ListTitleAsync(string title);
         Task<List<ContentDetail>> ListDetailsAsync(int contentId);
         Task<List<Content>> ListUserAsync(string email);
-        Task<List<Content>> ListReporterAsync();
+        //Task<List<Content>> ListReporterAsync();
 
 
         Task<ContentDetail> DetailsIdAsync(int ContentDetailsId);

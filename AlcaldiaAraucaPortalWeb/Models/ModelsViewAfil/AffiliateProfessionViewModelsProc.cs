@@ -10,7 +10,7 @@ namespace AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil
         [Display(Name = "Profesión")]
         public int ProfessionId { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es requerido")]
+        //[Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "Imagen")]
         public string ImagePath { get; set; }
 

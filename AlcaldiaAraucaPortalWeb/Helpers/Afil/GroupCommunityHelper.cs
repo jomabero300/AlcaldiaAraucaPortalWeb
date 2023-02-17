@@ -1,5 +1,6 @@
 ﻿using AlcaldiaAraucaPortalWeb.Data;
 using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
+using AlcaldiaAraucaPortalWeb.Data.Entities.Gene;
 using AlcaldiaAraucaPortalWeb.Helpers.Gene;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
 using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
@@ -111,6 +112,27 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
             var model = await _context.GroupCommunities.Include(g => g.State).ToListAsync();
 
             return model.OrderBy(m => m.GroupCommunityName).ToList();
+        }
+
+        public async Task<AffiliateGroupCommunityViewModelsFilter> ListAsync(int RowsCant, int OmitCant, string SearchText = "")
+        {
+            AffiliateGroupCommunityViewModelsFilter model= new AffiliateGroupCommunityViewModelsFilter();
+
+            IQueryable<GroupCommunity> query = _context.GroupCommunities.Include(g=>g.State);
+
+            int Rows = query.Count();
+
+            if(!string.IsNullOrEmpty(SearchText))
+            {
+                query = query
+                    .Where(p => p.GroupCommunityName.Contains(SearchText));
+            }
+
+            model.RowsFilterTotal = query.Count();
+
+            model.GroupCommunities = await query.Skip(OmitCant).Take(RowsCant).ToListAsync();
+
+            return model;
         }
 
         public async Task<List<GroupCommunityViewModel>> StatisticsReportAsync(GroupCommunityViewModel model)
