@@ -31,7 +31,7 @@ namespace AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public string Phone { get; set; }
 
-        [Display(Name = "Teléfono")]
+        [Display(Name = "Móvil")]
         [MaxLength(13, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         public string CellPhone { get; set; }
 

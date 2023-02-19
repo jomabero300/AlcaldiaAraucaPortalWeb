@@ -7,6 +7,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
     public interface IContentHelper
     {
         Task<Response> AddAsync(ContentModelsViewCont model);
+        Task<Response> AddAPrensasync(ContentModelsViewCont model);
         Task<Response> UpdateAsync(ContentEditViewModel model);
         Task<Response> AddEditDetailAsync(ContentDetail model);
 

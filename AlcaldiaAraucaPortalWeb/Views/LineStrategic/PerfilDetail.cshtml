@@ -1,0 +1,193 @@
+﻿@model AlcaldiaAraucaPortalWeb.Data.Entities.Afil.Affiliate
+
+@{
+    ViewData["Title"] = "Perfil de registro";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TypeUserId)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.TypeUserId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CellPhone)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.CellPhone)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <img class="rounded-circle" src="@Url.Content(Model.ImagePath)" alt="Image" style="max-width: 100%; height: auto;" />
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-12 border shadow">
+            <ul class="nav nav-pills nav-justified">
+                <li class="nav-item active"><a href="#GroupProductive-tab" class="nav-link" data-bs-toggle="pill">Productivo</a></li>
+                <li class="nav-item"><a href="#GroupCommunities-tab" class="nav-link" data-bs-toggle="pill">Comunitario</a></li>
+                <li class="nav-item"><a href="#Proffesional-tab" class="nav-link" data-bs-toggle="pill">Profesión</a></li>
+                <li class="nav-item"><a href="#SocialNetwork-tab" class="nav-link" data-bs-toggle="pill">Redes sociales</a></li>
+            </ul>
+            
+            <div class="tab-content">
+                <!--Grupoi productivo-->
+                <div class="tab-pane show fade active justify-content-center p-2" id="GroupProductive-tab">
+                    <div class="form-group col-md-12">
+                        <div id="divProductive">
+                            <table class="table" id="myTableProductive">
+                                <thead>
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.GroupProductives)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.GroupProductive.GroupProductiveName)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--Grupo comunitario-->
+                <div class="tab-pane justify-content-center p-2" id="GroupCommunities-tab">
+                    <div class="form-group col-md-12">
+                        <div id="divGroupCommunity">
+                            <table class="table" id="myTableGroupCommunity">
+                                <thead>
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.GroupCommunities)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.GroupCommunity.GroupCommunityName)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Profesion-->
+                <div class="tab-pane justify-content-center p-2" id="Proffesional-tab">
+                    <div class="form-group col-md-12 mt-2">
+                        <div id="divProfession">
+                            <table class="table" id="myTableProfession">
+                                <thead>
+                                    <tr>
+                                        <th>Profesión</th>
+                                        <th>Foto</th>
+                                        <th>Descripción</th>
+                                        <th>Documento</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Professions)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Profession.ProfessionName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ImagePath)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Concept)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DocumentoPath)
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--Redes sociales-->
+                <div class="tab-pane justify-content-center p-2" id="SocialNetwork-tab">
+                    <div class="form-group col-md-12 mt-2">
+                        <div id="divSocialNetwork">
+                            <table class="table" id="myTableSocialNetwork">
+                                <thead>
+                                    <tr>
+                                        <th>Red</th>
+                                        <th>Url</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.SocialNetworks)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SocialNetwork.SocialNetworkName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AffiliateSocialNetworURL)
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

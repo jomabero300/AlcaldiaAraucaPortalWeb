@@ -17,6 +17,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Gene
         Task<List<ApplicationUser>> UsersComboAsync();
         Task<List<ApplicationUser>> ListAsync();
         Task<List<UsersViewModel>> ListAsync(string id);
+        Task<List<string>> ListPrensaEmailsAsync();
 
 
         Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);

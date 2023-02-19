@@ -43,7 +43,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="align-middle">
                 <td>
                     @Html.DisplayFor(modelItem => item.TypeUserId)
                 </td>
@@ -65,14 +65,14 @@
                 <td>
                     @if (!string.IsNullOrEmpty(item.ImagePath))
                     {
-                        <img class="img-rounded" src="@Url.Content(item.ImagePath)" alt="Image" style="width: 100px; height: 100px; max-width: 100%; height: auto;" />
+                        <img class="rounded-circle" src="@Url.Content(item.ImagePath)" alt="Image" style="width: 80px; height: 80px; max-width: 100%; height: auto;" />
                     }
 
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.AffiliateId" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i> Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.AffiliateId" class="btn btn-sm btn-info"><i class="bi bi-eye-fill"></i> Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.AffiliateId" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i> Elimnar</a>
+                    <a asp-action="Edit" asp-route-id="@item.AffiliateId" class="btn btn-sm btn-warning md-2"><i class="bi bi-pencil-fill"></i> Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.AffiliateId" class="btn btn-sm btn-info md-2"><i class="bi bi-eye-fill"></i> Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.AffiliateId" class="btn btn-sm btn-danger md-2"><i class="bi bi-trash2-fill"></i> Elimnar</a>
                 </td>
             </tr>
         }

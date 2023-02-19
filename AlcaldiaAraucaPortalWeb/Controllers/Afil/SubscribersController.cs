@@ -5,6 +5,7 @@ using AlcaldiaAraucaPortalWeb.Helpers.Gene;
 using AlcaldiaAraucaPortalWeb.Helpers.Subs;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
 using AlcaldiaAraucaPortalWeb.Models.ModelsViewSusc;
+using iTextSharp.text.pdf.qrcode;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
@@ -62,22 +63,28 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
             if(response.Succeeded)
             {
-                string myToken = "2510";
+                string myToken = Guid.NewGuid().ToString();
+
                 string tokenLink = Url.Action("ConfirmSubscriber", "Home", new
                 {
                     userid = subscribete.SubscriberId.ToString(),
                     token = myToken
                 }, protocol: HttpContext.Request.Scheme);
 
-
-                response = _mailHelper.SendMail(model.email, "Araucactiva - Confirmación de subscripción", 
+                response = _mailHelper.SendMail(model.email, 
+                    "Araucactiva - Confirmación de subscripción", 
                     $"<h1>Araucactiva - Confirmación de subscripción</h1>" +
-                    $"Para habilitar la subscripción, " +
+                    $"Para habilitar la subscripción," +
                     $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Confirmar Email</a>");
 
             }
 
-            return Json(response.Succeeded);
+            return Json(response);
+        }
+
+        public IActionResult SubCribirseConfirmation()
+        {
+            return View();
         }
 
         private string SelectUrl(int sectorId)

@@ -12,7 +12,18 @@
             <div class="card-body">
                 <h4 class="card-title">@item.Name</h4>
                 <p class="card-text text-justify">@item.descrition</p>
-                <a asp-controller="LineStrategic" asp-action="GeneViewHorizontalDetails" asp-route-id="@item.id" class="btn btn-sm btn-outline-success">Ver..</a>
+
+                @if(item.Model=="C")
+                {
+                    @if(item.isDetails)
+                    {
+                        <a asp-controller="LineStrategic" asp-action="GeneViewHorizontalDetails" asp-route-id="@item.id" class="btn btn-sm btn-outline-success"><i class="bi bi-eye-fill"></i>Ver..</a>
+                    }
+                }
+                else @if (item.Model == "A")
+                {
+                    <a asp-controller="LineStrategic" asp-action="PerfilDetail" asp-route-id="@item.id" class="btn btn-sm btn-outline-success"><i class="bi bi-eye-fill"></i>Ver..</a>
+                }
             </div>
         </div>
     }

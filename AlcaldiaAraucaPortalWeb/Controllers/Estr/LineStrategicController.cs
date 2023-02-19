@@ -1,4 +1,6 @@
-﻿using AlcaldiaAraucaPortalWeb.Data.Entities.Cont;
+﻿using AlcaldiaAraucaPortalWeb.Data.Entities.Afil;
+using AlcaldiaAraucaPortalWeb.Data.Entities.Cont;
+using AlcaldiaAraucaPortalWeb.Helpers.Afil;
 using AlcaldiaAraucaPortalWeb.Helpers.Alar;
 using AlcaldiaAraucaPortalWeb.Helpers.Cont;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
@@ -14,22 +16,25 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Estr
         private readonly IPqrsStrategicLineSectorHelper _lineSectorHelper;
         private readonly IContentOdsHelper _contentOdsHelper;
         private readonly IContentHelper _contentHelper;
+        private readonly IAffiliateHelper _affiliateHelper;
 
         public LineStrategicController(
             IPqrsStrategicLineHelper pqrsStrategicLine,
             IPqrsStrategicLineSectorHelper lineSectorHelper,
             IContentOdsHelper contentOdsHelper,
-            IContentHelper contentHelper)
+            IContentHelper contentHelper,
+            IAffiliateHelper affiliateHelper)
         {
             _pqrsStrategicLine = pqrsStrategicLine;
             _lineSectorHelper = lineSectorHelper;
             _contentOdsHelper = contentOdsHelper;
             _contentHelper = contentHelper;
+            _affiliateHelper = affiliateHelper;
         }
 
 
         #region Desarrollo social
-        
+
         public IActionResult Cultura()
         {
             string StrategicLine = "Desarrollo social incluyente";
@@ -351,6 +356,13 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Estr
             //string xx =await _lineSectorHelper.ByLineaSector(id);
             ViewBag.TituloHead =await _lineSectorHelper.ByLineaSector(id);
 
+            return View(model);
+        }
+
+        public async Task<IActionResult> PerfilDetail(int id)
+        {
+            Affiliate model =await _affiliateHelper.AffiliateByIdAsync(id);
+            model.TypeUserId = model.TypeUserId == "P" ? "Persona" : "Empresa";
             return View(model);
         }
 

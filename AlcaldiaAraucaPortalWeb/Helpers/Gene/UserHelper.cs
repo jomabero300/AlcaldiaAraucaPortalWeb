@@ -198,5 +198,16 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Gene
 
             return model.OrderBy(m => m.Name).ToList();
         }
+
+        public async Task<List<string>> ListPrensaEmailsAsync()
+        {
+            List<string> model = await (from u in _context.Users
+                                         join ur in _context.UserRoles on u.Id equals ur.UserId
+                                         join r in _context.Roles on ur.RoleId equals r.Id
+                                         where r.Name.Equals("Prensa")
+                                         select u.Email).ToListAsync();
+
+            return model;
+        }
     }
 }

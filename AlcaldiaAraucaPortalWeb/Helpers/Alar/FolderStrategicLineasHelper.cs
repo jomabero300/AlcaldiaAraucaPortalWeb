@@ -1,4 +1,5 @@
 ﻿using AlcaldiaAraucaPortalWeb.Data;
+using AlcaldiaAraucaPortalWeb.Data.Entities.Alar;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlcaldiaAraucaPortalWeb.Helpers.Alar
@@ -49,11 +50,17 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Alar
 
         public async Task<string> FolderPathAsync(int pqrsStrategicLineSectorId, string userName)
         {
-            string lineName = await lpineNameAsync(userName);
+            //string lineName = await lpineNameAsync(userName);
+
+            string lineName1 = await _context.PqrsStrategicLineSectors
+                                    .Include(x => x.PqrsStrategicLine)
+                                    .Where(p => p.PqrsStrategicLineSectorId == pqrsStrategicLineSectorId)
+                                    .Select(x=>x.PqrsStrategicLine.PqrsStrategicLineName)
+                                    .FirstOrDefaultAsync();
 
             var nomSector = await _strategicLineSectorHelper.ByIdAsync(pqrsStrategicLineSectorId);
 
-            string folderPath = FolderPath(lineName, nomSector.PqrsStrategicLineSectorName);
+            string folderPath = FolderPath(lineName1, nomSector.PqrsStrategicLineSectorName);
 
             return folderPath;
         }
@@ -223,7 +230,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Alar
 
         public async Task<string> lpineNameAsync(string userName)
         {
-            var strategiaLineaId = await _userStrategicLineHelper.PqrsStrategicLineEmaildAsync(userName);
+            PqrsStrategicLine strategiaLineaId = await _userStrategicLineHelper.PqrsStrategicLineEmaildAsync(userName);
 
             return strategiaLineaId.PqrsStrategicLineName;
         }

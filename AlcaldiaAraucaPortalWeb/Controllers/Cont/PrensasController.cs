@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
 {
@@ -28,6 +29,8 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
         private readonly IContentHelper _contentHelper;
         private readonly IUserHelper _userHelper;
         private readonly IUtilitiesHelper _utilitiesHelper;
+        private readonly ISubscriberHelper _subscriberHelper;
+        private readonly IMailHelper _mailHelper;
 
         public PrensasController(
             IPqrsStrategicLineHelper strategicLineHelper,
@@ -36,8 +39,8 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
             IImageHelper imageHelper, IStateHelper stateHelper,
             ISubscriberSectorHelper subscriberSectorHelper,
             IPqrsUserStrategicLineHelper userStrategicLineHelper,
-            IContentHelper contentHelper, IUserHelper userHelper, 
-            IUtilitiesHelper utilitiesHelper)
+            IContentHelper contentHelper, IUserHelper userHelper,
+            IUtilitiesHelper utilitiesHelper, ISubscriberHelper subscriberHelper, IMailHelper mailHelper)
         {
             _strategicLineHelper = strategicLineHelper;
             _strategicLineSectorHelper = strategicLineSectorHelper;
@@ -49,6 +52,8 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
             _contentHelper = contentHelper;
             _userHelper = userHelper;
             _utilitiesHelper = utilitiesHelper;
+            _subscriberHelper = subscriberHelper;
+            _mailHelper = mailHelper;
         }
 
         public IActionResult IndexPrueba()
@@ -106,7 +111,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
                     }).ToList()
                 };
 
-                Response response = await _contentHelper.AddAsync(modelAdd);
+                Response response = await _contentHelper.AddAPrensasync(modelAdd);
                 
                 if(response.Succeeded)
                 {
@@ -185,6 +190,28 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
 
                 if (response.Succeeded)
                 {
+                    State state = await _stateHelper.ByIdAsync(model.StateId);
+
+                    if (state.StateName == "Activo")
+                    {
+                        List<string> emails = await _subscriberHelper.emailsSubscribeAsync(model.ContentId);
+
+                        List<string> sectorName = await _subscriberHelper.SectorMenuUrl(model.ContentId);
+
+                        string tokenLink = Url.Action(sectorName[1], "LineStrategic", new
+                        {
+                        }, protocol: HttpContext.Request.Scheme);
+
+                        foreach (var email in emails)
+                        {
+                            Response response2 = _mailHelper.SendMail(email, 
+                                "Araucactiva - Notificación", 
+                                $"<h1>Araucactiva - Nota nueva</h1>" +
+                                $"Para ver las noticias de <strong>{sectorName[0]}</strong>, " +
+                                $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Ver aquí</a>");
+                        }
+                    }
+
                     return RedirectToAction(nameof(Index));
                 }
 

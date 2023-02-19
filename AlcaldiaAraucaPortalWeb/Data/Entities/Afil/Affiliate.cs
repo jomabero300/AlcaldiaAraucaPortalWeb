@@ -48,7 +48,7 @@ namespace AlcaldiaAraucaPortalWeb.Data.Entities.Afil
         public string Phone { get; set; }
 
         [Column(TypeName = "varchar(13)")]
-        [Display(Name = "Teléfono")]
+        [Display(Name = "Móvil")]
         [MaxLength(13, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
         public string CellPhone { get; set; }
 

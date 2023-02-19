@@ -66,7 +66,9 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
                 return NotFound();
             }
 
-            Content model = await _contentHelper.ByUserIdAsync(User.Identity.Name,(int)id);
+            //Content model = await _contentHelper.ByUserIdAsync(User.Identity.Name,(int)id);
+
+            Content model = await _contentHelper.ByIdAsync((int)id);
 
             if (model == null)
             {

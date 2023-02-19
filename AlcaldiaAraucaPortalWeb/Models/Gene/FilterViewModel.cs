@@ -7,5 +7,6 @@
         public string descrition { get; set; }
         public string ImageUrl { get; set; }
         public string Model { get; set; }
+        public bool isDetails { get; set; }
     }
 }

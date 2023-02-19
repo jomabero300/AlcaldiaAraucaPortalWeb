@@ -1,9 +1,10 @@
-﻿using AlcaldiaAraucaPortalWeb.Helpers.Gene;
+﻿using AlcaldiaAraucaPortalWeb.Data.Entities.Subs;
+using AlcaldiaAraucaPortalWeb.Helpers.Gene;
+using AlcaldiaAraucaPortalWeb.Helpers.Subs;
 using AlcaldiaAraucaPortalWeb.Models;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Drawing;
 
 namespace AlcaldiaAraucaPortalWeb.Controllers
 {
@@ -11,11 +12,19 @@ namespace AlcaldiaAraucaPortalWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IImageHelper _imageHelper;
+        private readonly ISubscriberHelper _subscriber;
+        private readonly ISubscriberSectorHelper _subscriberSectorHelper;
+        //private readonly IMailHelper _mailHelper;
 
-        public HomeController(ILogger<HomeController> logger, IImageHelper imageHelper)
+        public HomeController(ILogger<HomeController> logger,
+            IImageHelper imageHelper,
+            ISubscriberHelper subscriber,
+            ISubscriberSectorHelper subscriberSectorHelper)
         {
             _logger = logger;
             _imageHelper = imageHelper;
+            _subscriber = subscriber;
+            _subscriberSectorHelper = subscriberSectorHelper;
         }
 
         public IActionResult Index()
@@ -572,7 +581,59 @@ namespace AlcaldiaAraucaPortalWeb.Controllers
         {
             return View();
         }
+                                         
+        public async Task<IActionResult> ConfirmSubscriber(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return NotFound();
+            }
 
+            Subscriber subscribe = await _subscriber.ByIdAsync(int.Parse(userId));
+
+            if (subscribe == null)
+            {
+                return NotFound();
+            }
+
+            Response result = await _subscriber.ConfirmEmailAsync(subscribe, token);
+
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+
+            return View();
+        }
+
+        //private async void publicSend()
+        //{
+        //    try
+        //    {
+        //        List<SubscriberSector> model = await _subscriberSectorHelper.BySubSectorAsync();
+
+        //        if (model != null)
+        //        {
+        //            foreach (var item in model)
+        //            {
+        //                string tokenLink = Url.Action("MenuConfirmed", "Home", new
+        //                {
+        //                    id = item.Url
+        //                }, protocol: HttpContext.Request.Scheme);
+
+        //                Response response = _mailHelper.SendMail(item.Subscriber.email, "Araucactiva - Nuevas actualización", $"<h1>Araucactiva - Nota nueva</h1>" +
+        //                    $"Para ver las nuevas noticias, " +
+        //                    $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">ve aquí</a>");
+        //            }
+
+        //            model.ForEach(x => x.SendUrl = false);
+
+        //            _subscriberSectorHelper.AddUpdateAsync(model).Wait();
+        //        }
+        //    }
+        //    catch { }
+
+        //}
 
         public IActionResult NotAuthorized()
         {
@@ -584,8 +645,6 @@ namespace AlcaldiaAraucaPortalWeb.Controllers
         {
             return View();
         }
-
-
 
         public IActionResult Privacy()
         {
@@ -601,22 +660,23 @@ namespace AlcaldiaAraucaPortalWeb.Controllers
         public async Task<IActionResult> manuales()
         {
             string ltFile = "ManualDeUsuario.pdf";
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
-                if(User.IsInRole("Administrador"))
+                if (User.IsInRole("Administrador"))
                 {
                     ltFile = "ManualDelAdministrador.pdf";
                 }
-                else if(User.IsInRole("Publicador") || User.IsInRole("Prensa"))
+                else if (User.IsInRole("Publicador") || User.IsInRole("Prensa"))
                 {
                     ltFile = "ManualDelPublicador.pdf";
                 }
             }
-            
+
             MemoryStream memory = await DownloadSinghFile(ltFile, "wwwroot\\support");
 
             return File(memory, "application/pdf");
         }
+
         private async Task<MemoryStream> DownloadSinghFile(string fileName, string uploadPath)
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), uploadPath, fileName);

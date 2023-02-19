@@ -23,8 +23,11 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
 
         private readonly IImageHelper _imageHelper;
         private readonly IStateHelper _stateHelper;
+        private readonly IUserHelper _userHelper;
 
-        public ContentHelper(ApplicationDbContext context, IPqrsUserStrategicLineHelper userStrategicLineHelper, IFolderStrategicLineasHelper folderStrategicLineasHelper, IImageHelper imageHelper, IStateHelper stateHelper, ISubscriberSectorHelper subscriberSectorHelper)
+
+
+        public ContentHelper(ApplicationDbContext context, IPqrsUserStrategicLineHelper userStrategicLineHelper, IFolderStrategicLineasHelper folderStrategicLineasHelper, IImageHelper imageHelper, IStateHelper stateHelper, ISubscriberSectorHelper subscriberSectorHelper, IUserHelper userHelper)
         {
             _context = context;
             _userStrategicLineHelper = userStrategicLineHelper;
@@ -32,6 +35,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
             _imageHelper = imageHelper;
             _stateHelper = stateHelper;
             _subscriberSectorHelper = subscriberSectorHelper;
+            _userHelper = userHelper;
         }
 
         public async Task<Response> ActiveAsync(int id)
@@ -55,6 +59,92 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
             {
                 response.Succeeded = false;
 
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public async Task<Response> AddAPrensasync(ContentModelsViewCont model)
+        {
+            Response response = new Response() { Succeeded = true };
+
+            try
+            {
+                ApplicationUser user = await _context.Users.Where(c => c.Id == model.UserId).FirstOrDefaultAsync();
+
+                model.ContentTitle = Utilities.StartCharacterToUpper(model.ContentTitle);
+
+                model.ContentText = Utilities.StartCharacterToUpper(model.ContentText);
+
+                if (model.ContentText.Contains("http"))
+                {
+                    model.ContentText = Utilities.ConvertToTextInLik(model.ContentText);
+                }
+
+                string folder = await _folderStrategicLineasHelper.FolderPathAsync(model.PqrsStrategicLineSectorId, model.UserId);
+
+                var path = string.Empty;
+
+                if (model.ContentUrlImg != null)
+                {
+                    path = await _imageHelper.UploadImageAsync(model.ContentUrlImg, folder);
+                }
+
+                int stateId = await _stateHelper.StateIdAsync("G", "Previo");
+
+                for (int i = 0; i < model.ContentDetails.Count; i++)
+                {
+                    if (model.ContentDetails[i].isEsta == 1)
+                    {
+                        model.ContentDetails[i].ContentUrlImg = _folderStrategicLineasHelper.FileMove(model.ContentDetails[i].ContentUrlImg, folder);
+                    }
+                    else
+                    {
+                        model.ContentDetails[i].ContentUrlImg = model.ContentDetails[i].ContentUrlImg;
+                    }
+
+                    if (model.ContentDetails[i].ContentText.Contains("http"))
+                    {
+                        model.ContentDetails[i].ContentText = Utilities.ConvertToTextInLik(model.ContentDetails[i].ContentText);
+                    }
+                }
+
+                var modelAdd = new Content()
+                {
+                    PqrsStrategicLineSectorId = model.PqrsStrategicLineSectorId,
+                    UserId = user.Id,
+                    ContentDate = DateTime.Now,
+                    ContentTitle = model.ContentTitle,
+                    ContentText = model.ContentText,
+                    ContentUrlImg = path,
+                    StateId = stateId,
+                    ContentDetails = model.ContentDetails.Select(c => new ContentDetail()
+                    {
+                        ContentDate = DateTime.Now,
+                        ContentTitle = c.ContentTitle,
+                        ContentText = c.ContentText,
+                        ContentUrlImg = c.ContentUrlImg,
+                        StateId = stateId
+                    }).ToList()
+                };
+
+                List<SubscriberSector> subscriberSector = await _subscriberSectorHelper.BySectorIdAsync(model.PqrsStrategicLineSectorId);
+
+                _context.Contents.Add(modelAdd);
+
+                await _context.SaveChangesAsync();
+
+                if (subscriberSector != null)
+                {
+                    _context.SubscriberSectors.UpdateRange(subscriberSector);
+                    await _context.SaveChangesAsync();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.Succeeded = false;
                 response.Message = ex.Message;
             }
 
@@ -126,6 +216,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
                 };
 
                 List<SubscriberSector> subscriberSector = await _subscriberSectorHelper.BySectorIdAsync(model.PqrsStrategicLineSectorId);
+
                 _context.Contents.Add(modelAdd);
 
                 await _context.SaveChangesAsync();
@@ -187,9 +278,9 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
         {
             Content model = await _context.Contents
                                         .Include(c=>c.ContentDetails)
+                                        .Include(u=>u.ApplicationUser)
                                         .Include(c=>c.PqrsStrategicLineSector)
                                         .Include(c=>c.State)
-                                        .Include(u=>u.ApplicationUser)
                                         .Where(c=>c.ContentId== contentId)
                                         .FirstOrDefaultAsync();
             return model;
@@ -197,7 +288,11 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
 
         public async Task<List<string>> ByImageAsync(int contentId)
         {
-            Content model = await _context.Contents.Include(c => c.ContentDetails).Where(c => c.ContentId == contentId).FirstOrDefaultAsync();
+            Content model = await _context.Contents
+                                          .Include(c => c.ContentDetails)
+                                          .Where(c => c.ContentId == contentId)
+                                          .FirstOrDefaultAsync();
+
             List<string> image=new List<string>();
             image.Add(model.ContentUrlImg);
 
@@ -360,7 +455,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
 
         public async Task<List<FilterViewModel>> ListTitleAsync(string title)
         {
-            List<Content> modelConten = await _context.Contents
+            List<Content> modelConten = await _context.Contents.Include(c=>c.ContentDetails)
                                           .Where(x =>
                                                  x.ContentTitle.ToUpper().Contains(title) ||
                                                  x.ContentText.ToUpper().Contains(title)).ToListAsync();
@@ -385,7 +480,8 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
                     Name = x.ContentTitle,
                     descrition = x.ContentText,
                     ImageUrl = x.ContentUrlImg,
-                    Model = "C"
+                    Model = "C",
+                    isDetails=x.ContentDetails.Count > 0 ? true:false,
                 }).ToList();
             }
             if (modelProfes.Count > 0)
@@ -412,15 +508,32 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
         public async Task<List<Content>> ListUserAsync(string email)
         {
             PqrsStrategicLine strategiaLineaId = await _userStrategicLineHelper.PqrsStrategicLineEmaildAsync(email);
-
-            List<Content> model = _context.Contents
+            //buscart los publicitas
+            List<string> userName = await _userHelper.ListPrensaEmailsAsync();
+            List<Content> model = (_context.Contents
                                         .Include(c => c.ApplicationUser)
                                         .Include(c => c.PqrsStrategicLineSector)
                                         .Include(c => c.State)
                                         .Where(c => c.ApplicationUser.UserName == email &&
                                                     c.PqrsStrategicLineSector.PqrsStrategicLineId == strategiaLineaId.PqrsStrategicLineId)
-                                        .OrderByDescending(x => x.ContentId)
-                                        .ToList();
+                                        .OrderByDescending(x => x.ContentId))
+                                        .Union(_context.Contents
+                                        .Include(c => c.ApplicationUser)
+                                        .Include(c => c.PqrsStrategicLineSector)
+                                        .Include(c => c.State)
+                                        .Where(c => userName.Contains(c.ApplicationUser.UserName) &&
+                                                    c.PqrsStrategicLineSector.PqrsStrategicLineId == strategiaLineaId.PqrsStrategicLineId)
+                                        .OrderByDescending(x => x.ContentId)).ToList();
+
+            //List<Content> model = _context.Contents
+            //                            .Include(c => c.ApplicationUser)
+            //                            .Include(c => c.PqrsStrategicLineSector)
+            //                            .Include(c => c.State)
+            //                            .Where(c => c.ApplicationUser.UserName == email &&
+            //                                        c.PqrsStrategicLineSector.PqrsStrategicLineId == strategiaLineaId.PqrsStrategicLineId)
+            //                            .OrderByDescending(x => x.ContentId)
+            //                            .ToList();
+
 
             return model;
         }
