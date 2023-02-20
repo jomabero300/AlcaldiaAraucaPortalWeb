@@ -252,7 +252,7 @@
                                     <div class="form-group">
                                         <label asp-for="SocialNetworks.FirstOrDefault().SocialNetworkId" class="control-label"></label>
                                         <select id="socialNetworkId" class="form-control" asp-items="ViewBag.SocialNetworkId"></select>
-                                        <span asp-validation-for="SocialNetworks.FirstOrDefault().SocialNetworkId" class="text-danger"></span>
+                                        <span id="spanSocialNetworkId" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="SocialNetworks.FirstOrDefault().AffiliateSocialNetworURL" class="control-label"></label>
@@ -262,7 +262,7 @@
                                 </di>
                                 <di class="col-md-2 text-right align-self-center">
                                     <div class="form-group">
-                                        <button type="button" id="btnAddSocialNetwork" onclick="SocialNetworkAdd();" class="btn btn-sm btn-primary">Agregar</button>
+                                        <button type="button" id="btnAddSocialNetwork" onclick="SocialNetworkAdd(@Model.AffiliateId);" class="btn btn-sm btn-primary">Agregar</button>
                                     </div>
                                 </di>
                             </div>
@@ -281,7 +281,7 @@
                                             {
                                                 <tr>
                                                     <td>@Html.DisplayFor(modelitem => item.SocialNetwork.SocialNetworkName)</td>
-                                                    <td><a asp-action="DeleteSocialNetwork" asp-route-id="@item.AffiliateSocialNetworkId" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i></a></td>
+                                                    <td><button type="button" id="btnSocialNetwork" onclick="SocialNetworkDelete(@item.AffiliateId,@item.AffiliateSocialNetworkId);" class="btn btn-sm btn-warning">Borrar</button></td>
                                                 </tr>
                                             }
                                         </tbody>

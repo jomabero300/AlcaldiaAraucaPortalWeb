@@ -10,7 +10,7 @@ function ProfessionAdd() {
 
         if ($('#profImagePath').val().trim() == "" && $('#profdocumentoPath').val().trim() == "") {
 
-            $("#myTableProfession tbody").append("<tr>" +
+            $("#myTableProfession tbody").append("<tr class='align-middle'>" +
                 "<td>" + $("#professionId option:selected").text() + "</td>" +
                 "<td><img src='" + urlServidor +"Image/noImage.png' class='img - rounded' alt='Image' style='width: 50px; height: 50px; max-width: 100 %; height: auto;' /></td>" +
                 "<td>" + $("#profConcept").val() + "</td>" +
@@ -406,11 +406,7 @@ function SocialNetworkAdd() {
             redNetwor = "link";
         }
 
-        
-
-        console.log(redNetwor);
-
-        $("#myTableSocialNetwork tbody").append("<tr>" +
+        $("#myTableSocialNetwork tbody").append("<tr class='align-middle'>" +
             "<td>" + $("#socialNetworkId option:selected").text() + "</td>" +
 
             "<td width='10%'><a href='" + $("#socialNetworURL").val() + "' target='_blank'><i class='bi bi-" + redNetwor +"' style='font-size:30px;'></i></a></td>" +

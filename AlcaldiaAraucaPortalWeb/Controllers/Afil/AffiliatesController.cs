@@ -23,6 +23,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
         private readonly IAffiliateGroupProductiveHelper _affiliateGroupProductiveHelper;
         private readonly IAffiliateGroupCommunityHelper _AffiliateGroupCommunityHelper;
         private readonly IAffiliateProfessionHelper _affiliateProfessionHelper;
+        private readonly IAffiliateSocialNetworkHelper _affiliateSocialNetworkHelper;
 
 
         private readonly IGroupProductiveHelper _productiveHelper;
@@ -45,7 +46,8 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
             IWebHostEnvironment env,
             IAffiliateGroupProductiveHelper affiliateGroupProductiveHelper,
             IAffiliateGroupCommunityHelper affiliateGroupCommunityHelper,
-            IAffiliateProfessionHelper affiliateProfessionHelper)
+            IAffiliateProfessionHelper affiliateProfessionHelper,
+            IAffiliateSocialNetworkHelper affiliateSocialNetworkHelper)
         {
             _productiveHelper = productiveHelper;
             _affiliate = affiliate;
@@ -60,6 +62,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
             _affiliateGroupProductiveHelper = affiliateGroupProductiveHelper;
             _AffiliateGroupCommunityHelper = affiliateGroupCommunityHelper;
             _affiliateProfessionHelper = affiliateProfessionHelper;
+            _affiliateSocialNetworkHelper = affiliateSocialNetworkHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -306,6 +309,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
             return RedirectToAction(nameof(Index));
         }
+
         [HttpPost]
         public async Task<JsonResult> getCommunity(string GroupCommunity)
         {
@@ -405,7 +409,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
             Response response = await _affiliateGroupProductiveHelper.AddUpdateAsync(model);
 
-            return Json(new { res = true });
+            return Json(new { data = response});
 
         }
         [HttpPost]
@@ -413,9 +417,8 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
         {
             Response response = await _affiliateGroupProductiveHelper.DeleteAsync(GroupProductiveId);
 
-            return Json(new { res = response.Succeeded });
+            return Json(new { data = response });
         }
-
 
         [HttpPost]
         public async Task<JsonResult> GroupCommunityAdd(int id, int GroupCommunityId)
@@ -428,7 +431,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
             Response response = await _AffiliateGroupCommunityHelper.AddUpdateAsync(model);
 
-            return Json(new { res = response.Succeeded });
+            return Json(new { data = response });
 
         }
         [HttpPost]
@@ -436,9 +439,8 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
         {
             Response response = await _AffiliateGroupCommunityHelper.DeleteAsync(GroupCommunityId);
 
-            return Json(new { res = response.Succeeded });
+            return Json(new { data = response });
         }
-
 
         [HttpPost]
         public async Task<JsonResult> ProfessionAdd(int id, int ProfessionId, IFormFile ImagePath, string Concept, IFormFile DocumentoPath)
@@ -455,17 +457,43 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
             Response response = await _affiliateProfessionHelper.AddUpdateAsync(model);
 
-            return Json(new { res = response.Succeeded });
+            return Json(new { data = response });
 
         }
         [HttpPost]
-
         public async Task<JsonResult> ProfessionDelete(int ProfessionId)
         {
             Response response = await _affiliateProfessionHelper.DeleteAsync(ProfessionId);
 
-            return Json(new { res = response.Succeeded });
+            return Json(new { data = response });
         }
+
+        [HttpPost]
+        public async Task<JsonResult> SocialNetworkAdd(int id, int socialNetworkId,string affiliateSocialNetworURL)
+        {
+            AffiliateSocialNetwork model = new AffiliateSocialNetwork()
+            {
+                Affiliate = await _affiliate.AffiliateByIdAsync(id),
+                SocialNetwork =await _socialNetworkHelper.ByIdAsync(socialNetworkId),
+                AffiliateSocialNetworURL= affiliateSocialNetworURL
+            };
+
+            Response response = await _affiliateSocialNetworkHelper.AddUpdateAsync(model);
+
+            return Json(new { data = response });
+
+        }
+        [HttpPost]
+        public async Task<JsonResult> SocialNetworkDelete(int affiliateSocialNetworkId)
+        {
+            Response response = await _affiliateSocialNetworkHelper.DeleteAsync(affiliateSocialNetworkId);
+
+            return Json(new { data = response });
+        }
+
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> UploadeTemp(IFormFile fileImg, IFormFile fileDoc)
@@ -535,7 +563,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
 
             return Json(new { path = "Ok" });
         }
-
+        [HttpPost]
 
         private List<TypeUserModelsView> typeUser()
         {
