@@ -70,7 +70,15 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
             catch (Exception ex)
             {
                 response.Succeeded = false;
-                response.Message = ex.Message.Contains("REFERENCE") ? "No se puede borrar el registro, tiene registros relacionados" : ex.Message;
+
+                if (ex.InnerException.Message.Contains("REFERENCE"))
+                {
+                    response.Message = "No se puede borrar este registro, porque tiene registros relacionados";
+                }
+                else
+                {
+                    response.Message = ex.Message;
+                }
             }
 
             return response;

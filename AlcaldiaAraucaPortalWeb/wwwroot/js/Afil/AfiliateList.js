@@ -23,8 +23,12 @@ $(document).ready(function () {
     });
 
     $('#MyTableGroupComunity').DataTable({
+        "paging": true,
+        "searching": true,
+        "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" },
         "processing": true,
         "serverSide": true,
+        "order": "[[0, 'desc']]",
         "ajax": {
             "url": urlServidor + "GroupCommunities/ListGene",
             "type": "POST",
@@ -45,8 +49,12 @@ $(document).ready(function () {
     });
 
     $('#MyTableGroupProductive').DataTable({
+        "paging": true,
+        "searching": true,
+        "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" },
         "processing": true,
         "serverSide": true,
+        "order": "[[0, 'desc']]",
         "ajax": {
             "url": urlServidor + "GroupProductives/ListGene",
             "type": "POST",
@@ -67,6 +75,9 @@ $(document).ready(function () {
     });
 
     $('#MyTableSocialNetwork').DataTable({
+        "paging": true,
+        "searching": true,
+        "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" },
         "processing": true,
         "serverSide": true,
         "ajax": {
@@ -89,6 +100,9 @@ $(document).ready(function () {
     });
 
     $('#MyTablePrensa').DataTable({
+        "paging": true,
+        "searching": true,
+        "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" },
         "processing": true,
         "serverSide": true,
         "ajax": {
@@ -108,9 +122,10 @@ $(document).ready(function () {
             { "data": "state", "render": function(data) { return data.stateName } },
             {
                 "data": "contentId", "render": function (data) {
-                    return '<a href="/Prensas/Edit/' + data + '" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill" title="Editar"></i> Editar</a> ' +
-                        '<a href="/Prensas/Delete/' + data + '" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill" title="Borrar"></i> Borrar</a> '
 
+
+                    return '<a href="/Prensas/Edit/' + data + '" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill" title="Editar"></i> Editar</a> ' +
+                              '<a href="/Prensas/Delete/' + data + '" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill" title="Borrar"></i> Borrar</a> '
                 }
             }
         ]

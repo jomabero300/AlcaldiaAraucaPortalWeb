@@ -7,7 +7,10 @@ using AlcaldiaAraucaPortalWeb.Models.Gene;
 using AlcaldiaAraucaPortalWeb.Models.ModelsViewCont;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Data.OleDb;
 
 namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
 {
@@ -441,5 +444,83 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
             PqrsStrategicLine model = await _userStrategicLineHelper.PqrsStrategicLineEmaildAsync(User.Identity.Name);
             return model.PqrsStrategicLineName;
         }
+
+        public IActionResult ImportExcelFile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ImportExcelFile(bool esta)
+        {
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult ImportExcelFile(IFormFile formFile)
+        //{
+        //    string mainPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadExcelFile");
+
+        //    if (!Directory.Exists(mainPath))
+        //    {
+        //        Directory.CreateDirectory(mainPath);
+
+        //    }
+        //    string filePath = Path.Combine(mainPath, formFile.FileName);
+
+        //    using (FileStream stream = new FileStream(filePath, FileMode.Create))
+        //    {
+        //        formFile.CopyTo(stream);
+        //    }
+
+        //    string fileName = formFile.FileName;
+
+        //    string extension = Path.GetExtension(fileName);
+
+        //    string conString = string.Empty;
+
+        //    switch (extension)
+        //    {
+        //        case ".xls":
+        //            conString = "Provider=Microsoft.Jet.OLDB.4.0; Data Source=" + filePath + ";Extended Properties='Excel 8.0;' HDR=Yes'";
+        //            break;
+        //        case ".xlsx":
+        //            //conString = "Provider=Microsoft.ACE.OLDB.12.0; Data Source=" + filePath + ";Extended Properties='Excel 8.0;' HDR=Yes'";
+        //            conString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={filePath};Extended Properties='Excel 8.0;HDR=YES'";
+        //            break;
+        //        default:
+        //            break;
+        //    }
+
+        //    DataTable dt = new DataTable();
+
+        //    conString = string.Format(conString, filePath);
+
+        //    using (OleDbConnection conExcel = new OleDbConnection(conString))
+        //    {
+        //        using (OleDbCommand cmdExcel = new OleDbCommand())
+        //        {
+        //            using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+        //            {
+        //                cmdExcel.Connection = conExcel;
+        //                conExcel.Open();
+        //                DataTable dtExcelSchema = conExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+        //                string sheetName = dtExcelSchema.Rows[0]["Table_Name"].ToString();
+        //                cmdExcel.CommandText = "SELECT * FROM [" + sheetName + "]";
+        //                odaExcel.SelectCommand = cmdExcel;
+        //                odaExcel.Fill(dt);
+        //                conExcel.Close();
+        //            }
+        //        }
+        //    }
+
+
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+
     }
 }

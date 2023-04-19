@@ -125,23 +125,23 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Estr
             return View(model);
         }
 
-        // GET: PqrsUserStrategicLines/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //GET: PqrsUserStrategicLines/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    PqrsUserStrategicLine pqrsUserStrategicLine = await _pqrsUserStrategicLineHelper.ByIdAsync((int)id);
+            PqrsUserStrategicLine pqrsUserStrategicLine = await _pqrsUserStrategicLineHelper.ByIdAsync((int)id);
 
-        //    if (pqrsUserStrategicLine == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (pqrsUserStrategicLine == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(pqrsUserStrategicLine);
-        //}
+            return View(pqrsUserStrategicLine);
+        }
 
         // POST: PqrsUserStrategicLines/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -149,12 +149,14 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Estr
         {
             Response response = await _pqrsUserStrategicLineHelper.DeleteAsync(id);
 
-            if(response.Succeeded)
-            {
-                return Json(new { status = true });
-            }
+            //if(response.Succeeded)
+            //{
+            //    return Json(new { status = true });
+            //}
 
-            return Json(new { status = false, message=response.Message });
+            //return Json(new { status = false, message=response.Message });
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

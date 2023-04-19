@@ -43,6 +43,7 @@
                     @if (User.IsInRole("Prensa"))
                     {
                         <li><a class="dropdown-item small" asp-area="" asp-controller="Prensas" asp-action="Index">Operar contenido</a></li>
+                        <li><a class="dropdown-item small" asp-area="" asp-controller="Prensas" asp-action="IndexPublc">Contenido publicado</a></li>
                     }
                     @if (User.IsInRole("Usuario"))
                     {

@@ -27,7 +27,7 @@ $(document).ready(function () {
 
     $("#communeTownshipId").change(function () {
         $("#neighborhoodSidewalkId").empty();
-        console.log("Huy");
+
         $.ajax({
             type: 'POST',
             url: urlServidor + 'ApplicationUsers/NeighborhoodSidewalkSearch',

@@ -5,7 +5,7 @@
 }
 
 <h1>Borrar</h1>
-<h3>Realmente desea borrar este?</h3>
+<h3>Realmente desea borrar esto?</h3>
 
 <div class="row">
     <h4>Perfil de registro</h4>
@@ -56,7 +56,7 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="AffiliateId" />
-        <input type="submit" value="Borrar" class="btn btn-sm btn-danger" /> |
+        <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i>Eliminar</button> |
         <a asp-action="Index" class="btn btn-sm btn-success"><i class="bi bi-chevron-double-left"></i>Retornar</a>
     </form>
 

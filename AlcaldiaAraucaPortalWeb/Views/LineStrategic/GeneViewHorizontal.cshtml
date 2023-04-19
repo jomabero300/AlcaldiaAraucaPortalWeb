@@ -31,11 +31,14 @@
 
     <section id="header" class="jumbotron text-center" style="height:350px">
     </section>
-    <div class="text-center">
-        <h5>@ViewBag.TituloHead</h5>
-        <p class="lead">@Html.Raw(@ViewBag.SubTituloHead)</p>
-        <a asp-action="GeneViewHorizontalDetails" asp-route-id="@ViewBag.url" class="btn btn-sm btn-outline-success">Ver..</a>
-    </div>
+    @if (@ViewBag.TituloHead != null)
+    {
+        <div class="text-center">
+            <h5>@ViewBag.TituloHead</h5>
+            <p class="lead">@Html.Raw(@ViewBag.SubTituloHead)</p>
+            <a asp-action="GeneViewHorizontalDetails" asp-route-id="@ViewBag.url" class="btn btn-sm btn-outline-success">Ver..</a>
+        </div>
+    }
     <hr />
     <section id="gallery">
         <div class="container">

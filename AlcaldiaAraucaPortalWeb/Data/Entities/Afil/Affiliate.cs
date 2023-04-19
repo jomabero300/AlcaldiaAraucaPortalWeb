@@ -65,6 +65,10 @@ namespace AlcaldiaAraucaPortalWeb.Data.Entities.Afil
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public string ImagePath { get; set; }
 
+        [Display(Name = "Tipo")]
+        public string TypeUserIdDes => TypeUserId == "P" ? "Personal" : "Empresa";
+
+
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual List<AffiliateGroupCommunity> GroupCommunities { get; set; } = new List<AffiliateGroupCommunity>();
         public virtual List<AffiliateGroupProductive> GroupProductives { get; set; } = new List<AffiliateGroupProductive>();

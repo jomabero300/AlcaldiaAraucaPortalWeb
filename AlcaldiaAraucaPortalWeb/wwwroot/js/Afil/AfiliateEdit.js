@@ -4,7 +4,6 @@ function ProductivoAdd(id) {
     $('#spanGroupProductiveId').text('').show('hide');
 
     if ($('#groupProductiveId option:selected').val() == "0") {
-        console.log("Debe seleccionar");
         $('#spanGroupProductiveId').text('!El campo es requerido¡').show();
         $('#groupProductiveId').focus();
     } else {

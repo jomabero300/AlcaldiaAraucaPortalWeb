@@ -1,12 +1,15 @@
 ﻿@model AlcaldiaAraucaPortalWeb.Data.Entities.Gene.State
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Borrar";
 }
 
-<h1>Delete</h1>
+<h1>Borrar</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Realmente desea eliminar esto?</h3>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
 <div>
     <h4>State</h4>
     <hr />
@@ -27,7 +30,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="StateId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i>Eliminar</button> |
+        <a asp-action="Index" class="btn btn-sm btn-success"><i class="bi bi-chevron-double-left"></i>Retornar</a>
     </form>
 </div>

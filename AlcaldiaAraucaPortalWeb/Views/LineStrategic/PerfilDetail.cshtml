@@ -13,7 +13,7 @@
                 @Html.DisplayNameFor(model => model.TypeUserId)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.TypeUserId)
+                @Html.DisplayFor(model => model.TypeUserIdDes)
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Name)
@@ -48,7 +48,7 @@
         </dl>
     </div>
     <div class="col-md-6">
-        <img class="rounded-circle" src="@Url.Content(Model.ImagePath)" alt="Image" style="max-width: 100%; height: auto;" />
+        <img class="rounded-circle" src="@Url.Content(Model.ImagePath)" alt="Image" style="width:200px;height:200px; max-width: 100%; height: auto;" />
     </div>
 </div>
 <hr />

@@ -25,8 +25,6 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
         private readonly IStateHelper _stateHelper;
         private readonly IUserHelper _userHelper;
 
-
-
         public ContentHelper(ApplicationDbContext context, IPqrsUserStrategicLineHelper userStrategicLineHelper, IFolderStrategicLineasHelper folderStrategicLineasHelper, IImageHelper imageHelper, IStateHelper stateHelper, ISubscriberSectorHelper subscriberSectorHelper, IUserHelper userHelper)
         {
             _context = context;
@@ -142,10 +140,24 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
                 }
 
             }
-            catch (Exception ex)
+            catch (DbUpdateException dbUpdateException)
             {
+                if (dbUpdateException.InnerException.Message.Contains("duplica"))
+                {
+                    response.Message = $"Ya existe este registro.!!!";
+                }
+                else
+                {
+                    response.Message = dbUpdateException.InnerException.Message;
+                }
+
                 response.Succeeded = false;
-                response.Message = ex.Message;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+
+                response.Succeeded = false;
             }
 
             return response;
@@ -356,7 +368,14 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
             {
                 response.Succeeded = false;
 
-                response.Message = ex.Message.Contains("REFERENCE") ? "No se puede borrar la categoría porque tiene registros relacionados" : ex.Message;
+                if (ex.InnerException.Message.Contains("REFERENCE"))
+                {
+                    response.Message = "No se puede borrar este detalle del contenido, porque tiene registros relacionados";
+                }
+                else
+                {
+                    response.Message = ex.Message;
+                }
             }
 
             return response;
@@ -410,11 +429,17 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
         {
             ContentModelsViewFilter model= new ContentModelsViewFilter();
 
+            //IQueryable<Content> query = _context.Contents
+            //                                    .Include(c => c.ApplicationUser)
+            //                                    .Include(c => c.PqrsStrategicLineSector)
+            //                                    .Include(c => c.State)
+            //                                    .Where(c => c.State.StateName == "Previo");
+
             IQueryable<Content> query = _context.Contents
                                                 .Include(c => c.ApplicationUser)
                                                 .Include(c => c.PqrsStrategicLineSector)
                                                 .Include(c => c.State)
-                                                .Where(c => c.State.StateName == "Previo");
+                                                .OrderByDescending(c=>c.State.StateName).ThenBy(c=>c.ContentDate);
 
             int Rows = query.Count();
 
@@ -441,17 +466,17 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
 
         }
 
-        //public async Task<List<Content>> ListReporterAsync()
-        //{
-        //    List<Content> model = await
-        //        _context.Contents
-        //                                .Include(c => c.ApplicationUser)
-        //                                .Include(c => c.PqrsStrategicLineSector)
-        //                                .Include(c => c.State)
-        //                                .Where(c => c.State.StateName == "Previo")
-        //                                .OrderByDescending(x => x.ContentId).ToListAsync();
-        //    return model;
-        //}
+        public async Task<List<Content>> ListReporterAsync()
+        {
+            List<Content> model = await
+                _context.Contents
+                                        .Include(c => c.ApplicationUser)
+                                        .Include(c => c.PqrsStrategicLineSector)
+                                        .Include(c => c.State)
+                                        .Where(c => c.State.StateName != "Previo")
+                                        .OrderByDescending(x => x.ContentId).ToListAsync();
+            return model;
+        }
 
         public async Task<List<FilterViewModel>> ListTitleAsync(string title)
         {

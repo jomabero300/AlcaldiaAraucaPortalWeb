@@ -14,7 +14,7 @@ $(function () {
                     TempChecks: programIds
                 };
                 let urlSusb = urlServidor + "Subscribers/Index";
-                console.log(urlSusb);
+
                 $.ajax({
                     cache: false,
                     headers: {
@@ -27,7 +27,7 @@ $(function () {
                     data: JSON.stringify(model),
                     success: function (data) {
                         if (data.succeeded) {
-                            var url = urlServidor + "Subscribers/SubCribirseConfirmation";
+                            let url = urlServidor + "Subscribers/SubCribirseConfirmation";
                             window.location.href = url;
                         } else {
                             alert("Lo sentimos. Hemos tenido un inconveniente para guardar la información\n" + data.message + "!");

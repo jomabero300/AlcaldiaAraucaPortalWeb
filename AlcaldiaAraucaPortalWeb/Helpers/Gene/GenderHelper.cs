@@ -29,10 +29,24 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Gene
             {
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (DbUpdateException dbUpdateException)
             {
+                if (dbUpdateException.InnerException.Message.Contains("duplica"))
+                {
+                    response.Message = $"Ya existe una registro con el mismo nombre.!!!";
+                }
+                else
+                {
+                    response.Message = dbUpdateException.InnerException.Message;
+                }
+
                 response.Succeeded = false;
-                response.Message = ex.Message.Contains("IX_")? "El registro ya existe": ex.Message;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+
+                response.Succeeded = false;
             }
 
             return response;
@@ -74,7 +88,16 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Gene
             catch (Exception ex)
             {
                 response.Succeeded = false;
-                response.Message = ex.Message.Contains("REFERENCE") ? "No se puede borrar la categoría porque tiene registros relacionados" : ex.Message;
+
+                if (ex.InnerException.Message.Contains("REFERENCE"))
+                {
+                    response.Message = "No se puede borrar este genero, porque tiene registros relacionados";
+
+                }
+                else
+                {
+                    response.Message = ex.Message;
+                }
             }
 
             return response;

@@ -5,26 +5,37 @@
 }
 
 <div class="row d-flex justify-content-center text-center g-0">
-    @foreach (var item in Model)
+    @if (Model.Count() > 1)
     {
-        <div class="card" style="width:20em;margin:10px;">
-            <img src="@item.ImageUrl" class="card-img-top" />
-            <div class="card-body">
-                <h4 class="card-title">@item.Name</h4>
-                <p class="card-text text-justify">@item.descrition</p>
+        @foreach (var item in Model)
+        {
+            <div class="card" style="width:20em;margin:10px;">
+                <img src="@item.ImageUrl" class="card-img-top" />
+                <div class="card-body">
+                    <h4 class="card-title">@item.Name</h4>
+                    <p class="card-text text-justify">@item.descrition</p>
 
-                @if(item.Model=="C")
-                {
-                    @if(item.isDetails)
+                    @if(item.Model=="C")
                     {
-                        <a asp-controller="LineStrategic" asp-action="GeneViewHorizontalDetails" asp-route-id="@item.id" class="btn btn-sm btn-outline-success"><i class="bi bi-eye-fill"></i>Ver..</a>
+                        @if(item.isDetails)
+                        {
+                            <a asp-controller="LineStrategic" asp-action="GeneViewHorizontalDetails" asp-route-id="@item.id" class="btn btn-sm btn-outline-success"><i class="bi bi-eye-fill"></i>Ver..</a>
+                        }
                     }
-                }
-                else @if (item.Model == "A")
-                {
-                    <a asp-controller="LineStrategic" asp-action="PerfilDetail" asp-route-id="@item.id" class="btn btn-sm btn-outline-success"><i class="bi bi-eye-fill"></i>Ver..</a>
-                }
+                    else @if (item.Model == "A")
+                    {
+                        <a asp-controller="LineStrategic" asp-action="PerfilDetail" asp-route-id="@item.id" class="btn btn-sm btn-outline-success"><i class="bi bi-eye-fill"></i>Ver..</a>
+                    }
+                </div>
             </div>
-        </div>
+        }
+
+    }
+    else
+    {
+    <div class="alert alert-success alert-dismissible" role="alert">
+        !No hay resultados para la búsqueda!.
+    </div>
+        
     }
 </div>

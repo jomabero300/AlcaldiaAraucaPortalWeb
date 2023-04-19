@@ -5,7 +5,6 @@ using AlcaldiaAraucaPortalWeb.Helpers.Gene;
 using AlcaldiaAraucaPortalWeb.Helpers.Subs;
 using AlcaldiaAraucaPortalWeb.Models.Gene;
 using AlcaldiaAraucaPortalWeb.Models.ModelsViewSusc;
-using iTextSharp.text.pdf.qrcode;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
@@ -59,9 +58,9 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
                 }).ToList(),
             };
 
-            Response response=await _subscriberHelper.AddUpdateAsync(subscribete);
+            Response response = await _subscriberHelper.AddUpdateAsync(subscribete);
 
-            if(response.Succeeded)
+            if (response.Succeeded)
             {
                 string myToken = Guid.NewGuid().ToString();
 
@@ -71,8 +70,8 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
                     token = myToken
                 }, protocol: HttpContext.Request.Scheme);
 
-                response = _mailHelper.SendMail(model.email, 
-                    "Araucactiva - Confirmación de subscripción", 
+                response = _mailHelper.SendMail(model.email,
+                    "Araucactiva - Confirmación de subscripción",
                     $"<h1>Araucactiva - Confirmación de subscripción</h1>" +
                     $"Para habilitar la subscripción," +
                     $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Confirmar Email</a>");

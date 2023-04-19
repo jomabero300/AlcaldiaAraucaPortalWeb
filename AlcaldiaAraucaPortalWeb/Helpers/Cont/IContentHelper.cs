@@ -16,7 +16,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Cont
         Task<List<FilterViewModel>> ListTitleAsync(string title);
         Task<List<ContentDetail>> ListDetailsAsync(int contentId);
         Task<List<Content>> ListUserAsync(string email);
-        //Task<List<Content>> ListReporterAsync();
+        Task<List<Content>> ListReporterAsync();
 
 
         Task<ContentDetail> DetailsIdAsync(int ContentDetailsId);

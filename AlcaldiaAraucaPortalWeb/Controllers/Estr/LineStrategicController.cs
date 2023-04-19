@@ -69,7 +69,9 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Estr
         public IActionResult DesarrolloSocialNormatividad()
         {
             string StrategicLine = "Desarrollo social incluyente";
-            return RedirectToAction("GeneViewHorizontal", new { lTipo = "Normatividad", tituloHead= $"{StrategicLine} - Normatividad", LineaStrategica = StrategicLine });
+            return RedirectToAction("GeneView", new { lTipo = "Normatividad", tituloHead = $"{StrategicLine} - Normatividad", LineaStrategica = StrategicLine });
+
+            //return RedirectToAction("GeneViewHorizontal", new { lTipo = "Normatividad", tituloHead= $"{StrategicLine} - Normatividad", LineaStrategica = StrategicLine });
         }
         #endregion
 

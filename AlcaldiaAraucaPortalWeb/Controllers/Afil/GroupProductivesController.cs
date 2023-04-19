@@ -2,6 +2,7 @@
 using AlcaldiaAraucaPortalWeb.Enun;
 using AlcaldiaAraucaPortalWeb.Helpers.Afil;
 using AlcaldiaAraucaPortalWeb.Helpers.Gene;
+using AlcaldiaAraucaPortalWeb.Models.Gene;
 using AlcaldiaAraucaPortalWeb.Models.ModelsViewAfil;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -125,7 +126,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
                 return NotFound();
             }
 
-            var groupProductive = await _groupProductive.ByIdAsync((int)id);
+            GroupProductive groupProductive = await _groupProductive.ByIdAsync((int)id);
 
             if (groupProductive == null)
             {
@@ -139,7 +140,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Afil
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var response = await _groupProductive.DeleteAsync(id);
+            Response response = await _groupProductive.DeleteAsync(id);
 
             if (response.Succeeded)
             {

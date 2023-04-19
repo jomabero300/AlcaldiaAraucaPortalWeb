@@ -13,9 +13,14 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Gene
         {
             _context = context;
         }
+
         public async Task<List<State>> StateComboAsync(string stateType)
         {
-            var model = await _context.States.Where(s => s.StateType == stateType).ToListAsync();
+            var model = await _context.States
+                                      .Where(s => 
+                                        s.StateType == stateType && 
+                                        !s.StateName.Equals("Eliminado") &&
+                                        !s.StateName.Equals("Previo")).ToListAsync();
 
             model.Add(new State { StateId = 0, StateName = "[Seleccione un estado..]" });
 
@@ -28,6 +33,7 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Gene
 
             return model.StateId;
         }
+
         public async Task<List<State>> StateAsync(string stateType, string[] stateName)
         {
             var model = await _context.States.Where(s => s.StateType == stateType && stateName.Contains(s.StateName)).ToListAsync();
@@ -56,33 +62,61 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Gene
             {
                 _context.States.Update(model);
             }
-            var response = new Response() { Succeeded = true };
+
+            Response response = new Response() { Succeeded = true };
+
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (DbUpdateException dbUpdateException)
             {
-                response.Message = ex.Message;
-            }
+                if (dbUpdateException.InnerException.Message.Contains("duplica"))
+                {
+                    response.Message = $"Ya existe una estado con el mismo nombre.!!!";
+                }
+                else
+                {
+                    response.Message = dbUpdateException.InnerException.Message;
+                }
 
+                response.Succeeded = false;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+
+                response.Succeeded = false;
+            }
             return response;
         }
 
         public async Task<Response> DeleteAsync(int id)
         {
-            var response = new Response() { Succeeded = true };
+            Response response = new Response() { Succeeded = true };
 
-            var model = await _context.States.Where(a => a.StateId == id).FirstOrDefaultAsync();
+            State model = await _context.States.Where(a => a.StateId == id).FirstOrDefaultAsync();
 
             try
             {
                 _context.States.Remove(model);
+
+                await _context.SaveChangesAsync();
             }
+
             catch (Exception ex)
             {
                 response.Succeeded = false;
-                response.Message = ex.Message.Contains("REFERENCE") ? "No se puede borrar la categoría porque tiene registros relacionados" : ex.Message;
+
+                if (ex.InnerException.Message.Contains("REFERENCE"))
+                {
+                    response.Message = "No se puede borrar el estadp porque tiene registros relacionados";
+
+                }
+                else
+                {
+                    response.Message = ex.Message;
+                }
             }
 
             return response;

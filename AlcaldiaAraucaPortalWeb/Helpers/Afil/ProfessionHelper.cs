@@ -36,10 +36,24 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
             {
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (DbUpdateException dbUpdateException)
             {
+                if (dbUpdateException.InnerException.Message.Contains("duplica"))
+                {
+                    response.Message = $"Ya existe una registro con el mismo nombre.!!!";
+                }
+                else
+                {
+                    response.Message = dbUpdateException.InnerException.Message;
+                }
+
                 response.Succeeded = false;
-                response.Message = ex.Message;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+
+                response.Succeeded = false;
             }
 
             return response;
@@ -99,6 +113,17 @@ namespace AlcaldiaAraucaPortalWeb.Helpers.Afil
             }
             catch (Exception ex)
             {
+                response.Succeeded = false;
+
+                if (ex.InnerException.Message.Contains("REFERENCE"))
+                {
+                    response.Message = "No se puede borrar esta profesión, porque tiene registros relacionados";
+                }
+                else
+                {
+                    response.Message = ex.Message;
+                }
+
                 response.Succeeded = false;
                 response.Message = ex.Message.Contains("REFERENCE") ? "No se puede borrar la categoría porque tiene registros relacionados" : ex.Message;
             }

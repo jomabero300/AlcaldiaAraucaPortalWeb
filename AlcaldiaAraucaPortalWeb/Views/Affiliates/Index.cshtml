@@ -45,7 +45,7 @@
         {
             <tr class="align-middle">
                 <td>
-                    @Html.DisplayFor(modelItem => item.TypeUserId)
+                    @Html.DisplayFor(modelItem => item.TypeUserIdDes)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
@@ -80,5 +80,7 @@
 </table>
 
 @section scripts{
+    <script src="~/js/Afil/AfiliateList.js"></script>
+
     <script src="~/js/datatable_files.js"></script>
 }

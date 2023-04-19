@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Afil.GroupCommunity>
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -13,11 +14,11 @@
     </div>
 </div>
 
-<table id="MyTableGroupComunity" class="table table-striped" style="width:100%">
+<table id="MyTableGene" class="table table-striped" style="width:100%">
     <thead>
         <tr>
             <th>
-                Descripción'
+                Descripción
             </th>
             <th>
                 Estado
@@ -26,9 +27,22 @@
         </tr>
     </thead>
     <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="align-middle">
+                <td>@Html.DisplayFor(modelItem => item.GroupCommunityName)</td>
+                <td>@Html.DisplayFor(modelItem => item.State.StateName)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.GroupCommunityId" class="btn btn-sm btn-warning md-2"><i class="bi bi-pencil-fill"></i> Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.GroupCommunityId" class="btn btn-sm btn-info md-2"><i class="bi bi-eye-fill"></i> Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.GroupCommunityId" class="btn btn-sm btn-danger md-2"><i class="bi bi-trash2-fill"></i> Elimnar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
 @section scripts{
-    <script src="~/js/Afil/AfiliateList.js"></script>
+    @*<script src="~/js/Afil/AfiliateList.js"></script>*@
+    <script src="~/js/DataTable_Files.js"></script>
 }

@@ -77,6 +77,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Gene
 
             return View(model);
         }
+
         [Authorize(Roles = nameof(UserType.Administrador))]
         public async Task<IActionResult> Delete(string id)
         {

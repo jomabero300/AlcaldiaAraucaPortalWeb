@@ -1,0 +1,80 @@
+﻿@model IEnumerable<AlcaldiaAraucaPortalWeb.Data.Entities.Cont.Content>
+
+@{
+    ViewData["Title"] = "Contenido";
+}
+<body>
+    <section>
+        <div class="row">
+            <di class="col-md-10">
+                <h2 class="fst-italic fw-bold text-capitalize" style="color:#3366CC;">@ViewBag.LineName</h2>
+            </di>
+            <di class="col-md-2 text-end align-self-center">
+                <a asp-action="Create" class="btn btn-sm btn-primary"><i class="bi bi-file-earmark-fill"></i> Nuevo</a>
+            </di>
+        </div>
+
+    </section>
+    <section>
+        <table id="MyTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContentDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContentTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContentText)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContentUrlImg)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StateId)
+                    </th>
+                    <th>Proceso</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr valign="middle">
+                        <td style="width:8%;">
+                            @Html.DisplayFor(modelItem => item.ContentDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContentTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContentText)
+                        </td>
+                        <td align="center">
+                            <img src="@Url.Content(item.ContentUrlImg)" class="rounded-3" alt="Image" style="width:80px;height:80px;max-width: 100%; height: auto;" />
+                        </td>
+                        <td align="center">
+                            @Html.DisplayFor(modelItem => item.State.StateName)
+                        </td>
+                        <td align="center" style="width:16%;">
+                            @if (item.State.StateName == "Activo")
+                            {
+                                <a asp-action="Inactive" asp-route-id="@item.ContentId" class="btn btn-sm btn-success"><i class="bi bi-toggle-off"></i> Inactivar</a>
+                            }
+                            else
+                            {
+                                <a asp-action="Active" asp-route-id="@item.ContentId" class="btn btn-primary btn-sm"><i class="bi bi-toggle-on"></i> Activar</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </section>
+</body>
+
+@section scripts{
+    <script src="~/js/datatable_files.js"></script>
+}
+

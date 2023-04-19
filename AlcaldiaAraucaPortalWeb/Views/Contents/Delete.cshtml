@@ -58,9 +58,8 @@
     </div>
     <form asp-action="Delete">
         <input type="hidden" asp-for="ContentId" />
-        <input type="submit" value="Eliminar" class="btn btn-danger btn-sm" /> |
-        <a asp-action="Index" class="btn btn-sm btn-success">Retornar</a>
-    </form>
+        <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash2-fill"></i>Eliminar</button> |
+        <a asp-action="Index" class="btn btn-sm btn-success"><i class="bi bi-chevron-double-left"></i>Retornar</a>    </form>
     <footer>
     <h4 style="color:white;">Avisos legales</h4>
     <a href="#"style="color:white">Política de cookies</a>

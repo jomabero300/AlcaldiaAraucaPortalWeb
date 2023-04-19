@@ -3,9 +3,8 @@ let numD = 0;
 let activeId = 0;
 
 function AddContentDetalle() {
-
+    
     if (ContentDetalleValidate()) {
-
         if ($("#OptionFile").val() == "1") {
 
             if (typeof $("#contentUrlImg")[0].files[0] != "undefined") {
@@ -212,7 +211,7 @@ function AddContentEditDetalle(ContentId, isEsta) {
             formData.append("ContentDetailDate", $("#contentDate").text());
 
             let ctr = isEsta == '0' ? "Contents" : "Prensas";
-            console.log(urlServidor + ctr + "/UpdateContentDetalle");
+            
             $.ajax({
                 type: "POST",
                 url: urlServidor + ctr + "/UpdateContentDetalle",
@@ -316,11 +315,7 @@ function ContentDetailEdit(ctl) {
 
     $("#optionFile").text($(cols[3]).text());
 
-    //console.log($(cols[3]).text());
-
     $("#contentDetailsId").text($(cols[4]).text());
-
-    console.log($("#contentDetailsId").text());
 
     $("#contentDate").text($(cols[5]).text());
 
@@ -470,7 +465,6 @@ $(document).ready(function () {
         }
 
         $("#pqrsStrategicLineSectorId").empty();
-        console.log($("#pqrsStrategicLineId").val());
 
         $.ajax({
             type: 'POST',

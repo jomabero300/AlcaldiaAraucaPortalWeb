@@ -71,6 +71,16 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
             return View();
         }
 
+        public async Task< IActionResult> IndexPublc()
+        {
+            List<Content> model = await _contentHelper.ListReporterAsync();
+
+            ViewBag.LineName = "Prensa";
+
+            return View(model);
+            //return View();
+        }
+
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -314,6 +324,7 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
                 return Json(new { status = false, message = ltmensaje });
             }
         }
+
         [HttpPost]
         public async Task<IActionResult> AddContentDetalle(int id, string Title, string ContentText, IFormFile file, string fileUrl)
         {
@@ -432,6 +443,66 @@ namespace AlcaldiaAraucaPortalWeb.Controllers.Cont
                 recordsFiltered = model.RowsFilterTotal,
                 data = model.Contents
             });
+
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Active(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Content model = await _contentHelper.ByIdAsync((int)id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Active")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ActiveConfirmed(int id)
+        {
+            Response response = await _contentHelper.ActiveAsync(id);
+
+            return RedirectToAction(nameof(IndexPublc));
+        }
+        [HttpGet]
+        public async Task<IActionResult> Inactive(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Content model = await _contentHelper.ByIdAsync((int)id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Inactive")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> InactiveConfirmed(int id)
+        {
+            Response response = await _contentHelper.InactiveAsync(id);
+
+            if (response.Succeeded)
+            {
+                return RedirectToAction(nameof(IndexPublc));
+            }
+
+            return RedirectToAction(nameof(IndexPublc));
 
         }
 

@@ -38,6 +38,7 @@ namespace AlcaldiaAraucaPortalWeb.Data
             await CheckCommuneTownshipAsync();
             await CheckNeighborhoodSidewalkIdAsync();
             await CheckRolesAsync();
+            //await CheckRegisAsync();
             //await CheckUserAsync("0000", "Administrador", "Arauca activa", "admin@gmail.com", "3130000000", "Calle 20 carrera 24", UserType.Administrador, DateTime.Parse("01/01/1912"), "User123.");
             //await CheckUserAsync("1010", "José Manuel", "Bello Romero", "jomabero300@gmail.com", "3133670740", "Calle 14 No 14 - 63", UserType.Administrador, DateTime.Parse("25/10/1972"), "Mbel123.");
             //await CheckUserAsync("1010", "leonardol", "Pulido", "leonardopulidom@gmail.com", "3134907527", "Carrera 42 No 14a - 03", UserType.Administrador, DateTime.Parse("25/10/1965"), "User123.");
@@ -50,6 +51,42 @@ namespace AlcaldiaAraucaPortalWeb.Data
             //await CheckUserAsync("0007", "User", "Linea 7", "userlinea7@gmail.com", "3130000000", "Calle 20 carrera 24", UserType.Publicador, DateTime.Parse("01/01/1912"), "User123.");
             //await CheckLineAsync();
 
+        }
+
+        private async Task CheckRegisAsync()
+        {
+
+            if(_context.Contents.Count()<79)
+            {
+                /*
+                57723453-477d-4236-a867-73c1db32f1c0 - Desarrollo
+                c2228ca7-cde8-4bbf-9b49-0ccc5ea1572f - Crecimiento
+                6d236100-0f4a-4405-ad89-7d6d10992a3a - Arauca
+                2ad99c1c-7e35-4340-b365-226390f42ba9 - Infraestructura
+                baa77bf0-db2a-4e32-b59a-6c4c664a1539 - Buen gobierno
+                a95777db-2025-4bb3-ac2c-4af4d1a66f77 - Seguridad
+                 */
+                //ApplicationUser publiDesarrollo =await _context.Users.Where(x => x.Id == "57723453-477d-4236-a867-73c1db32f1c0").FirstOrDefaultAsync();
+                await _context.Contents.AddRangeAsync(
+                    new Entities.Cont.Content 
+                    { 
+                        UserId= "57723453-477d-4236-a867-73c1db32f1c0",
+                        ContentDate=DateTime.Parse(""),
+                        ContentTitle="",
+                        ContentText="",
+                        ContentUrlImg="",StateId=3,
+                        ContentDetails = new List<Entities.Cont.ContentDetail> {
+                            new Entities.Cont.ContentDetail
+                            {
+                             ContentDate=DateTime.Parse(""),
+                             ContentTitle="",
+                             ContentText="",
+                             ContentUrlImg= "",
+                             StateId=3
+                            }
+                        }
+                    });
+            }
         }
 
         private async Task CheckLineAsync()
